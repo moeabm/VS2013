@@ -22,9 +22,7 @@ ipch
 *.unsuccessfulbuild
 *.filters
 *.sentinel
-*.lib
 *.bak
-*.exe
 
 # OSX/Linux build products
 *.mak
