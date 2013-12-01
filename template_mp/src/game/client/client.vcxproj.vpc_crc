@@ -1,5 +1,5 @@
 [vpc crc file version 2]
-0f234c44 F:\Dev\HL_Modding\VS2013\template_mp\src\devtools\bin\vpc.exe
+0f234c44 C:\Dev\VS2013\template_mp\src\devtools\bin\vpc.exe
 _Nc_/vpcgame:valve_
 85934ec3 client_template_mp.vpc
 d01fa2c4 ..\..\game\client\client_base.vpc
