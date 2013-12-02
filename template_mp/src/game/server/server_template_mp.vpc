@@ -134,6 +134,8 @@ $Project "Server (SDK)"
 				$File	"$SRCDIR\game\shared\sdk\weapon_sdkbase.h"
 				$File	"$SRCDIR\game\shared\sdk\weapon_shotgun.cpp"
 				$File	"$SRCDIR\game\shared\sdk\weapon_claws1.cpp"
+				$File	"$SRCDIR\game\shared\sdk\weapon_claws2.cpp"
+				$File	"$SRCDIR\game\shared\sdk\weapon_claws3.cpp"
 			}
 			
 			$Folder	"Multiplayer"
