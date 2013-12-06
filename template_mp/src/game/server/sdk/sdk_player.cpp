@@ -219,9 +219,11 @@ void CSDKPlayer::SetupVisibility( CBaseEntity *pViewEntity, unsigned char *pvs, 
 
 CSDKPlayer::CSDKPlayer()
 {
+
 	//Tony; create our player animation state.
 	m_PlayerAnimState = CreateSDKPlayerAnimState( this );
 	m_iLastWeaponFireUsercmd = 0;
+	m_NextEnvDmg = gpGlobals->curtime;
 	
 	m_Shared.Init( this );
 
@@ -297,6 +299,14 @@ void CSDKPlayer::PostThink()
 		}
 	}
 
+	if(ShouldTakeSunDmg()){
+		TakeDamage( CTakeDamageInfo( GetContainingEntity(INDEXENT(0)), GetContainingEntity(INDEXENT(0)), 1, DMG_SLOWBURN ) );
+		m_NextEnvDmg = gpGlobals->curtime + 1.0f;
+		//float *lightOrigin = new float[10];
+		//GetLightingOrigin()->GetAbsOrigin().CopyToArray(lightOrigin);
+		//Msg("X coord: %d", lightOrigin[0]);
+		//Warning( "X coord: %d", lightOrigin[0] );
+	}
 	QAngle angles = GetLocalAngles();
 	angles[PITCH] = 0;
 	SetLocalAngles( angles );
@@ -357,6 +367,8 @@ void CSDKPlayer::SDKPushawayThink(void)
 
 void CSDKPlayer::Spawn()
 {
+	
+	engine->ClientCommand( edict(), "sv_cheats 1" );
 	SetModel( SDK_PLAYER_MODEL );	//Tony; basically, leave this alone ;) unless you're not using classes or teams, then you can change it to whatever.
 	
 	SetBloodColor( BLOOD_COLOR_RED );
@@ -1718,4 +1730,44 @@ bool CSDKPlayer::WantsLagCompensationOnEntity( const CBasePlayer *pPlayer, const
 		return false;
 
 	return BaseClass::WantsLagCompensationOnEntity( pPlayer, pCmd, pEntityTransmitBits );
+}
+
+bool CSDKPlayer::ShouldTakeSunDmg( void ) {
+	
+
+	if( GetTeamNumber() != SDK_TEAM_BLUE ) return false;
+	if ( m_NextEnvDmg == NULL ) m_NextEnvDmg = gpGlobals->curtime - 1.0f;
+	if( m_NextEnvDmg > gpGlobals->curtime ) return false;
+	
+	CBaseEntity *sun = NULL;
+	sun =  gEntList.FindEntityByName(sun, "mySun");
+	Vector x,y,z;
+	QAngle angMyAngle = QAngle(sun->GetAbsAngles().x, sun->GetAbsAngles().y, sun->GetAbsAngles().z);
+	Vector sunDirection ;
+	AngleVectors(angMyAngle, &sunDirection );
+
+	sunDirection = sunDirection * Vector(1,1,-1);
+	
+
+	CBaseEntity *targetEnt = this;
+    trace_t tr;
+    CTraceFilterSimpleList trfilter( COLLISION_GROUP_NONE );
+    trfilter.AddEntityToIgnore( sun ); 
+    trfilter.AddEntityToIgnore( targetEnt ); 
+	
+
+	// ideally 2500 would be the true distance to the skybox. 
+	Vector endPos = targetEnt->GetAbsOrigin() + (sunDirection * -2500); // 2500 seemed lika good distance 
+	Vector startPos = targetEnt->GetAbsOrigin();
+	UTIL_TraceLine(startPos, endPos, MASK_SHOT, &trfilter, &tr);
+	
+	SetAbsAngles(sun->GetAbsAngles());
+	if(tr.DidHit()) {
+		//Msg("Hit: %d\n", endPos.x);
+		return false;
+	}
+	else Msg("Hit: %s\n", "nothing");
+	//if ( tr.m_pEnt != targetEnt ) return false;
+
+	return true;
 }

@@ -129,6 +129,7 @@ void C_PlayerResource::ClientThink()
 //-----------------------------------------------------------------------------
 const char *C_PlayerResource::GetPlayerName( int iIndex )
 {
+	if ( iIndex == 0 ) return "GOD";
 	if ( iIndex < 1 || iIndex > MAX_PLAYERS )
 	{
 		Assert( false );
@@ -158,7 +159,7 @@ int C_PlayerResource::GetTeam(int iIndex )
 {
 	if ( iIndex < 1 || iIndex > MAX_PLAYERS )
 	{
-		Assert( false );
+		//Assert( false );
 		return 0;
 	}
 	else

@@ -853,7 +853,7 @@ void bf_read::SetOverflowFlag()
 {
 	if ( m_bAssertOnOverflow )
 	{
-		Assert( false );
+		//Assert( false );
 	}
 	m_bOverflow = true;
 }

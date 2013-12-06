@@ -1,0 +1,17 @@
+
+@include "halflife2.fgd"
+
+@PointClass base(Angles,Targetname,EnableDisable) studio("models/editor/playerstart.mdl") = info_player_deathmatch :
+	"This entity marks the start point for players in deathmatch."
+[
+]
+
+@PointClass base(Angles,Targetname,EnableDisable) size(-16 -16 0, 16 16 72) = info_player_blue :
+	"This entity marks the start point for Blue team players, in teamplay."
+[
+]
+
+@PointClass base(Angles,Targetname,EnableDisable) size(-16 -16 0, 16 16 72) = info_player_red :
+	"This entity marks the start point for Red team players, in teamplay."
+[
+]

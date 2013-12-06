@@ -11,9 +11,9 @@ PlayerClassDatafile
 	"team"				"BLUE"
 
 	// Weapon Info
-	"primaryweapon"		"shotgun"
-	"secondaryweapon"	"pistol"
-	"meleeweapon"		"crowbar"
+	"primaryweapon"		"claws2"
+	"secondaryweapon"	"none"
+//	"meleeweapon"		"crowbar"
 
 	"grenadetype"		"grenade"
 	"numgrens"		"2"
@@ -23,10 +23,10 @@ PlayerClassDatafile
 	"classimage"		"cls_blue_class2_active"
 	"classimagebg"		"cls_blue_class2_active_bg"
 
-	"armor"			"100"
+	//"armor"			"100"
 
 	// Movement
-	"RunSpeed"		"220"
-	"SprintSpeed"		"330"
-	"ProneSpeed"		"60"
+	"RunSpeed"		"240"
+	"SprintSpeed"		"360"
+	"ProneSpeed"		"70"
 }

@@ -32,6 +32,7 @@ WeaponData
 		"single_shot"		"Weapon_Crowbar.Single"
 		"melee_hit"		"Weapon_Crowbar.Melee_Hit"
 		"melee_hit_world"	"Weapon_Crowbar.Melee_HitWorld"
+		"special1"		"Weapon_Claws1.Growl"
 	}
 
 	// Weapon Sprite data is loaded by the Client DLL.

@@ -21,6 +21,7 @@
 #include "obstacle_pushaway.h"
 #include "bone_setup.h"
 #include "cl_animevent.h"
+#include "model_types.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 ConVar cl_ragdoll_physics_enable( "cl_ragdoll_physics_enable", "1", 0, "Enable/disable ragdoll physics." );
@@ -534,6 +535,7 @@ C_SDKPlayer::C_SDKPlayer() :
 	AddVar( &m_angEyeAngles, &m_iv_angEyeAngles, LATCH_SIMULATION_VAR );
 
 	m_fNextThinkPushAway = 0.0f;
+	m_bIsGlowing = false;
 
 }
 
@@ -885,6 +887,7 @@ void C_SDKPlayer::ClientThink()
 		}
 	}
 
+
 	// Avoidance
 	if ( gpGlobals->curtime >= m_fNextThinkPushAway )
 	{
@@ -900,6 +903,15 @@ void C_SDKPlayer::GoInvisible(float length){
 	isInvisible = true;
 	invStart = gpGlobals->curtime;
 	invEnd = invStart + length;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: sets parameters to glow
+//-----------------------------------------------------------------------------
+void C_SDKPlayer::Glow(float length){
+	m_bIsGlowing = true;
+	glowStart = gpGlobals->curtime;
+	glowEnd = glowStart + length;
 }
 
 //-----------------------------------------------------------------------------
@@ -1223,4 +1235,32 @@ void C_SDKPlayer::UpdateSoundEvents()
 			m_SoundEvents.Remove( i );
 		}
 	}
+}
+
+int C_SDKPlayer::DrawModel(int flags)
+{
+   int retVal = BaseClass::DrawModel(flags);
+   SetRenderMode(kRenderTransColor);
+   if ( m_bIsGlowing )
+   {
+	  SetRenderColorR(150);
+	  SetRenderColorG(50);
+	  SetRenderColorB(50);
+	   //working now... needed to precache the material. I precached in team initialization (bad place?)
+      modelrender->ForcedMaterialOverride( materials->FindMaterial( "models/player/glow", TEXTURE_GROUP_CLIENT_EFFECTS ) );
+	  
+      BaseClass::DrawModel(STUDIO_RENDER|STUDIO_TRANSPARENCY|STUDIO_OVERRIDE);
+      modelrender->ForcedMaterialOverride(0);
+	  
+		if(glowEnd < gpGlobals->curtime){
+			m_bIsGlowing = false;
+		}
+   }
+   else {
+
+	  SetRenderColorR(255);
+	  SetRenderColorG(255);
+	  SetRenderColorB(255);
+   }
+   return retVal;
 }

@@ -12,6 +12,7 @@
 
 	#define CWeaponClaws1 C_WeaponClaws1
 	#include "c_sdk_player.h"
+	#include "c_sdk_team.h"
 
 #else
 
@@ -88,11 +89,22 @@ void CWeaponClaws1::SecondaryAttack()
 		return;
 	
 
-	WeaponSound( BURST );
+	WeaponSound( SPECIAL1 );
 
 	Msg("Secondary Claws1 swing\n");
 	
 	startCloackTime = gpGlobals->curtime;
+	
+#if defined( CLIENT_DLL )
+	C_SDKTeam *iTeam = GetGlobalSDKTeam( SDK_TEAM_RED );
+	for( int i =0 ; i < iTeam->Get_Number_Players() ; i++){
+		CSDKPlayer *tmpPlayer = dynamic_cast< CSDKPlayer* > (iTeam->GetPlayer(i));
+		if(tmpPlayer->IsAlive()){
+			tmpPlayer->Glow(5.0f);
+		}
+		Msg("FOUND SLAYER: %s", tmpPlayer->GetPlayerName());
+	}
+#endif
 	
 	pPlayer->GoInvisible(5.0f);
 	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();

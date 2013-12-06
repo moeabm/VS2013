@@ -131,6 +131,10 @@ public:
 	// Returns true if the player is allowed to attack.
 	bool CanAttack( void );
 
+	// Returns true if player is a vampire and in sun
+	bool ShouldTakeSunDmg( void );
+	float m_NextEnvDmg;
+
 	virtual int GetPlayerStance();
 
 	// Called whenever this player fires a shot.

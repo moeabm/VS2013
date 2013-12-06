@@ -11,7 +11,7 @@ PlayerClassDatafile
 	"team"				"RED"
 
 	// Weapon Info
-	"primaryweapon"		"mp5"
+	"primaryweapon"		"pistol"
 	"secondaryweapon"	"shotgun"
 	"meleeweapon"		"crowbar"
 

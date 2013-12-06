@@ -11,9 +11,9 @@ PlayerClassDatafile
 	"team"				"BLUE"
 
 	// Weapon Info
-	"primaryweapon"		"mp5"
-	"secondaryweapon"	"shotgun"
-	"meleeweapon"		"crowbar"
+	"primaryweapon"		"claws3"
+	"secondaryweapon"	"none"
+//	"meleeweapon"		"crowbar"
 
 	"grenadetype"		"grenade"
 	"numgrens"		"4"

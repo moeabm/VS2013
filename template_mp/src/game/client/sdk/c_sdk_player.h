@@ -58,6 +58,8 @@ public:
 	float invEnd;
 	virtual void GoInvisible( float);
 
+	virtual void Glow( float);
+
 // Called by shared code.
 public:
 	SDKPlayerState State_Get() const;
@@ -89,6 +91,9 @@ public:
 	virtual void SharedSpawn();
 	
 	void InitSpeeds( void ); //Tony; called EVERY spawn on server and client after class has been chosen (if any!)
+
+	//player glow
+	virtual int					DrawModel( int flags ); 
 
 //Tony; pronetodo!
 //	void CheckProneMoveSound( int groundspeed, bool onground );
@@ -164,6 +169,10 @@ private:
 
 	CNetworkVar( bool, m_bSpawnInterpCounter );
 	bool m_bSpawnInterpCounterCache;
+
+	bool m_bIsGlowing;
+	float glowStart;
+	float glowEnd;
 
 	CNetworkVar( SDKPlayerState, m_iPlayerState );
 
