@@ -19,6 +19,7 @@ enum
 };
 #endif
 
+//AM NOTE: Most of these definitions are in the project solution "Predefined definitions" Generated from VPC script
 #define SPECIFY_OPTIONS 0
 /*#define SDK_USE_TEAMS
 #define SDK_USE_PLAYERCLASSES
@@ -53,27 +54,27 @@ enum
 // Do your players have stamina? - this is a pre-requisite for sprinting, if you define sprinting, and don't uncomment this, it will be included anyway.
 // define SDK_USE_STAMINA
 #if SPECIFY_OPTIONS == 1
-%TemplateOptionStamina%
+//%TemplateOptionStamina%
 #endif
 
 //
 // Are your players able to sprint?
 // define SDK_USE_SPRINTING
 #if SPECIFY_OPTIONS == 1
-%TemplateOptionSprinting%
+//%TemplateOptionSprinting%
 #endif
 
 //Tony; stamina is a pre-requisite to sprinting, if you don't declare stamina but you do declare sprinting
 //stamina needs to be included.
 #if defined ( SDK_USE_SPRINTING ) && !defined( SDK_USE_STAMINA )
-#define SDK_USE_STAMINA
+//#define SDK_USE_STAMINA
 #endif
 
 //
 // Can your players go prone?
 // define SDK_USE_PRONE
 #if SPECIFY_OPTIONS == 1
-%TemplateOptionProne%
+//%TemplateOptionProne%
 #endif
 
 //=====================
@@ -97,13 +98,14 @@ enum
 //
 // Do you want your players to be able to shoot while jumping?
 // define SDK_SHOOT_WHILE_JUMPING
+#define SDK_SHOOT_WHILE_JUMPING
 #if SPECIFY_OPTIONS == 1
 %TemplateOptionShootWhileJumping%
 #endif
 
 
 
-#define SDK_GAME_DESCRIPTION	"SDK Template mod v1"
+#define SDK_GAME_DESCRIPTION	"Vampire Slayer Source"
 
 //================================================================================
 // Most elements below here are specific to the options above.

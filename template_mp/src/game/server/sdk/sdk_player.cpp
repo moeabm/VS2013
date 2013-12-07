@@ -17,6 +17,7 @@
 #include "GameStats.h"
 #include "obstacle_pushaway.h"
 #include "in_buttons.h"
+#include "particle_parse.h"
 
 
 #if defined ( SDK_DLL ) && defined ( SDK_DEV_DLL )
@@ -301,11 +302,8 @@ void CSDKPlayer::PostThink()
 
 	if(ShouldTakeSunDmg()){
 		TakeDamage( CTakeDamageInfo( GetContainingEntity(INDEXENT(0)), GetContainingEntity(INDEXENT(0)), 1, DMG_SLOWBURN ) );
+		DispatchParticleEffect( "blood_impact_red_01", GetAbsOrigin(), QAngle(0,0,1), this);
 		m_NextEnvDmg = gpGlobals->curtime + 1.0f;
-		//float *lightOrigin = new float[10];
-		//GetLightingOrigin()->GetAbsOrigin().CopyToArray(lightOrigin);
-		//Msg("X coord: %d", lightOrigin[0]);
-		//Warning( "X coord: %d", lightOrigin[0] );
 	}
 	QAngle angles = GetLocalAngles();
 	angles[PITCH] = 0;
@@ -358,6 +356,13 @@ void CSDKPlayer::GoInvisible(float length){
 	invStart = gpGlobals->curtime;
 	invEnd = invStart + length;
 }
+
+void CSDKPlayer::GoSunImmune(float length){
+	m_IsSunImmune = true;
+	immStart = gpGlobals->curtime;
+	immEnd = immStart + length;
+}
+
 void CSDKPlayer::SDKPushawayThink(void)
 {
 	// Push physics props out of our way.
@@ -1738,15 +1743,17 @@ bool CSDKPlayer::ShouldTakeSunDmg( void ) {
 	if( GetTeamNumber() != SDK_TEAM_BLUE ) return false;
 	if ( m_NextEnvDmg == NULL ) m_NextEnvDmg = gpGlobals->curtime - 1.0f;
 	if( m_NextEnvDmg > gpGlobals->curtime ) return false;
+
+	if( immEnd < gpGlobals->curtime ) m_IsSunImmune = false;
+	if( m_IsSunImmune ) return false;
 	
 	CBaseEntity *sun = NULL;
 	sun =  gEntList.FindEntityByName(sun, "mySun");
-	Vector x,y,z;
 	QAngle angMyAngle = QAngle(sun->GetAbsAngles().x, sun->GetAbsAngles().y, sun->GetAbsAngles().z);
 	Vector sunDirection ;
 	AngleVectors(angMyAngle, &sunDirection );
 
-	sunDirection = sunDirection * Vector(1,1,-1);
+	sunDirection = sunDirection * Vector(1,1,-1); // for some reason the z vector is backwards; fix it.
 	
 
 	CBaseEntity *targetEnt = this;

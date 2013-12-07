@@ -153,10 +153,10 @@
 				}
 			}
 			
-			"attached_model"
-			{
-				"modelname" "models/weapons/w_pist_deagle.mdl"
-			}
+			//"attached_model"
+			//{
+			//	"modelname" "models/weapons/w_pist_deagle.mdl"
+			//}
 		}
 
 	}
@@ -216,10 +216,10 @@
 				}
 			}
 			
-			"attached_model"
-			{
-				"modelname" "models/weapons/w_shot_m3super90.mdl"
-			}
+			//"attached_model"
+			//{
+			//	"modelname" "models/weapons/w_shot_m3super90.mdl"
+			//}
 		}
 
 	}
@@ -279,10 +279,10 @@
 				}
 			}
 			
-			"attached_model"
-			{
-				"modelname" "models/weapons/w_smg_mp5.mdl"
-			}
+			//"attached_model"
+			//{
+			//	"modelname" "models/weapons/w_smg_mp5.mdl"
+			//}
 		}
 
 	}

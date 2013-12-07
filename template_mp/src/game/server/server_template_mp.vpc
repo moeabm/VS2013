@@ -16,7 +16,8 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	"$BASE;$SRCDIR\game\shared\hl2,.\hl2,.\hl2mp,$SRCDIR\game\shared\hl2mp,.\sdk,$SRCDIR\game\shared\sdk,$SRCDIR\game\shared\Multiplayer,$SRCDIR\public\haptics"
-		$PreprocessorDefinitions		"$BASE;SDK_DLL;SDK_DEV_DLL;SDK_USE_TEAMS;SDK_USE_PLAYERCLASSES;SDK_USE_STAMINA;SDK_USE_SPRINTING"
+		$PreprocessorDefinitions		"$BASE;SDK_DLL;SDK_DEV_DLL;SDK_USE_TEAMS;SDK_USE_PLAYERCLASSES"
+		//;SDK_USE_STAMINA;SDK_USE_SPRINTING"
 	}
 }
 

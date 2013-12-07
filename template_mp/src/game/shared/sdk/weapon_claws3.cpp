@@ -88,12 +88,14 @@ void CWeaponClaws3::SecondaryAttack()
 		return;
 	
 
-	WeaponSound( BURST );
+	WeaponSound( SPECIAL1 );
 
 	Msg("Secondary Claws3 swing\n");
 	
-	startCloackTime = gpGlobals->curtime;
-	
-	pPlayer->GoInvisible(5.0f);
+#if defined ( CLIENT_DLL )
+#else
+	pPlayer->GoSunImmune(5.0f);
+#endif
+
 	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
 }

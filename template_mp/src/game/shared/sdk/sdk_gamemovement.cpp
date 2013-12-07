@@ -322,7 +322,13 @@ void CSDKGameMovement::CheckFalling( void )
 		}
 	}
 
-	BaseClass::CheckFalling();
+	if(player->GetTeamNumber() == SDK_TEAM_BLUE){
+		//just start walking (no vampire fall dmg)
+			MoveHelper( )->PlayerSetAnimation( PLAYER_WALK );
+	}
+	else{
+		BaseClass::CheckFalling();
+	}
 }
 void CSDKGameMovement::ProcessMovement( CBasePlayer *pBasePlayer, CMoveData *pMove )
 {

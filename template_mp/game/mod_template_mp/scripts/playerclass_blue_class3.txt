@@ -13,17 +13,11 @@ PlayerClassDatafile
 	// Weapon Info
 	"primaryweapon"		"claws3"
 	"secondaryweapon"	"none"
-//	"meleeweapon"		"crowbar"
-
-	"grenadetype"		"grenade"
-	"numgrens"		"4"
 
 	"limitcvar"		"mp_limit_blue_class3"
 
 	"classimage"		"cls_blue_class3_active"
 	"classimagebg"		"cls_blue_class3_active_bg"
-
-	"armor"			"150"
 
 	// Movement
 	"RunSpeed"		"200"

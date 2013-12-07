@@ -133,7 +133,10 @@ public:
 
 	// Returns true if player is a vampire and in sun
 	bool ShouldTakeSunDmg( void );
+	void GoSunImmune( float duration );
 	float m_NextEnvDmg;
+	bool m_IsSunImmune;
+	float immStart, immEnd;
 
 	virtual int GetPlayerStance();
 
