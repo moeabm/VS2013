@@ -719,6 +719,11 @@ bool CSDKGameMovement::CheckJumpButton( void )
 		mv->m_nOldButtons |= IN_JUMP ;	// don't jump again until released
 		return false;
 	}
+
+	if( m_pSDKPlayer->State_Get() == STATE_KNOCKOUT){
+		mv->m_nOldButtons |= IN_JUMP;
+		return false;
+	}
 #if defined ( SDK_USE_PRONE )
 	if( m_pSDKPlayer->m_Shared.IsProne() ||
 		m_pSDKPlayer->m_Shared.IsGettingUpFromProne() || 

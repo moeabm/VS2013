@@ -225,6 +225,8 @@ CSDKPlayer::CSDKPlayer()
 	m_PlayerAnimState = CreateSDKPlayerAnimState( this );
 	m_iLastWeaponFireUsercmd = 0;
 	m_NextEnvDmg = gpGlobals->curtime;
+
+	bIsResurrecting = false;
 	
 	m_Shared.Init( this );
 
@@ -631,7 +633,7 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 	CBaseEntity *pInflictor = info.GetInflictor();
 
-	if ( !pInflictor )
+	if ( !pInflictor || m_takedamage == DAMAGE_NO)
 		return 0;
 
 	if ( GetMoveType() == MOVETYPE_NOCLIP || GetMoveType() == MOVETYPE_OBSERVER )
@@ -715,12 +717,12 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 		// Commented out to handle this with player states instead
 		// AM: if player is a vampire, dont kill just floor them.
-		//if(GetTeamNumber() == SDK_TEAM_BLUE && m_iHealth <= info.GetDamage()){
-		//	KnockOut();
-		//	m_iHealth = 0;
-		//	return 0;
-		//}
-		//else 
+		if(GetTeamNumber() == SDK_TEAM_BLUE && m_iHealth <= info.GetDamage()){
+			State_Transition( STATE_KNOCKOUT );	// Transition into the knockout state.
+			m_iHealth = 0;
+			return 0;
+		}
+		else 
 			return CBaseCombatCharacter::OnTakeDamage( info );
 	}
 	else
@@ -807,12 +809,6 @@ int CSDKPlayer::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 void CSDKPlayer::Event_Killed( const CTakeDamageInfo &info )
 {
 	//Msg("EVENT KILLED");
-	// AM; need to find a better way to knockout
-	if(false && GetTeamNumber() == SDK_TEAM_BLUE) {
-		CreateRagdollEntity();
-		State_Transition( STATE_KNOCKOUT );	// Transition into the knockout state.
-		return;
-	}
 	ThrowActiveWeapon();
 
 	// show killer in death cam mode
@@ -1638,13 +1634,40 @@ void CSDKPlayer::State_PreThink_DEATH_ANIM()
 
 void CSDKPlayer::State_Enter_KNOCKOUT()
 {
-	m_takedamage = false;
+	
+	AddSolidFlags( FSOLID_NOT_SOLID );
+	
+	CreateRagdollEntity();
+	CSDKRagdoll *pRagdoll = dynamic_cast<CSDKRagdoll*>( m_hRagdoll.Get() );	
+	SetAbsVelocity(Vector(0,0,0));
+
+	pRagdoll->SetAbsOrigin(GetAbsOrigin());
+	pRagdoll->SetAbsVelocity(Vector(0,0,0));
+
+
+	m_takedamage = DAMAGE_NO;
+	///SetViewOffset( GetViewOffset() - Vector(0,0,50));
+	Weapon_SetLast(GetActiveSDKWeapon());
+	GetActiveSDKWeapon()->Holster(NULL);
 	Msg("STATE KNOCKOUT\n");
+
+	
+	startKnockout = gpGlobals->curtime;
+	endKnockout = startKnockout + SDK_DEFAULT_KNOCKOUT_TIME;
 }
 
 void CSDKPlayer::State_PreThink_KNOCKOUT()
 {
-	Msg("PRETHINK KNOCKOUT\n");
+	if(endKnockout < gpGlobals->curtime){
+		DestroyRagdoll();
+		//SetViewOffset( GetViewOffset() + Vector(0,0, 50));
+		m_iHealth = 20;
+		m_takedamage = DAMAGE_YES;
+		bIsResurrecting = true;
+		State_Transition( STATE_ACTIVE );
+		Weapon_Switch(Weapon_GetLast());
+	}
+	//Msg("PRETHINK KNOCKOUT\n");
 }
 void CSDKPlayer::State_Enter_OBSERVER_MODE()
 {
@@ -1746,8 +1769,13 @@ void CSDKPlayer::State_Enter_ACTIVE()
     m_Local.m_iHideHUD = 0;
 	PhysObjectWake();
 
+
+	if( bIsResurrecting ){
+		bIsResurrecting = false;
+	}
+	else
 	//Tony; call spawn again now -- remember; when we add respawn timers etc, to just put them into the spawn queue, and let the queue respawn them.
-	Spawn();
+		Spawn();
 }
 
 void CSDKPlayer::State_PreThink_ACTIVE()
@@ -1826,7 +1854,7 @@ bool CSDKPlayer::ShouldTakeSunDmg( void ) {
 		//Msg("Hit: %d\n", endPos.x);
 		return false;
 	}
-	else Msg("Hit: %s\n", "nothing");
+	//else Msg("Hit: %s\n", "nothing");
 	//if ( tr.m_pEnt != targetEnt ) return false;
 
 	return true;

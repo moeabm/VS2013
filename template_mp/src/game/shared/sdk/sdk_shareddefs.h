@@ -169,6 +169,7 @@ extern const char *pszTeamNames[];
 #define SDK_DEFAULT_PLAYER_RUNSPEED			220
 #define SDK_DEFAULT_PLAYER_SPRINTSPEED		330
 #define SDK_DEFAULT_PLAYER_PRONESPEED		50
+#define SDK_DEFAULT_KNOCKOUT_TIME	5
 
 //--------------------------------------------------------------------------------------------------------
 //

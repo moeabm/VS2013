@@ -222,6 +222,9 @@ bool CSDKPlayer::IsSprinting( void )
 
 bool CSDKPlayer::CanAttack( void )
 {
+	//AM; prevent attacking while Knocked out
+	if(State_Get() == STATE_KNOCKOUT) return false;
+
 #if defined ( SDK_USE_SPRINTING )
 	#if !defined ( SDK_SHOOT_WHILE_SPRINTING )
 		if ( IsSprinting() ) 

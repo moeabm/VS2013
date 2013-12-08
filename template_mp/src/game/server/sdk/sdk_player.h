@@ -62,7 +62,9 @@ public:
 
 	//AM: Knockout handling funcitons
 	void KockOut( void );
-//	static const float flKOLenght = 5.0f;
+	float startKnockout;
+	float endKnockout;
+//	static const float flKOLenght = 5.0f; // defined in shareddefs
 
 	// Animstate handles this.
 	void SetAnimation( PLAYER_ANIM playerAnim ) { return; }
@@ -188,6 +190,8 @@ private:
 
 	void State_Enter_KNOCKOUT();
 	void State_PreThink_KNOCKOUT();
+
+	bool bIsResurrecting;
 
 	// Find the state info for the specified state.
 	static CSDKPlayerStateInfo* State_LookupInfo( SDKPlayerState state );

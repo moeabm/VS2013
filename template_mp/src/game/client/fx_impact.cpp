@@ -72,6 +72,8 @@ IterationRetval_t CRagdollEnumerator::EnumElement( IHandleEntity *pHandleEntity 
 //-----------------------------------------------------------------------------
 bool FX_AffectRagdolls( Vector vecOrigin, Vector vecStart, int iDamageType )
 {
+	//AM this is breaking things.. turn it off. 
+	return false;
 	// don't do this when lots of ragdolls are simulating
 	if ( s_RagdollLRU.CountRagdolls(true) > 1 )
 		return false;
