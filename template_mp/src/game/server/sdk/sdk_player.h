@@ -76,6 +76,7 @@ public:
 	virtual void LeaveVehicle( const Vector &vecExitPoint, const QAngle &vecExitAngles );
 	
 	CWeaponSDKBase* GetActiveSDKWeapon() const;
+	virtual bool Weapon_CanUse( CBaseCombatWeapon *pWeapon );
 	virtual void	CreateViewModel( int viewmodelindex = 0 );
 
 	virtual void	CheatImpulseCommands( int iImpulse );

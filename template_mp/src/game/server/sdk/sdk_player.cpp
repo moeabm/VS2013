@@ -823,6 +823,31 @@ void CSDKPlayer::Event_Killed( const CTakeDamageInfo &info )
 
 	BaseClass::Event_Killed( info );
 }
+
+
+// ==========================================================================
+//	> Weapon stuff
+// ==========================================================================
+
+//-----------------------------------------------------------------------------
+// Purpose: Test if a player can use the given weapon
+// Input  : A weapon
+// Output :	true or false
+//-----------------------------------------------------------------------------
+bool CSDKPlayer::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
+{
+	CWeaponSDKBase * weapon = (CWeaponSDKBase *) pWeapon;
+	CSDKTeam *pTeam = (CSDKTeam *)GetTeam();
+	const CSDKPlayerClassInfo &pClassInfo = pTeam->GetPlayerClassInfo( m_Shared.PlayerClass() );
+	
+	//Slayers can only use thier primary weapon. 
+	if(GetTeamNumber() == SDK_TEAM_BLUE && pClassInfo.m_iPrimaryWeapon != weapon->GetWeaponID()){
+		//Msg("Failed to grab weapon: %s\n", weapon->GetName());
+		return false;
+	}
+	return true;
+}
+
 void CSDKPlayer::ThrowActiveWeapon( void )
 {
 	CWeaponSDKBase *pWeapon = (CWeaponSDKBase *)GetActiveWeapon();
