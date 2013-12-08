@@ -748,6 +748,9 @@ bool C_SDKPlayer::ShouldDraw( void )
 	if ( !IsAlive() )
 		return false;
 
+	if ( State_Get() == STATE_KNOCKOUT )
+		return false;
+
 	if( GetTeamNumber() == TEAM_SPECTATOR )
 		return false;
 

@@ -229,6 +229,7 @@ enum SDKPlayerState
 	
 	STATE_DEATH_ANIM,			// Playing death anim, waiting for that to finish.
 	STATE_OBSERVER_MODE,		// Noclipping around, watching players, etc.
+	STATE_KNOCKOUT,
 
 	NUM_PLAYER_STATES
 };

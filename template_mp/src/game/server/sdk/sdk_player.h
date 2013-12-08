@@ -60,6 +60,10 @@ public:
 	
 	virtual void GoInvisible( float);
 
+	//AM: Knockout handling funcitons
+	void KockOut( void );
+//	static const float flKOLenght = 5.0f;
+
 	// Animstate handles this.
 	void SetAnimation( PLAYER_ANIM playerAnim ) { return; }
 
@@ -181,6 +185,9 @@ private:
 
 	void State_Enter_DEATH_ANIM();
 	void State_PreThink_DEATH_ANIM();
+
+	void State_Enter_KNOCKOUT();
+	void State_PreThink_KNOCKOUT();
 
 	// Find the state info for the specified state.
 	static CSDKPlayerStateInfo* State_LookupInfo( SDKPlayerState state );

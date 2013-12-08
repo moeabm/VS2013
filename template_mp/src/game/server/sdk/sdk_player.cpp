@@ -712,7 +712,16 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 		gamestats->Event_PlayerDamage( this, info );
 
-		return CBaseCombatCharacter::OnTakeDamage( info );
+
+		// Commented out to handle this with player states instead
+		// AM: if player is a vampire, dont kill just floor them.
+		//if(GetTeamNumber() == SDK_TEAM_BLUE && m_iHealth <= info.GetDamage()){
+		//	KnockOut();
+		//	m_iHealth = 0;
+		//	return 0;
+		//}
+		//else 
+			return CBaseCombatCharacter::OnTakeDamage( info );
 	}
 	else
 	{
@@ -797,6 +806,13 @@ int CSDKPlayer::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 
 void CSDKPlayer::Event_Killed( const CTakeDamageInfo &info )
 {
+	//Msg("EVENT KILLED");
+	// AM; need to find a better way to knockout
+	if(false && GetTeamNumber() == SDK_TEAM_BLUE) {
+		CreateRagdollEntity();
+		State_Transition( STATE_KNOCKOUT );	// Transition into the knockout state.
+		return;
+	}
 	ThrowActiveWeapon();
 
 	// show killer in death cam mode
@@ -1429,7 +1445,9 @@ CSDKPlayerStateInfo* CSDKPlayer::State_LookupInfo( SDKPlayerState state )
 		{ STATE_PICKINGCLASS,	"STATE_PICKINGCLASS",	&CSDKPlayer::State_Enter_PICKINGCLASS, NULL,	&CSDKPlayer::State_PreThink_WELCOME },
 #endif
 		{ STATE_DEATH_ANIM,		"STATE_DEATH_ANIM",		&CSDKPlayer::State_Enter_DEATH_ANIM,	NULL, &CSDKPlayer::State_PreThink_DEATH_ANIM },
-		{ STATE_OBSERVER_MODE,	"STATE_OBSERVER_MODE",	&CSDKPlayer::State_Enter_OBSERVER_MODE,	NULL, &CSDKPlayer::State_PreThink_OBSERVER_MODE }
+		{ STATE_OBSERVER_MODE,	"STATE_OBSERVER_MODE",	&CSDKPlayer::State_Enter_OBSERVER_MODE,	NULL, &CSDKPlayer::State_PreThink_OBSERVER_MODE },
+		
+		{ STATE_KNOCKOUT,		"STATE_KNOCKOUT",		&CSDKPlayer::State_Enter_KNOCKOUT,	NULL, &CSDKPlayer::State_PreThink_KNOCKOUT }
 	};
 
 	for ( int i=0; i < ARRAYSIZE( playerStateInfos ); i++ )
@@ -1618,6 +1636,16 @@ void CSDKPlayer::State_PreThink_DEATH_ANIM()
 	}
 }
 
+void CSDKPlayer::State_Enter_KNOCKOUT()
+{
+	m_takedamage = false;
+	Msg("STATE KNOCKOUT\n");
+}
+
+void CSDKPlayer::State_PreThink_KNOCKOUT()
+{
+	Msg("PRETHINK KNOCKOUT\n");
+}
 void CSDKPlayer::State_Enter_OBSERVER_MODE()
 {
 	// Always start a spectator session in roaming mode
@@ -1764,10 +1792,10 @@ bool CSDKPlayer::WantsLagCompensationOnEntity( const CBasePlayer *pPlayer, const
 
 bool CSDKPlayer::ShouldTakeSunDmg( void ) {
 	
-
-	if( GetTeamNumber() != SDK_TEAM_BLUE ) return false;
+	if ( GetTeamNumber() != SDK_TEAM_BLUE ) return false;
+	if (!IsAlive()) return false;
 	if ( m_NextEnvDmg == NULL ) m_NextEnvDmg = gpGlobals->curtime - 1.0f;
-	if( m_NextEnvDmg > gpGlobals->curtime ) return false;
+	if ( m_NextEnvDmg > gpGlobals->curtime ) return false;
 
 	if( immEnd < gpGlobals->curtime ) m_IsSunImmune = false;
 	if( m_IsSunImmune ) return false;
@@ -1802,4 +1830,8 @@ bool CSDKPlayer::ShouldTakeSunDmg( void ) {
 	//if ( tr.m_pEnt != targetEnt ) return false;
 
 	return true;
+}
+
+void CSDKPlayer::KockOut( void ) {
+
 }
