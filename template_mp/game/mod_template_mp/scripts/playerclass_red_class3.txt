@@ -15,15 +15,13 @@ PlayerClassDatafile
 	"secondaryweapon"	"shotgun"
 	"meleeweapon"		"crowbar"
 
-	"grenadetype"		"grenade"
-	"numgrens"		"4"
 
 	"limitcvar"		"mp_limit_red_class3"
 
 	"classimage"		"cls_red_class3_active"
 	"classimagebg"		"cls_red_class3_active_bg"
 
-	"armor"			"150"
+	//"armor"			"150"
 
 	// Movement
 	"RunSpeed"		"200"

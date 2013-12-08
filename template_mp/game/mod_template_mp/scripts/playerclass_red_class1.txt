@@ -14,16 +14,13 @@ PlayerClassDatafile
 	"primaryweapon"		"pistol"
 	"secondaryweapon"	"none"
 	"meleeweapon"		"crowbar"
-
-	"grenadetype"		"grenade"
-	"numgrens"		"1"
 	
 	"limitcvar"		"mp_limit_red_class1"
 
 	"classimage"		"cls_red_class1_active"
 	"classimagebg"		"cls_red_class1_active_bg"
 
-	"armor"			"50"
+	//"armor"			"50"
 
 	// Movement
 	"RunSpeed"		"240"

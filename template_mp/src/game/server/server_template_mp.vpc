@@ -90,6 +90,8 @@ $Project "Server (SDK)"
 			{
 				$File	"sdk\sdk_bot_temp.cpp"
 				$File	"sdk\sdk_bot_temp.h"
+				//$File	"sdk\my_bot.cpp"
+				//$File	"sdk\my_bot.h"
 			}
 			
 			$Folder	"Player"

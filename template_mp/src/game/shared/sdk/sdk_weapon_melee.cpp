@@ -299,7 +299,26 @@ void CWeaponSDKMelee::Swing( int bIsSecondary )
 	UTIL_TraceLine( swingStart, swingEnd, MASK_SHOT_HULL, pOwner, COLLISION_GROUP_NONE, &traceHit );
 	Activity nHitActivity = ACT_VM_HITCENTER;
 
+
 #ifndef CLIENT_DLL
+	
+	for( int i = 0; i < gpGlobals->maxClients; i++){
+		CSDKPlayer * pPlayer = dynamic_cast<CSDKPlayer *> (UTIL_PlayerByIndex(i));
+		if(!pPlayer){
+			continue;
+		}
+		CBaseEntity * pRagdoll = pPlayer->m_hRagdoll.Get();
+		if(!pRagdoll) continue;
+		Msg("ragdoll exists: %s\n", pPlayer->GetPlayerName());
+		Vector ragOrigin = pRagdoll->GetAbsOrigin();
+		
+		if(VectorLength(swingEnd - ragOrigin) < 20) {
+			Msg("hit Rag: %s\n", pRagdoll->GetClassname());
+			pPlayer->m_takedamage = DAMAGE_YES;
+			pPlayer->TakeDamage(CTakeDamageInfo( pOwner->GetBaseEntity(), pOwner->GetBaseEntity(), this->GetBaseEntity(), 100.0f, DMG_CLUB));
+		}
+	}
+
 	// Like bullets, melee traces have to trace against triggers.
 	CTakeDamageInfo triggerInfo( GetOwner(), GetOwner(), GetDamageForActivity( nHitActivity ), DMG_CLUB );
 	TraceAttackToTriggers( triggerInfo, traceHit.startpos, traceHit.endpos, vec3_origin );

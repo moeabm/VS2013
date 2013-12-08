@@ -718,12 +718,17 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 		// Commented out to handle this with player states instead
 		// AM: if player is a vampire, dont kill just floor them.
 		if(GetTeamNumber() == SDK_TEAM_BLUE && m_iHealth <= info.GetDamage()){
-			State_Transition( STATE_KNOCKOUT );	// Transition into the knockout state.
-			m_iHealth = 0;
-			return 0;
+			if(State_Get() == STATE_ACTIVE){
+				State_Transition( STATE_KNOCKOUT );	// Transition into the knockout state.
+				m_iHealth = 0;
+				return 0;
+			}
+			else if(true || info.GetWeapon()->GetClassname() ){
+				Msg("attacked while down with %s\n", info.GetWeapon()->GetClassname());
+
+			}
 		}
-		else 
-			return CBaseCombatCharacter::OnTakeDamage( info );
+		return CBaseCombatCharacter::OnTakeDamage( info );
 	}
 	else
 	{
@@ -822,18 +827,26 @@ void CSDKPlayer::Event_Killed( const CTakeDamageInfo &info )
 		SetFOV( this, 0 );
 	}
 	else
-		m_hObserverTarget.Set( NULL );
+		m_hObserverTarget.Set( NULL );												
 
 	// Note: since we're dead, it won't draw us on the client, but we don't set EF_NODRAW
 	// because we still want to transmit to the clients in our PVS.
-	CreateRagdollEntity();
+	// AM; no ragdoll on kill for vampires. 
+	
+	if(GetTeamNumber() != SDK_TEAM_BLUE) 
+		CreateRagdollEntity();
+	else {
+		//since it was already created in Knockdown. 
+		DestroyRagdoll();
+		// TODO:Need explosion and sound in else statement
+	}
 
 	State_Transition( STATE_DEATH_ANIM );	// Transition into the dying state.
 
 	//Tony; after transition, remove remaining items
 	RemoveAllItems( true );
 
-	BaseClass::Event_Killed( info );
+		BaseClass::Event_Killed( info );
 }
 
 
@@ -1570,6 +1583,11 @@ void CSDKPlayer::State_PreThink_WELCOME()
 
 void CSDKPlayer::State_Enter_DEATH_ANIM()
 {
+	
+	if (GetTeamNumber() == SDK_TEAM_BLUE ){
+		m_flDeathTime = gpGlobals->curtime;
+		return;
+	}
 	if ( HasWeapons() )
 	{
 		// we drop the guns here because weapons that have an area effect and can kill their user
@@ -1639,11 +1657,13 @@ void CSDKPlayer::State_Enter_KNOCKOUT()
 	
 	CreateRagdollEntity();
 	CSDKRagdoll *pRagdoll = dynamic_cast<CSDKRagdoll*>( m_hRagdoll.Get() );	
+	int coll = pRagdoll->GetCollisionGroup();
+	if(coll == 1) SetAbsVelocity(Vector(0,0,0));
+	 
 	SetAbsVelocity(Vector(0,0,0));
 
 	pRagdoll->SetAbsOrigin(GetAbsOrigin());
 	pRagdoll->SetAbsVelocity(Vector(0,0,0));
-
 
 	m_takedamage = DAMAGE_NO;
 	///SetViewOffset( GetViewOffset() - Vector(0,0,50));
