@@ -632,3 +632,5 @@ bool CSDKPlayer::ShouldCollide( int collisionGroup, int contentsMask ) const
 	return BaseClass::ShouldCollide( collisionGroup, contentsMask );
 }
 
+
+

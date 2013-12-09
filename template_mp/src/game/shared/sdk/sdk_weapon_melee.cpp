@@ -307,12 +307,14 @@ void CWeaponSDKMelee::Swing( int bIsSecondary )
 		if(!pPlayer){
 			continue;
 		}
-		CBaseEntity * pRagdoll = pPlayer->m_hRagdoll.Get();
+		CBaseEntity *pRagdoll = pPlayer->GetRagDoll();
 		if(!pRagdoll) continue;
 		Msg("ragdoll exists: %s\n", pPlayer->GetPlayerName());
-		Vector ragOrigin = pRagdoll->GetAbsOrigin();
 		
-		if(VectorLength(swingEnd - ragOrigin) < 20) {
+		trace_t tr;
+		UTIL_TraceLine( swingStart, swingEnd, MASK_SHOT_HULL, pOwner, COLLISION_GROUP_NONE, &tr );
+		
+		if(tr.fraction != 1.0f && tr.m_pEnt && tr.m_pEnt == pRagdoll) {
 			Msg("hit Rag: %s\n", pRagdoll->GetClassname());
 			pPlayer->m_takedamage = DAMAGE_YES;
 			pPlayer->TakeDamage(CTakeDamageInfo( pOwner->GetBaseEntity(), pOwner->GetBaseEntity(), this->GetBaseEntity(), 100.0f, DMG_CLUB));

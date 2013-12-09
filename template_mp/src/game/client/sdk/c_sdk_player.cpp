@@ -327,7 +327,7 @@ void C_SDKRagdoll::CreateRagdoll()
 
 			SetAbsVelocity( m_vecRagdollVelocity );
 
-			int iSeq = LookupSequence( "RagdollSpawn" );	// hax, find a neutral standing pose
+			int iSeq = LookupSequence( "ragdoll" );	// hax, find a neutral standing pose
 			if ( iSeq == -1 )
 			{
 				Assert( false );	// missing look_idle?
@@ -1266,4 +1266,35 @@ int C_SDKPlayer::DrawModel(int flags)
 	  SetRenderColorB(255);
    }
    return retVal;
+}
+
+void C_SDKPlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov )
+{
+		BaseClass::CalcView(eyeOrigin, eyeAngles, zNear, zFar, fov);
+		return;
+			// First person ragdolls
+		if ( m_hRagdoll.Get() )
+		{
+			// pointer to the ragdoll
+			C_SDKRagdoll *pRagdoll = (C_SDKRagdoll*)m_hRagdoll.Get();
+
+			// gets its origin and angles
+			pRagdoll->GetAttachment( pRagdoll->LookupAttachment( "eyes" ), eyeOrigin, eyeAngles );
+			Vector vForward; 
+			AngleVectors( eyeAngles, &vForward );
+			eyeOrigin = Vector(0,0,24) + eyeOrigin;
+
+			if ( false )
+			{
+				// DM: Don't use first person view when we are very close to something
+				trace_t tr;
+				UTIL_TraceLine( eyeOrigin, eyeOrigin + ( vForward * 10000 ), MASK_ALL, pRagdoll, COLLISION_GROUP_NONE, &tr );
+
+				if ( (!(tr.fraction < 1) || (tr.endpos.DistTo(eyeOrigin) > 25)) )
+					return;
+			}
+			else
+				return;
+		}
+		BaseClass::CalcView(eyeOrigin, eyeAngles, zNear, zFar, fov);
 }

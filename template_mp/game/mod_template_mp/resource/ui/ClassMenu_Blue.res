@@ -262,7 +262,7 @@
 		"model"
 		{
 			"spotlight"	"1"
-			"modelname"	"models/player/blue_player.mdl"
+			"modelname"	"models/player/female_01.mdl"
 			"origin_z"	"-30"
 			"origin_y"	"10"
 			"origin_x"	"120"
@@ -272,7 +272,7 @@
 
 			"animation"
 			{
-				"sequence"		"c_CrouchWalkIdle_GREN_STICK"
+				"sequence"		"cidle_melee"
 				"pose_parameters"
 				{
 					"move_x" "0.1"

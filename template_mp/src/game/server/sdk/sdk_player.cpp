@@ -18,6 +18,7 @@
 #include "obstacle_pushaway.h"
 #include "in_buttons.h"
 #include "particle_parse.h"
+#include "physics_prop_ragdoll.h"
 
 
 #if defined ( SDK_DLL ) && defined ( SDK_DEV_DLL )
@@ -715,7 +716,6 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 		gamestats->Event_PlayerDamage( this, info );
 
 
-		// Commented out to handle this with player states instead
 		// AM: if player is a vampire, dont kill just floor them.
 		if(GetTeamNumber() == SDK_TEAM_BLUE && m_iHealth <= info.GetDamage()){
 			if(State_Get() == STATE_ACTIVE){
@@ -723,8 +723,12 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 				m_iHealth = 0;
 				return 0;
 			}
+			//if they are knocked out already look for see if they were staked. 
 			else if(true || info.GetWeapon()->GetClassname() ){
-				Msg("attacked while down with %s\n", info.GetWeapon()->GetClassname());
+				Msg("Staked while down with %s\n", info.GetWeapon()->GetClassname());
+				m_pRagdoll->Remove();
+				m_pRagdoll = 0;
+				//TODO Add effect
 
 			}
 		}
@@ -1655,18 +1659,20 @@ void CSDKPlayer::State_Enter_KNOCKOUT()
 	
 	AddSolidFlags( FSOLID_NOT_SOLID );
 	
-	CreateRagdollEntity();
-	CSDKRagdoll *pRagdoll = dynamic_cast<CSDKRagdoll*>( m_hRagdoll.Get() );	
-	int coll = pRagdoll->GetCollisionGroup();
-	if(coll == 1) SetAbsVelocity(Vector(0,0,0));
-	 
-	SetAbsVelocity(Vector(0,0,0));
+	//CreateRagdollEntity();
+	//BecomeRagdoll(CTakeDamageInfo(), GetAbsVelocity()); 
 
-	pRagdoll->SetAbsOrigin(GetAbsOrigin());
-	pRagdoll->SetAbsVelocity(Vector(0,0,0));
+	m_pRagdoll = CreateServerRagdoll( this, m_nForceBone, CTakeDamageInfo(), COLLISION_GROUP_INTERACTIVE_DEBRIS, true );
+	FixupBurningServerRagdoll( m_pRagdoll );
+	//RemoveDeferred();
+	//return true;
+	 
+	//SetAbsVelocity(Vector(0,0,0));
+
+	//pRagdoll->SetAbsOrigin(GetAbsOrigin());
+	//pRagdoll->SetAbsVelocity(Vector(0,0,0));
 
 	m_takedamage = DAMAGE_NO;
-	///SetViewOffset( GetViewOffset() - Vector(0,0,50));
 	Weapon_SetLast(GetActiveSDKWeapon());
 	GetActiveSDKWeapon()->Holster(NULL);
 	Msg("STATE KNOCKOUT\n");
@@ -1678,9 +1684,10 @@ void CSDKPlayer::State_Enter_KNOCKOUT()
 
 void CSDKPlayer::State_PreThink_KNOCKOUT()
 {
+	SetAbsOrigin(m_pRagdoll->GetAbsOrigin());
+	
 	if(endKnockout < gpGlobals->curtime){
-		DestroyRagdoll();
-		//SetViewOffset( GetViewOffset() + Vector(0,0, 50));
+		m_pRagdoll->Remove();
 		m_iHealth = 20;
 		m_takedamage = DAMAGE_YES;
 		bIsResurrecting = true;
@@ -1882,4 +1889,8 @@ bool CSDKPlayer::ShouldTakeSunDmg( void ) {
 
 void CSDKPlayer::KockOut( void ) {
 
+}
+
+CBaseEntity * CSDKPlayer::GetRagDoll( void ){
+	return m_pRagdoll;
 }

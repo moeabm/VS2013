@@ -66,6 +66,7 @@ const char *pszPossiblePlayerModels[] =
 	SDK_PLAYER_MODEL,
 	"models/player/blue_player.mdl",
 	"models/player/red_player.mdl",
+	"models/player/female_01.mdl",
 	NULL
 };
 

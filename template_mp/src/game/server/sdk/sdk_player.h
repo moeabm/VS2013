@@ -161,6 +161,8 @@ public:
 
 	virtual bool	ModeWantsSpectatorGUI( int iMode ) { return ( iMode != OBS_MODE_DEATHCAM && iMode != OBS_MODE_FREEZECAM ); }
 
+	virtual CBaseEntity * GetRagDoll( void );
+
 private:
 	bool SelectSpawnSpot( const char *pEntClassName, CBaseEntity* &pSpot );
 
@@ -192,6 +194,7 @@ private:
 	void State_PreThink_KNOCKOUT();
 
 	bool bIsResurrecting;
+	CBaseEntity *m_pRagdoll;
 
 	// Find the state info for the specified state.
 	static CSDKPlayerStateInfo* State_LookupInfo( SDKPlayerState state );
