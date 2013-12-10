@@ -161,6 +161,7 @@ IMPLEMENT_SERVERCLASS_ST( CSDKPlayer, DT_SDKPlayer )
 	SendPropDataTable( "sdknonlocaldata", 0, &REFERENCE_SEND_TABLE(DT_SDKNonLocalPlayerExclusive), SendProxy_SendNonLocalDataTable ),
 
 	SendPropEHandle( SENDINFO( m_hRagdoll ) ),
+	SendPropEHandle( SENDINFO( m_pRagdoll ) ),
 
 	SendPropInt( SENDINFO( m_iPlayerState ), Q_log2( NUM_PLAYER_STATES )+1, SPROP_UNSIGNED ),
 

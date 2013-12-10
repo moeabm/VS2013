@@ -129,6 +129,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_SDKPlayer, DT_SDKPlayer, CSDKPlayer )
 	RecvPropDataTable( "sdknonlocaldata", 0, 0, &REFERENCE_RECV_TABLE(DT_SDKNonLocalPlayerExclusive) ),
 
 	RecvPropEHandle( RECVINFO( m_hRagdoll ) ),
+	RecvPropEHandle( RECVINFO( m_pRagdoll ) ),
 
 	RecvPropInt( RECVINFO( m_iPlayerState ) ),
 
@@ -1270,13 +1271,13 @@ int C_SDKPlayer::DrawModel(int flags)
 
 void C_SDKPlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov )
 {
-		BaseClass::CalcView(eyeOrigin, eyeAngles, zNear, zFar, fov);
-		return;
+		//BaseClass::CalcView(eyeOrigin, eyeAngles, zNear, zFar, fov);
+		//return;
 			// First person ragdolls
-		if ( m_hRagdoll.Get() )
+	if ( m_pRagdoll.Get())
 		{
 			// pointer to the ragdoll
-			C_SDKRagdoll *pRagdoll = (C_SDKRagdoll*)m_hRagdoll.Get();
+			C_BaseEntity *pRagdoll = (C_BaseEntity*)m_pRagdoll.Get();
 
 			// gets its origin and angles
 			pRagdoll->GetAttachment( pRagdoll->LookupAttachment( "eyes" ), eyeOrigin, eyeAngles );

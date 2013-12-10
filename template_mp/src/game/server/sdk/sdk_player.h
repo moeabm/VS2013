@@ -95,6 +95,7 @@ public:
 
 	// Tracks our ragdoll entity.
 	CNetworkHandle( CBaseEntity, m_hRagdoll );	// networked entity handle 
+	CNetworkHandle( CBaseEntity, m_pRagdoll );	// networked entity handle 
 #if defined ( SDK_USE_PLAYERCLASSES )
 	int GetPlayerClassAsString( char *pDest, int iDestSize );
 	void SetClassMenuOpen( bool bIsOpen );
@@ -194,7 +195,6 @@ private:
 	void State_PreThink_KNOCKOUT();
 
 	bool bIsResurrecting;
-	CBaseEntity *m_pRagdoll;
 
 	// Find the state info for the specified state.
 	static CSDKPlayerStateInfo* State_LookupInfo( SDKPlayerState state );

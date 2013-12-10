@@ -149,6 +149,7 @@ public: // Public Variables
 	CNetworkVar( int, m_iShotsFired );	// number of shots fired recently
 
 	EHANDLE	m_hRagdoll;
+	EHANDLE	m_pRagdoll;
 
 	int	m_headYawPoseParam;
 	int	m_headPitchPoseParam;
