@@ -1152,8 +1152,13 @@ CBaseEntity *CBasePlayer::FindUseEntity()
 			UTIL_TraceHull( searchCenter, searchCenter + down * 72, -Vector(16,16,16), Vector(16,16,16), useableContents, this, COLLISION_GROUP_NONE, &tr );
 		}
 		pObject = tr.m_pEnt;
-
+		
 #ifndef CLIENT_DLL
+		
+		//AM: this is for testing ragdoll use()
+		//if(pObject){
+		//	Msg("found : %s\n", pObject->GetClassname());
+		//}
 		pFoundByTrace = pObject;
 #endif
 		bool bUsable = IsUseableEntity(pObject, 0);
@@ -1403,7 +1408,6 @@ void CBasePlayer::PlayerUse ( void )
 	// Found an object
 	if ( pUseEntity )
 	{
-
 		//!!!UNDONE: traceline here to prevent +USEing buttons through walls			
 
 		int caps = pUseEntity->ObjectCaps();

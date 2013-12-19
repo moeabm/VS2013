@@ -378,6 +378,8 @@ void CSDKPlayer::Spawn()
 {
 	
 	engine->ClientCommand( edict(), "sv_cheats 1" );
+	engine->ClientCommand( edict(), "cl_entityreport 1" );
+	
 	SetModel( SDK_PLAYER_MODEL );	//Tony; basically, leave this alone ;) unless you're not using classes or teams, then you can change it to whatever.
 	
 	SetBloodColor( BLOOD_COLOR_RED );
@@ -724,14 +726,6 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 				m_iHealth = 0;
 				return 0;
 			}
-			//if they are knocked out already look for see if they were staked. 
-			else if(true || info.GetWeapon()->GetClassname() ){
-				Msg("Staked while down with %s\n", info.GetWeapon()->GetClassname());
-				m_pRagdoll->Remove();
-				m_pRagdoll = 0;
-				//TODO Add effect
-
-			}
 		}
 		return CBaseCombatCharacter::OnTakeDamage( info );
 	}
@@ -838,11 +832,13 @@ void CSDKPlayer::Event_Killed( const CTakeDamageInfo &info )
 	// because we still want to transmit to the clients in our PVS.
 	// AM; no ragdoll on kill for vampires. 
 	
-	if(GetTeamNumber() != SDK_TEAM_BLUE) 
-		CreateRagdollEntity();
+	if(GetTeamNumber() != SDK_TEAM_BLUE) {
+		CreateServerRagdoll(this, m_nForceBone, CTakeDamageInfo(), COLLISION_GROUP_INTERACTIVE_DEBRIS, true );
+	}
 	else {
 		//since it was already created in Knockdown. 
-		DestroyRagdoll();
+			m_pRagdoll->Remove();
+			m_pRagdoll = 0;
 		// TODO:Need explosion and sound in else statement
 	}
 

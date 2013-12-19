@@ -38,6 +38,7 @@ public:
 	void DisableAutoFade();
 
 	int ObjectCaps();
+	virtual void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
 	DECLARE_SERVERCLASS();
 	// Don't treat as a live target

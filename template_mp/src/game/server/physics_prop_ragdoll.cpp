@@ -289,7 +289,7 @@ void CRagdollProp::Precache( void )
 
 int CRagdollProp::ObjectCaps()
 {
-	return BaseClass::ObjectCaps() | FCAP_WCEDIT_POSITION;
+	return BaseClass::ObjectCaps() | FCAP_WCEDIT_POSITION | FCAP_CONTINUOUS_USE;
 }
 
 //-----------------------------------------------------------------------------
@@ -1709,5 +1709,22 @@ void Ragdoll_GetAngleOverrideString( char *pOut, int size, CBaseEntity *pEntity 
 	if ( pRagdoll )
 	{
 		pRagdoll->GetAngleOverrideFromCurrentState( pOut, size );
+	}
+}
+
+
+//-----------------------------------------------------------------------------
+// Purpose: This is called when player uses a ragdoll
+//-----------------------------------------------------------------------------
+void CRagdollProp::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
+{
+	//currently called continuously
+	//TODO: throttle this
+			CPASAttenuationFilter sndFilter( this, "PropJeep.AmmoOpen" );
+			EmitSound( sndFilter, entindex(), "PropJeep.AmmoOpen" );
+	Msg("USED >>> FEED");
+	CBasePlayer * pPlayer = (CBasePlayer *) pActivator;
+	if(pPlayer){
+		pPlayer->TakeHealth(1.0f, DMG_GENERIC);
 	}
 }
