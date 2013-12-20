@@ -29,9 +29,8 @@ class CSDKTeam : public CTeam
 {
 	DECLARE_CLASS( CSDKTeam, CTeam );
 	DECLARE_SERVERCLASS();
-
+	
 public:
-
 	// Initialization
 	virtual void Init( const char *pName, int iNumber );
 	const unsigned char *GetEncryptionKey( void ) { return g_pGameRules->GetEncryptionKey(); }

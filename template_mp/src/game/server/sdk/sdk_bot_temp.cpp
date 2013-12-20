@@ -46,6 +46,7 @@ public:
 	bool			m_bBackwards;
 
 	float			m_flNextTurnTime;
+	float			m_flNextTurn;
 	bool			m_bLastTurnToRight;
 
 	float			m_flNextStrafeTime;
@@ -268,8 +269,10 @@ void Bot_UpdateDirection( CSDKBot *pBot )
 
 	trace_t trace;
 	Vector vecSrc, vecEnd, forward;
+	
 	while ( --maxtries >= 0 )
 	{
+		
 		AngleVectors( angle, &forward );
 
 		vecSrc = pBot->GetLocalOrigin() + Vector( 0, 0, 36 );
@@ -281,26 +284,26 @@ void Bot_UpdateDirection( CSDKBot *pBot )
 
 		if ( trace.fraction == 1.0 )
 		{
-			if ( gpGlobals->curtime < pBot->m_flNextTurnTime )
+			if (true || gpGlobals->curtime > pBot->m_flNextTurnTime ) // if I didnt hit anything and I can turn do so
 			{
-				break;
+				continue;
 			}
+			else break;
 		}
 
-		angle.y += angledelta;
+		angle.y += angledelta + random->RandomInt( -angledelta, angledelta );
 
 		if ( angle.y > 180 )
 			angle.y -= 360;
 		else if ( angle.y < -180 )
 			angle.y += 360;
 
-		pBot->m_flNextTurnTime = gpGlobals->curtime + 2.0;
 		pBot->m_bLastTurnToRight = random->RandomInt( 0, 1 ) == 0 ? true : false;
-
+		
+		pBot->m_flNextTurnTime = gpGlobals->curtime + 2.0;
 		pBot->m_ForwardAngle = angle;
 		pBot->m_LastAngles = angle;
 	}
-	
 	pBot->SetLocalAngles( angle );
 }
 
@@ -389,10 +392,10 @@ void Bot_SetForwardMovement( CSDKBot *pBot, CUserCmd &cmd )
 {
 	if ( !pBot->IsEFlagSet(EFL_BOT_FROZEN) )
 	{
-		if ( pBot->m_iHealth == 100 )
+		if ( pBot->m_iHealth > 20 )
 		{
 			cmd.forwardmove = 600 * ( pBot->m_bBackwards ? -1 : 1 );
-			if ( pBot->m_flSideMove != 0.0f )
+			if ( false && pBot->m_flSideMove != 0.0f )
 			{
 				cmd.forwardmove *= random->RandomFloat( 0.1, 1.0f );
 			}
@@ -428,6 +431,38 @@ void Bot_HandleRespawn( CSDKBot *pBot, CUserCmd &cmd )
 }
 
 
+bool Bot_ShouldFireWeapon( CSDKBot *pBot )
+{
+	if ( pBot->IsAlive() )
+	{
+		// Try hitting my buttons occasionally
+		if ( random->RandomInt( 0, 100 ) < 0 )
+		{
+			return true;
+		}
+		
+		QAngle angle = pBot->GetLocalAngles();
+
+		trace_t trace;
+		Vector vecSrc, vecEnd, forward;
+		
+		AngleVectors( angle, &forward );
+
+		vecSrc = pBot->GetLocalOrigin() + Vector( 0, 0, 36 );
+
+		vecEnd = vecSrc + forward * 1000;
+
+		UTIL_TraceHull(vecSrc, vecEnd, VEC_HULL_MIN, VEC_HULL_MAX, MASK_PLAYERSOLID, pBot, COLLISION_GROUP_PLAYER, &trace );
+		if( trace.m_pEnt && trace.m_pEnt->IsPlayer()) {
+			if (trace.m_pEnt->GetTeamNumber() != pBot->GetTeamNumber()){
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+
 //-----------------------------------------------------------------------------
 // Run this Bot's AI for one frame.
 //-----------------------------------------------------------------------------
@@ -451,10 +486,18 @@ void Bot_Think( CSDKBot *pBot )
 			Bot_SetForwardMovement( pBot, cmd );
 
 			// Only turn if I haven't been hurt
-			if ( !pBot->IsEFlagSet(EFL_BOT_FROZEN) && pBot->m_iHealth == 100 )
+			if ( !pBot->IsEFlagSet(EFL_BOT_FROZEN) && pBot->m_iHealth > 20 )
 			{
-				Bot_UpdateDirection( pBot );
+				//if(gpGlobals->curtime > pBot->m_flNextTurn){
+				//	pBot->m_flNextTurn = gpGlobals->curtime + 1.0f;
+					Bot_UpdateDirection( pBot );
+				//}
 				Bot_UpdateStrafing( pBot, cmd );
+
+				if(Bot_ShouldFireWeapon( pBot )){
+					//primary attack
+					cmd.buttons |=  IN_ATTACK;
+				}
 			}
 
 			// Handle console settings.

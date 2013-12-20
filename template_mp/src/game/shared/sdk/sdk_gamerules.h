@@ -96,6 +96,8 @@ public:
 
 	virtual int		PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarget );
 	virtual bool	IsTeamplay( void ) 
+
+	
 	{ 
 #if defined ( SDK_USE_TEAMS )
 		return true;
@@ -103,6 +105,7 @@ public:
 		return false;	
 #endif
 	}
+
 	// Get the view vectors for this mod.
 	virtual const CViewVectors* GetViewVectors() const;
 	virtual const CSDKViewVectors *GetSDKViewVectors() const;
@@ -181,6 +184,14 @@ public:
 
 private:
 	CNetworkVar( float, m_flGameStartTime );
+	
+	#ifdef SDK_USE_ROUNDS
+		int m_iRoundNum;
+		int m_iRoundState;
+		int m_flNextRound;
+		void EndRound();
+		void StartRound();
+	#endif
 };
 
 //-----------------------------------------------------------------------------

@@ -1718,13 +1718,19 @@ void Ragdoll_GetAngleOverrideString( char *pOut, int size, CBaseEntity *pEntity 
 //-----------------------------------------------------------------------------
 void CRagdollProp::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
+	if(m_flNextUseTime < gpGlobals->curtime){
 	//currently called continuously
 	//TODO: throttle this
+		m_flNextUseTime = gpGlobals->curtime + FEED_RATE;
+		CBasePlayer * pRagParent =(CBasePlayer *) GetOwnerEntity();
+		if(pRagParent && pRagParent->GetTeamNumber() == SDK_TEAM_BLUE) return;
+
+		CBasePlayer * pPlayer = (CBasePlayer *) pActivator;
+		if(pPlayer && pPlayer->GetTeamNumber() == SDK_TEAM_BLUE){
 			CPASAttenuationFilter sndFilter( this, "PropJeep.AmmoOpen" );
 			EmitSound( sndFilter, entindex(), "PropJeep.AmmoOpen" );
-	Msg("USED >>> FEED");
-	CBasePlayer * pPlayer = (CBasePlayer *) pActivator;
-	if(pPlayer){
-		pPlayer->TakeHealth(1.0f, DMG_GENERIC);
+			Msg("USED >>> FEED");
+			pPlayer->TakeHealth(1.0f, DMG_GENERIC);
+		}
 	}
 }

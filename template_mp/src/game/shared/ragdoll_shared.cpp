@@ -770,7 +770,7 @@ bool ShouldRemoveThisRagdoll( CBaseAnimating *pRagdoll )
 
 #else
 	CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
-
+	if( !pPlayer ) return true;
 	if( !UTIL_FindClientInPVS( pRagdoll->edict() ) )
 	{
 		if ( g_debug_ragdoll_removal.GetBool() )

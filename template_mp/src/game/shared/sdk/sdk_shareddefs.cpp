@@ -13,6 +13,7 @@
 // the 1 / 2 / 3 respectively are all identical in our template mod to start, I've made the base ones (pc_class1, pc_class2, pc_class3) and then duplicated them for the teams.
 //Tony;  for our template we have two versions.
 #if defined ( SDK_USE_PLAYERCLASSES ) && defined ( SDK_USE_TEAMS )
+
 const char *pszTeamBlueClasses[] = 
 {
 	"blue_class1",

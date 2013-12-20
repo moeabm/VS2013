@@ -64,7 +64,15 @@ public:
 	void KockOut( void );
 	float startKnockout;
 	float endKnockout;
-//	static const float flKOLenght = 5.0f; // defined in shareddefs
+
+	//AM: round based lives
+#ifdef SDK_USE_ROUNDS
+private:
+	int m_iLives;
+public:
+	void AddLives(int i);
+	void ClearLives();
+#endif
 
 	// Animstate handles this.
 	void SetAnimation( PLAYER_ANIM playerAnim ) { return; }
@@ -135,7 +143,7 @@ public:
 
 #if defined ( SDK_USE_SPRINTING )
 	void SetSprinting( bool bIsSprinting );
-#endif // SDK_USE_SPRINTING
+#endif // SDK_USE_SPRINTINGp
 	// Returns true if the player is allowed to attack.
 	bool CanAttack( void );
 
@@ -165,6 +173,7 @@ public:
 	virtual CBaseEntity * GetRagDoll( void );
 
 private:
+
 	bool SelectSpawnSpot( const char *pEntClassName, CBaseEntity* &pSpot );
 
 	void State_Enter( SDKPlayerState newState );	// Initialize the new state.

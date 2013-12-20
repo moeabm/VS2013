@@ -18,6 +18,8 @@
 // Purpose: entity class for simple ragdoll physics
 //-----------------------------------------------------------------------------
 
+#define FEED_RATE  0.3f
+
 // UNDONE: Move this to a private header
 class CRagdollProp : public CBaseAnimating, public CDefaultPlayerPickupVPhysics
 {
@@ -136,6 +138,7 @@ private:
 	float					m_flLastPhysicsInfluenceTime;
 	float				m_flFadeOutStartTime;
 	float				m_flFadeTime;
+	float				m_flNextUseTime;
 
 
 	string_t			m_strSourceClassName;

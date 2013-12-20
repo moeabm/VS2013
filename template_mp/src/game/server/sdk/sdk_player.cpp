@@ -227,7 +227,7 @@ CSDKPlayer::CSDKPlayer()
 	m_PlayerAnimState = CreateSDKPlayerAnimState( this );
 	m_iLastWeaponFireUsercmd = 0;
 	m_NextEnvDmg = gpGlobals->curtime;
-
+	m_iLives = 1;
 	bIsResurrecting = false;
 	
 	m_Shared.Init( this );
@@ -846,7 +846,7 @@ void CSDKPlayer::Event_Killed( const CTakeDamageInfo &info )
 
 	//Tony; after transition, remove remaining items
 	RemoveAllItems( true );
-
+	m_iLives -= 1;
 		BaseClass::Event_Killed( info );
 }
 
@@ -1647,7 +1647,13 @@ void CSDKPlayer::State_PreThink_DEATH_ANIM()
 		if (IsClassMenuOpen())
 			return;
 #endif
-		State_Transition( STATE_ACTIVE );
+		//AM: check lives before going active. if no lives left go to observer
+		if( m_iLives > 0 ){
+			State_Transition( STATE_ACTIVE );
+		}
+		else 
+			State_Transition( STATE_OBSERVER_MODE );
+		
 	}
 }
 
@@ -1797,7 +1803,7 @@ void CSDKPlayer::State_Enter_ACTIVE()
 	if( bIsResurrecting ){
 		bIsResurrecting = false;
 	}
-	else
+	else if(m_iLives > 0)
 	//Tony; call spawn again now -- remember; when we add respawn timers etc, to just put them into the spawn queue, and let the queue respawn them.
 		Spawn();
 }
@@ -1854,6 +1860,7 @@ bool CSDKPlayer::ShouldTakeSunDmg( void ) {
 	
 	CBaseEntity *sun = NULL;
 	sun =  gEntList.FindEntityByName(sun, "mySun");
+	if(!sun) return false;
 	QAngle angMyAngle = QAngle(sun->GetAbsAngles().x, sun->GetAbsAngles().y, sun->GetAbsAngles().z);
 	Vector sunDirection ;
 	AngleVectors(angMyAngle, &sunDirection );
@@ -1888,6 +1895,14 @@ void CSDKPlayer::KockOut( void ) {
 
 }
 
+
+void CSDKPlayer::AddLives( int i ) {
+	m_iLives += i;
+}
+
+void CSDKPlayer::ClearLives() {
+	m_iLives = 0;
+}
 CBaseEntity * CSDKPlayer::GetRagDoll( void ){
 	return m_pRagdoll;
 }

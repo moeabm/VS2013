@@ -311,7 +311,10 @@ CSDKGameRules::CSDKGameRules()
 	m_iSpawnPointCount_Blue = 0;
 	m_iSpawnPointCount_Red = 0;
 #endif // SDK_USE_TEAMS
-
+	
+#ifdef SDK_USE_ROUNDS
+	m_iRoundNum = 0;
+#endif
 	m_flGameStartTime = 0;
 
 }
@@ -535,8 +538,36 @@ void CSDKGameRules::RadiusDamage( const CTakeDamageInfo &info, const Vector &vec
 
 void CSDKGameRules::Think()
 {
+
+#ifdef SDK_USE_ROUNDS
+	CSDKTeam *vampTeam = GetGlobalSDKTeam(SDK_TEAM_BLUE);
+	CSDKTeam *slayTeam = GetGlobalSDKTeam(SDK_TEAM_RED);
+
+	if(vampTeam->GetNumPlayers() < 1 || slayTeam->GetNumPlayers() < 1){
+			Msg("Not enough players\n");
+	}
+
+	else if( m_iRoundState == ROUND_OVER ){
+		if(m_flNextRound < gpGlobals->curtime){
+			StartRound();
+			Msg("Round Started\n");
+		}
+	}
+	else if( vampTeam->GetNumPlayers() > 0 && vampTeam->GetAliveMembers() == 0){
+		slayTeam->AddScore(1);
+		EndRound();
+		Msg("Slayers win; end Round\n");
+	}
+	else if( slayTeam->GetNumPlayers() > 0 && slayTeam->GetAliveMembers() == 0){
+		vampTeam->AddScore(1);
+		EndRound();
+		Msg("Vamp win; end Round\n");
+	}
+
+#endif 
 	BaseClass::Think();
 }
+
 Vector DropToGround( 
 					CBaseEntity *pMainEnt, 
 					const Vector &vPos, 
@@ -1380,3 +1411,46 @@ float CSDKGameRules::GetMapElapsedTime( void )
 {
 	return gpGlobals->curtime;
 }
+#ifndef CLIENT_DLL
+#ifdef SDK_USE_ROUNDS
+
+void CSDKGameRules::EndRound(){
+	m_iRoundState = ROUND_OVER;
+	m_flNextRound = gpGlobals->curtime + 5.0f;
+
+	//TODO:  KILL ALL PLAYERS that are still alive (adjust score if necessary)
+	for(int i =0 ; i < GetNumberOfTeams(); i++){
+		CSDKTeam * tTeam = (CSDKTeam *) GetGlobalSDKTeam(i);
+		for( int j =0 ; j < tTeam->GetNumPlayers(); j++){
+			CSDKPlayer *tPlayer = (CSDKPlayer *) tTeam->GetPlayer(j);
+			if(tPlayer){
+				tPlayer->ClearLives();
+
+				if(tPlayer->IsAlive()){
+					tPlayer->StartObserverMode( OBS_MODE_CHASE );
+				}
+			}
+		}
+	}
+}
+
+void CSDKGameRules::StartRound(){
+	m_iRoundState = ROUND_ACTIVE;
+	m_iRoundNum++;
+
+	//TODO: Spawn all players reset their round life
+	//TODO: Reset Map
+	for(int i =0 ; i < GetNumberOfTeams(); i++){
+		CSDKTeam * tTeam = (CSDKTeam *) GetGlobalSDKTeam(i);
+		for( int j =0 ; j < tTeam->GetNumPlayers(); j++){
+			CSDKPlayer *tPlayer = (CSDKPlayer *) tTeam->GetPlayer(j);
+			if(tPlayer){
+				tPlayer->RemoveAllItems(true);
+				tPlayer->AddLives(1);
+				tPlayer->State_Transition( STATE_ACTIVE );
+			}
+		}
+	}
+}
+#endif // Rounds
+#endif // CLIENT_DLL

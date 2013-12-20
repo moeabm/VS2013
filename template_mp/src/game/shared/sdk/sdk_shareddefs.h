@@ -105,11 +105,22 @@ enum
 
 
 
+#define SDK_USE_ROUNDS
 #define SDK_GAME_DESCRIPTION	"Vampire Slayer Source"
 
 //================================================================================
 // Most elements below here are specific to the options above.
 //================================================================================
+
+#if defined ( SDK_USE_ROUNDS )
+
+enum sdkrounds_e
+	{
+		ROUND_ACTIVE,
+		ROUND_OVER,
+	};
+
+#endif // SDK_USE_ROUNDS
 
 #if defined ( SDK_USE_TEAMS )
 
