@@ -260,6 +260,7 @@ void Bot_UpdateDirection( CSDKBot *pBot )
 
 	int maxtries = (int)360.0/angledelta;
 
+
 	if ( pBot->m_bLastTurnToRight )
 	{
 		angledelta = -angledelta;
@@ -276,6 +277,7 @@ void Bot_UpdateDirection( CSDKBot *pBot )
 		AngleVectors( angle, &forward );
 
 		vecSrc = pBot->GetLocalOrigin() + Vector( 0, 0, 36 );
+		vecSrc += forward * 2.0;
 
 		vecEnd = vecSrc + forward * 10;
 
@@ -284,14 +286,12 @@ void Bot_UpdateDirection( CSDKBot *pBot )
 
 		if ( trace.fraction == 1.0 )
 		{
-			if (true || gpGlobals->curtime > pBot->m_flNextTurnTime ) // if I didnt hit anything and I can turn do so
-			{
-				continue;
-			}
-			else break;
-		}
+			maxtries = 0;
 
-		angle.y += angledelta + random->RandomInt( -angledelta, angledelta );
+		}
+		else angle.y += angledelta + random->RandomInt( -15, 15 );
+
+		
 
 		if ( angle.y > 180 )
 			angle.y -= 360;
@@ -463,6 +463,13 @@ bool Bot_ShouldFireWeapon( CSDKBot *pBot )
 }
 
 
+
+void Bot_duckjump( CSDKBot *pBot, CUserCmd &cmd )
+{
+	cmd.buttons |= IN_DUCK | IN_JUMP;
+}
+
+
 //-----------------------------------------------------------------------------
 // Run this Bot's AI for one frame.
 //-----------------------------------------------------------------------------
@@ -488,10 +495,18 @@ void Bot_Think( CSDKBot *pBot )
 			// Only turn if I haven't been hurt
 			if ( !pBot->IsEFlagSet(EFL_BOT_FROZEN) && pBot->m_iHealth > 20 )
 			{
-				//if(gpGlobals->curtime > pBot->m_flNextTurn){
-				//	pBot->m_flNextTurn = gpGlobals->curtime + 1.0f;
+				if(gpGlobals->curtime > pBot->m_flNextTurn){
+					pBot->m_flNextTurn = gpGlobals->curtime + random->RandomFloat(0.0f, 4.0f);
+					cmd.buttons |= IN_DUCK;
+					
 					Bot_UpdateDirection( pBot );
-				//}
+				}
+				if( pBot->m_flNextTurn - gpGlobals->curtime > 0.9 ){
+					cmd.buttons |= IN_JUMP;
+				}
+				else cmd.buttons |= !IN_JUMP;
+
+				Bot_UpdateDirection( pBot );
 				Bot_UpdateStrafing( pBot, cmd );
 
 				if(Bot_ShouldFireWeapon( pBot )){
