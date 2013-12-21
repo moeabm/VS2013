@@ -544,7 +544,7 @@ void CSDKGameRules::Think()
 	CSDKTeam *slayTeam = GetGlobalSDKTeam(SDK_TEAM_RED);
 
 	if(vampTeam->GetNumPlayers() < 1 || slayTeam->GetNumPlayers() < 1){
-			Msg("Not enough players\n");
+		//	Msg("Not enough players\n");
 	}
 
 	else if( m_iRoundState == ROUND_OVER ){

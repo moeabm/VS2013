@@ -294,10 +294,13 @@ void CSDKPlayer::PostThink()
 	if(isInvisible){
 		float iAlpha;
 		if(invEnd < gpGlobals->curtime){
+			
+			Msg("Class ... %s\n", m_Shared.PlayerClass());
 			SetRenderMode( kRenderNormal );
 			isInvisible = false;
 		}
 		else {
+			
 			iAlpha = min((gpGlobals->curtime-invStart),0.8f)/ 0.8f; 
 			SetRenderMode( kRenderTransAlpha );
 			SetRenderColorA(255- 200.0f * iAlpha);

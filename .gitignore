@@ -40,6 +40,14 @@ server.pdb
 server.dll
 server.lib
 
+#HBP Specific files
+HBP_Bot2.dll
+HBP_Bot2.pdb
+HBP_Bot2.lib
+*/RCBot2/Debug/*
+*/RCBot2/Release/*
+*/RCBot2/ipch/*
+
 client.so
 client.so.dbg
 server.so
