@@ -591,8 +591,8 @@ void CBotMods :: parseFile ()
 	unsigned int i,j;
 	char val[256];
 
-	eModId modtype;
-	eBotType bottype;
+	eModId modtype = MOD_UNSUPPORTED;
+	eBotType bottype = BOTTYPE_GENERIC;
 	char steamfolder[256];
 	char gamefolder[256];
 

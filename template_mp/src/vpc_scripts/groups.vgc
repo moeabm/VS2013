@@ -21,6 +21,7 @@ $Group "game"
 	"server"
 	"tier1"
 	"vgui_controls"
+	"HPB_Bot2"
 }
 
 $Group "shaders"

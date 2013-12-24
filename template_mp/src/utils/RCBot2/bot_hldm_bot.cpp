@@ -67,6 +67,8 @@ void CHLDMBot :: setup ()
 // the bot doesn't need to do anything to start a game in HL2DM
 bool CHLDMBot :: startGame ()
 {
+	
+	m_iDesiredClass = -1;
 	return true;
 }
 

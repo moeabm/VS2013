@@ -1,0 +1,176 @@
+//-----------------------------------------------------------------------------
+//	RCBOT2.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$macro SRCDIR		"..\.."
+$Macro GAMENAME 	"mod_template_mp" [$SOURCESDK]
+$Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\bin"
+
+$Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
+
+
+$Configuration	"Debug"
+{
+	$General
+	{
+		$OutputDirectory			".\Debug_$GAMENAME"			[$WIN32]
+		$IntermediateDirectory		".\Debug_$GAMENAME"			[$WIN32]
+
+		$OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
+		$IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
+	}
+}
+
+$Configuration	"Release"
+{
+	$General
+	{
+		$OutputDirectory			".\Release_$GAMENAME"		[$WIN32]
+		$IntermediateDirectory		".\Release_$GAMENAME"		[$WIN32]
+
+		$OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
+		$IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
+	}
+}
+
+$Configuration
+{
+	$Compiler
+	{
+		$AdditionalIncludeDirectories	"..\..\public\mathlib;..\..\public;..\..\public\engine;..\..\public\tier0;..\..\public\tier1;..\..\dlls;..\..\game_shared;..\..\game\shared;..\..\game\server;..\..\public\game\server;"
+		$PreprocessorDefinitions		"$BASE;HOMEFOLDER;"
+		$PrecompiledHeaderFile			"$(IntDir)/HPB_bot2.pch"
+		$EnableC++Exceptions			"Yes (/EHsc)"
+	}
+}
+
+$Project "HPB_bot2"
+{
+	$Folder	"Link Libraries"
+	{
+		$DynamicFile	"$SRCDIR\lib\public\tier2.lib"		[!$WIN64]
+		$DynamicFile	"$SRCDIR\lib\public\mathlib.lib"		[!$WIN64]
+
+		$DynamicFile	"$SRCDIR\lib\public\$PLATFORM\tier2.lib" 		[$WIN64]
+		$DynamicFile	"$SRCDIR\lib\public\$PLATFORM\mathlib.lib" 		[$WIN64]
+	}
+
+	$Folder	"Source Files"
+	{
+		$File	"bot.cpp"
+		$File	"bot_accessclient.cpp"
+		$File	"bot_buttons.cpp"
+		$File	"bot_client.cpp"
+		$File	"bot_commands.cpp"
+		$File	"bot_configfile.cpp"
+		$File	"bot_coop.cpp"
+		$File	"bot_css_bot.cpp"
+		$File	"bot_dod_bot.cpp"
+		$File	"bot_events.cpp"
+		$File	"bot_fortress.cpp"
+		$File	"bot_ga.cpp"
+		$File	"bot_ga_ind.cpp"
+		$File	"bot_getprop.cpp"
+		$File	"bot_globals.cpp"
+		$File	"bot_hl1dmsrc.cpp"
+		$File	"bot_hldm_bot.cpp"
+		$File	"bot_kv.cpp"
+		$File	"bot_main.cpp"
+		$File	"bot_menu.cpp"
+		$File	"bot_mods.cpp"
+		$File	"bot_mtrand.cpp"
+		$File	"bot_navmesh.cpp"
+		$File	"bot_perceptron.cpp"
+		$File	"bot_profile.cpp"
+		$File	"bot_profiling.cpp"
+		$File	"bot_schedule.cpp"
+		$File	"bot_script.cpp"
+		$File	"bot_som.cpp"
+		$File	"bot_strings.cpp"
+		$File	"bot_task.cpp"
+		$File	"bot_usercmd.cpp"
+		$File	"bot_utility.cpp"
+		$File	"bot_visibles.cpp"
+		$File	"bot_waypoint.cpp"
+		$File	"bot_waypoint_locations.cpp"
+		$File	"bot_waypoint_visibility.cpp"
+		$File	"bot_weapons.cpp"
+		$File	"bot_wpt_dist.cpp"
+		$File	"bot_zombie.cpp"
+	}
+
+	$Folder	"Header Files"
+	{
+		$File	"bot.h"
+		$File	"bot_accessclient.h"
+		$File	"bot_belief.h"
+		$File	"bot_buttons.h"
+		$File	"bot_client.h"
+		$File	"bot_commands.h"
+		$File	"bot_config.h"
+		$File	"bot_configfile.h"
+		$File	"bot_const.h"
+		$File	"bot_coop.h"
+		$File	"bot_css_bot.h"
+		$File	"bot_dod_bot.h"
+		$File	"bot_event.h"
+		$File	"bot_fortress.h"
+		$File	"bot_ga.h"
+		$File	"bot_ga_ind.h"
+		$File	"bot_genclass.h"
+		$File	"bot_getprop.h"
+		$File	"bot_globals.h"
+		$File	"bot_hl1dmsrc_bot.h"
+		$File	"bot_hldm_bot.h"
+		$File	"bot_kv.h"
+		$File	"bot_menu.h"
+		$File	"bot_mods.h"
+		$File	"bot_mtrand.h"
+		$File	"bot_navigator.h"
+		$File	"bot_perceptron.h"
+		$File	"bot_profile.h"
+		$File	"bot_profiling.h"
+		$File	"bot_rb.h"
+		$File	"bot_recipients.h"
+		$File	"bot_schedule.h"
+		$File	"bot_script.h"
+		$File	"bot_som.h"
+		$File	"bot_strings.h"
+		$File	"bot_task.h"
+		$File	"bot_utility.h"
+		$File	"bot_visibles.h"
+		$File	"bot_waypoint.h"
+		$File	"bot_waypoint_locations.h"
+		$File	"bot_waypoint_visibility.h"
+		$File	"bot_weapons.h"
+		$File	"bot_wpt_color.h"
+		$File	"bot_wpt_dist.h"
+		$File	"bot_zombie.h"
+		$File	"..\..\public\Color.h"
+		$File	"..\..\public\const.h"
+		$File	"..\..\public\tier0\dbg.h"
+		$File	"..\..\public\dt_send.h"
+		$File	"..\..\Public\eiface.h"
+		$File	"..\..\Public\FileSystem.h"
+		$File	"..\..\public\tier0\icommandline.h"
+		$File	"..\..\public\icvar.h"
+		$File	"..\..\public\igameevents.h"
+		$File	"..\..\public\tier1\interface.h"
+		$File	"..\..\public\game\server\iplayerinfo.h"
+		$File	"..\..\public\engine\iserverplugin.h"
+		$File	"..\..\public\tier1\KeyValues.h"
+		$File	"..\..\public\mathlib\mathlib.h"
+		$File	"..\..\public\tier0\mem.h"
+		$File	"..\..\public\tier0\memalloc.h"
+		$File	"..\..\public\tier0\memdbgon.h"
+		$File	"..\..\public\server_class.h"
+		$File	"..\..\public\tier1\strtools.h"
+		$File	"..\..\public\tier1\utlbuffer.h"
+		$File	"..\..\public\tier1\utlmemory.h"
+		$File	"..\..\public\tier1\utlvector.h"
+		$File	"..\..\public\mathlib\vector.h"
+		$File	"..\..\public\vstdlib\vstdlib.h"
+	}
+}
