@@ -382,6 +382,9 @@ void CSDKPlayer::Spawn()
 	
 	engine->ClientCommand( edict(), "sv_cheats 1" );
 	engine->ClientCommand( edict(), "cl_entityreport 1" );
+	engine->ClientCommand( edict(), "bind f1 \"rcbot waypoint add\"");
+	engine->ClientCommand( edict(), "bind f2 \"rcbot waypoint delete\"");
+	engine->ClientCommand( edict(), "bind f5 \"rcbot waypoint save\"");
 	
 	SetModel( SDK_PLAYER_MODEL );	//Tony; basically, leave this alone ;) unless you're not using classes or teams, then you can change it to whatever.
 	
@@ -1494,7 +1497,7 @@ void CSDKPlayer::State_Enter_WELCOME()
 	PhysObjectSleep();
 
 	// Show info panel
-	if ( IsBot() )
+	if ( IsBot() || IsFakeClient())
 	{
 		// If they want to auto join a team for debugging, pretend they clicked the button.
 		CCommand args;

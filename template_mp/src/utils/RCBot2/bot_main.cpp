@@ -796,13 +796,14 @@ void CRCBotPlugin::LevelInit( char const *pMapName )
 	CBotGlobals::setMapRunning(true);
 	CBotConfigFile::reset();
 	
-	mp_teamplay = cvar->FindVar("mp_teamplay");
-
-	if ( mp_teamplay )
-		CBotGlobals::setTeamplay(mp_teamplay->GetBool());
-	else
-		CBotGlobals::setTeamplay(false);
-
+	//AM: always on Teamplay for VS
+	//mp_teamplay = cvar->FindVar("mp_teamplay");
+	//
+	//if ( mp_teamplay )
+	//	CBotGlobals::setTeamplay(mp_teamplay->GetBool());
+	//else
+	//	CBotGlobals::setTeamplay(false);
+	CBotGlobals::setTeamplay(true);
 	gameeventmanager1->AddListener( this, true );	
 
 	CBotEvents::setupEvents();

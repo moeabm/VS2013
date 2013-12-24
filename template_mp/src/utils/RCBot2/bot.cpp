@@ -334,9 +334,11 @@ bool CBot :: createBotFromEdict(edict_t *pEdict, CBotProfile *pProfile)
 		engine->SetFakeClientConVarValue(pEdict,"name",pProfile->m_szName);
 		strcpy(m_szBotName,pProfile->m_szName);
 	}
-
+	
 	if ( m_pPlayerInfo && (pProfile->m_iTeam != -1) )
 		m_pPlayerInfo->ChangeTeam(pProfile->m_iTeam);
+
+
 
 	/////////////////////////////
 	// safe copy
@@ -354,7 +356,10 @@ bool CBot :: createBotFromEdict(edict_t *pEdict, CBotProfile *pProfile)
 	}
 
 	m_iDesiredTeam = pProfile->m_iTeam;
-	m_iDesiredClass = pProfile->m_iClass;
+	m_iDesiredClass = -2; //pProfile->m_iClass;
+
+	helpers->ClientCommand(pEdict, "cls_random");
+
 
 	engine->SetFakeClientConVarValue(pEdict,"cl_playermodel",szModel);
 	engine->SetFakeClientConVarValue(pEdict,"hud_fastswitch","1");
