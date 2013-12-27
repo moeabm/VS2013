@@ -437,7 +437,7 @@ inline CStudioHdr *CBaseAnimating::GetModelPtr( void )
 #ifdef _DEBUG
 	// GetModelPtr() is often called before OnNewModel() so go ahead and set it up first chance.
 	static IDataCacheSection *pModelCache = datacache->FindSection( "ModelData" );
-	AssertOnce( pModelCache->IsFrameLocking() );
+	//AssertOnce( pModelCache->IsFrameLocking() );
 #endif
 	if ( !m_pStudioHdr && GetModel() )
 	{

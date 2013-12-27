@@ -188,9 +188,10 @@ void FX_FireBullets(
 #if !defined (CLIENT_DLL)
 	// Move other players back to history positions based on local player's lag
 	lagcompensation->StartLagCompensation( pPlayer, pPlayer->GetCurrentCommand() );
-#endif
-
-	for ( int iBullet=0; iBullet < pWeaponInfo->m_iBullets; iBullet++ )
+#endif //iMode
+	int totalBullets = pWeaponInfo->m_iBullets;
+	if(iMode == 1) totalBullets *= 2;
+	for ( int iBullet=0; iBullet < totalBullets; iBullet++ )
 	{
 		RandomSeed( iSeed );	// init random system with this seed
 

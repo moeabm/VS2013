@@ -1,3 +1,4 @@
+//Father D
 PlayerClassDatafile
 {
 	// FilePLayerClassInfo_t members
@@ -11,8 +12,8 @@ PlayerClassDatafile
 	"team"				"RED"
 
 	// Weapon Info
-	"primaryweapon"		"pistol"
-	"secondaryweapon"	"none"
+	"primaryweapon"		"shotgun_fd1"
+	"secondaryweapon"	"shotgun_fd2"
 	"meleeweapon"		"crowbar"
 	
 	"limitcvar"		"mp_limit_red_class1"

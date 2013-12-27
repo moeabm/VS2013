@@ -383,8 +383,11 @@ void CSDKPlayer::Spawn()
 	engine->ClientCommand( edict(), "sv_cheats 1" );
 	engine->ClientCommand( edict(), "cl_entityreport 1" );
 	engine->ClientCommand( edict(), "bind f1 \"rcbot waypoint add\"");
-	engine->ClientCommand( edict(), "bind f2 \"rcbot waypoint delete\"");
+	engine->ClientCommand( edict(), "bind f2 \"rcbot waypoint add jump\"");
+	engine->ClientCommand( edict(), "bind f4 \"rcbot waypoint delete\"");
 	engine->ClientCommand( edict(), "bind f5 \"rcbot waypoint save\"");
+	engine->ClientCommand( edict(), "rcbot waypoint on");
+	engine->ClientCommand( edict(), "rcbot pathwaypoint on");
 	
 	SetModel( SDK_PLAYER_MODEL );	//Tony; basically, leave this alone ;) unless you're not using classes or teams, then you can change it to whatever.
 	
@@ -870,6 +873,7 @@ bool CSDKPlayer::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
 {
 	CWeaponSDKBase * weapon = (CWeaponSDKBase *) pWeapon;
 	CSDKTeam *pTeam = (CSDKTeam *)GetTeam();
+	if(!pTeam || m_Shared.PlayerClass() < 0 ) return false;
 	const CSDKPlayerClassInfo &pClassInfo = pTeam->GetPlayerClassInfo( m_Shared.PlayerClass() );
 	
 	//Slayers can only use thier primary weapon. 

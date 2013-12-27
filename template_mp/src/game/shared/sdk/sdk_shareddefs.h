@@ -199,6 +199,8 @@ typedef enum
 	SDK_WEAPON_CLAWS1,
 	SDK_WEAPON_CLAWS2,
 	SDK_WEAPON_CLAWS3,
+	SDK_WEAPON_SHOTGUN_FD1,
+	SDK_WEAPON_SHOTGUN_FD2,
 
 	
 	WEAPON_MAX,		// number of weapons weapon index

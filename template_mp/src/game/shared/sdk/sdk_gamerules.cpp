@@ -1265,8 +1265,8 @@ const char *CSDKGameRules::GetPlayerClassName( int cls, int team )
 
 	if( cls < 0 || cls >= pTeam->GetNumPlayerClasses() )
 	{
-		Assert( false );
-		return NULL;
+		//Assert( false );
+		return "UNDEF";
 	}
 
 	const CSDKPlayerClassInfo &pClassInfo = pTeam->GetPlayerClassInfo( cls );

@@ -247,8 +247,8 @@ void CWeaponSDKBase::ItemPostFrame( void )
 			// Secondary ammo doesn't have a reload animation
 			if ( UsesClipsForAmmo2() )
 			{
-				// reload clip2 if empty
-				if (m_iClip2 < 1)
+				// reload clip2 if empty : AM; Disabled
+				if (m_iClip2 < 1 && false)
 				{
 					pPlayer->RemoveAmmo( 1, m_iSecondaryAmmoType );
 					m_iClip2 = m_iClip2 + 1;
