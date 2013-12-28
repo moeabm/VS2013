@@ -307,6 +307,16 @@ void CSDKPlayer::PostThink()
 		}
 	}
 
+	if(m_IsPraying){
+		if(prayEnd < gpGlobals->curtime){
+			m_takedamage = DAMAGE_YES;
+			m_IsPraying = false;
+		}
+		else {
+			
+		}
+	}
+
 	if(ShouldTakeSunDmg()){
 		TakeDamage( CTakeDamageInfo( GetContainingEntity(INDEXENT(0)), GetContainingEntity(INDEXENT(0)), 1, DMG_SLOWBURN ) );
 		DispatchParticleEffect( "blood_impact_red_01", GetAbsOrigin(), QAngle(0,0,1), this);
@@ -368,6 +378,13 @@ void CSDKPlayer::GoSunImmune(float length){
 	m_IsSunImmune = true;
 	immStart = gpGlobals->curtime;
 	immEnd = immStart + length;
+}
+
+void CSDKPlayer::Pray(float length){
+	m_IsPraying = true;
+	m_takedamage = DAMAGE_NO;
+	prayStart = gpGlobals->curtime;
+	prayEnd = prayStart + length;
 }
 
 void CSDKPlayer::SDKPushawayThink(void)

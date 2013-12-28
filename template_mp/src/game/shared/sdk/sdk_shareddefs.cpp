@@ -87,6 +87,7 @@ static const char * s_WeaponAliasInfo[] =
 	"claws1",	// SDK_WEAPON_CLAWS1
 	"claws2",	// SDK_WEAPON_CLAWS2
 	"claws3",	// SDK_WEAPON_CLAWS3
+	"crucifix",	// SDK_WEAPON_CRUCIFIX
 	"shotgun_fd1",	// SDK_WEAPON_SHOTGUNFD1
 	"shotgun_fd2",	// SDK_WEAPON_SHOTGUNFD2
 	NULL,		// WEAPON_NONE

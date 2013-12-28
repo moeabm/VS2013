@@ -322,6 +322,21 @@
 	"wave"			"weapons/claws/growl01.wav"
 }
 
+// weapon_crucifix.txt
+"Weapon_Crucifix.Pray"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.55"
+	"soundlevel"	"SNDLVL_105dB"
+	"pitch"			"95,100"
+
+	"wave"			"weapons/crucifix/latin1.wav"
+	"wave"			"weapons/crucifix/latin2.wav"
+	"wave"			"weapons/crucifix/latin3.wav"
+	"wave"			"weapons/crucifix/latin4.wav"
+	"wave"			"weapons/crucifix/latin5.wav"
+	"wave"			"weapons/crucifix/latin6.wav"
+}
 // weapon_extinguisher.txt
 
 "Weapon_Extinguisher.Empty"

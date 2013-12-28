@@ -153,6 +153,15 @@ public:
 	float m_NextEnvDmg;
 	bool m_IsSunImmune;
 	float immStart, immEnd;
+	
+	//Praying (Father D)
+	void Pray( float duration );
+private:
+	bool m_IsPraying;
+	float prayStart, prayEnd;
+
+public:
+
 
 	virtual int GetPlayerStance();
 

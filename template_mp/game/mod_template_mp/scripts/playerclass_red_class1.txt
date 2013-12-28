@@ -14,7 +14,7 @@ PlayerClassDatafile
 	// Weapon Info
 	"primaryweapon"		"shotgun_fd1"
 	"secondaryweapon"	"shotgun_fd2"
-	"meleeweapon"		"crowbar"
+	"meleeweapon"		"crucifix"
 	
 	"limitcvar"		"mp_limit_red_class1"
 
