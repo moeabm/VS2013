@@ -1424,11 +1424,11 @@ void CSDKGameRules::EndRound(){
 		for( int j =0 ; j < tTeam->GetNumPlayers(); j++){
 			CSDKPlayer *tPlayer = (CSDKPlayer *) tTeam->GetPlayer(j);
 			if(tPlayer){
-				tPlayer->ClearLives();
-
-				if(tPlayer->IsAlive()){
-					tPlayer->StartObserverMode( OBS_MODE_CHASE );
-				}
+				//Commented out so Winning players can walk around until new round starts
+				//tPlayer->ClearLives();
+				//if(tPlayer->IsAlive()){
+				//	tPlayer->StartObserverMode( OBS_MODE_CHASE );
+				//}
 			}
 		}
 	}
@@ -1445,8 +1445,9 @@ void CSDKGameRules::StartRound(){
 		for( int j =0 ; j < tTeam->GetNumPlayers(); j++){
 			CSDKPlayer *tPlayer = (CSDKPlayer *) tTeam->GetPlayer(j);
 			if(tPlayer){
+				tPlayer->ClearLives();
 				tPlayer->RemoveAllItems(true);
-				tPlayer->AddLives(1);
+				tPlayer->AddLives(1); //TODO add cvar for multi lives
 				tPlayer->State_Transition( STATE_ACTIVE );
 			}
 		}

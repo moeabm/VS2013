@@ -747,6 +747,10 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 		// AM: if player is a vampire, dont kill just floor them.
 		if(GetTeamNumber() == SDK_TEAM_BLUE && m_iHealth <= info.GetDamage()){
+			//DO LIVE STAKE?
+			if(pInflictor->IsPlayer() && ((CSDKPlayer *)pInflictor)->GetActiveSDKWeapon()->IsMeleeWeapon()){ // IsMeleeWeapon() is defined in weapon script
+				return CBaseCombatCharacter::OnTakeDamage( info );
+			}
 			if(State_Get() == STATE_ACTIVE){
 				State_Transition( STATE_KNOCKOUT );	// Transition into the knockout state.
 				m_iHealth = 0;

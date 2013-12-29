@@ -807,6 +807,7 @@ void CBotGlobals :: buildFileName ( char *szOutput, const char *szFile, const ch
 	char dir[512];
 	ExpandEnvironmentStringsA("%RCBOTDIR%",dir, 511);
 	strcat(szOutput,dir);
+	//strcat(szOutput, "..\\addons"); //AM; USE THIS WHEN RELEASED!!!
 #endif HOMEFOLDER
 
 	addDirectoryDelimiter(szOutput);
