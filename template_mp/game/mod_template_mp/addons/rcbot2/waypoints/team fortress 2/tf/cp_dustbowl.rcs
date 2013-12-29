@@ -1,0 +1,59 @@
+#
+# RCBot2 Script for cp_dustbowl
+#
+#
+:attack_defend_map:1
+:setup_time:65
+#
+#
+#
+:on_reset:
+blue_attack:1
+blue_defend:0
+red_attack:0
+red_defend:1
+areas:1,2,8
+#
+# STAGE ONE
+# CAP ONE
+:on_blue_cap:#Dustbowl_cap_1_A
+red_attack:0
+red_defend:2
+blue_attack:2
+blue_defend:0
+areas:1,2,9
+:on_blue_cap:#Dustbowl_cap_1_B
+red_attack:0
+red_defend:3
+blue_attack:3
+blue_defend:0
+areas:3,4,10
+#
+# STAGE TWO
+# 
+:on_blue_cap:#Dustbowl_cap_2_A
+red_attack:0
+red_defend:4
+blue_attack:4
+blue_defend:0
+areas:3,4,11
+:on_blue_cap:#Dustbowl_cap_2_B
+red_attack:0
+red_defend:5
+blue_attack:5
+blue_defend:0
+areas:5,6,7
+#
+# STAGE THREE
+# 
+:on_blue_cap:#Dustbowl_cap_3_A
+red_attack:0
+red_defend:6
+blue_attack:6
+blue_defend:0
+areas:5,6
+#Well_cap_blue_two = 0
+#Well_cap_blue_rocket = 1
+#Well_cap_center = 2
+#Well_cap_red_two = 3
+#Well_cap_red_rocket = 4

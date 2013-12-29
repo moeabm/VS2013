@@ -1,0 +1,24 @@
+#
+# RCBot2 Script for koth_viaduct
+#
+#
+:arena_point_time:20
+:setup_time:0
+:on_reset:
+blue_attack:1
+blue_defend:0
+red_attack:1
+red_defend:0
+areas:0,1
+:on_blue_cap:#koth_viaduct_cap
+blue_attack:0
+blue_defend:1
+red_attack:1
+red_defend:0
+areas:0,1
+:on_red_cap:#koth_viaduct_cap
+blue_attack:1
+blue_defend:0
+red_attack:0
+red_defend:1
+areas:0,1

@@ -1,0 +1,69 @@
+#
+# hoodoo
+#
+# Map Start
+# CheckPoint A
+#
+:setup_time:70
+:attack_defend_map:1
+:on_reset:
+blue_attack:5
+blue_defend:0
+red_defend:5
+red_attack:0
+areas:1,5,6
+#
+# STAGE 1
+#
+:on_blue_cap:Capture Point A 1
+red_defend:6
+red_attack:0
+blue_attack:6
+blue_defend:0
+areas:1,5,6
+#
+#
+#
+:on_blue_cap:Capture Point A 2
+red_defend:7
+red_attack:0
+blue_attack:7
+blue_defend:0
+areas:2,7,8
+#
+# STAGE 2
+#
+:on_blue_cap:Capture Point B 1
+red_defend:8
+red_attack:0
+blue_attack:8
+blue_defend:0
+areas:2,7,8
+#
+#
+#
+:on_blue_cap:Capture Point B 2
+red_defend:9
+red_attack:0
+blue_attack:9
+blue_defend:0
+areas:3,9,10
+#
+#  STAGE 3
+#
+:on_blue_cap:Capture Point C 1
+red_defend:10
+red_attack:0
+blue_attack:10
+blue_defend:0
+areas:3,9,10
+#
+#
+#
+:on_blue_cap:Capture Point C 2
+red_defend:5
+red_attack:0
+blue_attack:5
+blue_defend
+areas:1,5,6
+#

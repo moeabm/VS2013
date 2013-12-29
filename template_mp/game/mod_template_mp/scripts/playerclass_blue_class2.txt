@@ -1,3 +1,4 @@
+// Edgar
 PlayerClassDatafile
 {
 	// FilePLayerClassInfo_t members

@@ -1,0 +1,13 @@
+#
+# RCBot2 Script MVM
+#
+#
+:attack_defend_map:1
+:setup_time:10
+#
+#
+#
+:on_reset:
+red_attack:0
+red_defend:1
+areas:1

@@ -90,6 +90,9 @@ static const char * s_WeaponAliasInfo[] =
 	"crucifix",	// SDK_WEAPON_CRUCIFIX
 	"shotgun_fd1",	// SDK_WEAPON_SHOTGUNFD1
 	"shotgun_fd2",	// SDK_WEAPON_SHOTGUNFD2
+	"poolcue",	// SDK_WEAPON_POOLCUE
+	"thunder5",	// SDK_WEAPON_THUNDER5
+	"winchester",	// SDK_WEAPON_WINCHESTER
 	NULL,		// WEAPON_NONE
 };
 

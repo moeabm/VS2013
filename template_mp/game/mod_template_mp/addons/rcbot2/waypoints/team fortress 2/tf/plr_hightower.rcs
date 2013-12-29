@@ -1,0 +1,14 @@
+#
+# HIGH TOWER
+#
+#
+:setup_time:5
+:on_reset:
+red_defend:1
+red_attack:1
+blue_attack:1
+blue_defend:1
+areas:1
+#
+#
+#

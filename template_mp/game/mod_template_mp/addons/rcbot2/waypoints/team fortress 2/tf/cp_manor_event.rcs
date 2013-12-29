@@ -1,0 +1,27 @@
+#
+# RCBot2 Script DUSTBOWL CP
+#
+#
+:attack_defend_map:1
+:setup_time:70
+:on_reset:
+blue_attack:1
+blue_defend:0
+red_attack:0
+red_defend:1
+areas:1,8
+#
+# STAGE ONE
+# CAP ONE
+:on_blue_cap:First Capture Point
+red_attack:0
+red_defend:2
+blue_attack:2
+blue_defend:0
+areas:2,8
+:on_blue_cap:Second Capture Point
+red_attack:0
+red_defend:3
+blue_attack:3
+blue_defend:0
+areas:3

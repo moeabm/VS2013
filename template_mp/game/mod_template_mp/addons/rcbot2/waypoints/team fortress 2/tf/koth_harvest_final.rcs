@@ -1,0 +1,25 @@
+#
+# RCBot2 Script for koth_harvest_final
+#
+#
+:on_reset:
+blue_attack:1
+blue_defend:0
+red_attack:1
+red_defend:0
+areas:0
+#
+# 
+#
+:on_blue_cap:#koth_viaduct_cap
+red_attack:1
+red_defend:0
+blue_attack:0
+blue_defend:1
+areas:0
+:on_red_cap:#koth_viaduct_cap
+red_attack:0
+red_defend:1
+blue_attack:1
+blue_defend:0
+areas:0

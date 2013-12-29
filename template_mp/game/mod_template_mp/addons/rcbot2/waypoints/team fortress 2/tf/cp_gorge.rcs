@@ -1,0 +1,22 @@
+#
+# RCBot2 Script for cp_gorge
+#
+#
+:attack_defend_map:1
+:setup_time:60
+#
+:on_reset:
+blue_attack:1
+blue_defend:0
+red_attack:0
+red_defend:1
+areas:0,1
+#
+# 
+# 
+:on_blue_cap:Badwater_cap_1
+red_attack:0
+red_defend:2
+blue_attack:2
+blue_defend:0
+areas:0,2

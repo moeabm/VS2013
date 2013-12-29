@@ -1,0 +1,17 @@
+#
+# RCBot2 Script for plr_nightfall_final
+#
+:on_reset:
+areas:0,1
+:on_red_cap:#Pipeline_cap_1_red
+areas:0,2
+:on_blue:cap#Pipeline_cap_1_blue
+areas:0,2
+:on_red_cap:#Pipeline_cap_2_red
+areas:0,3
+:on_blue_cap:#Pipeline_cap_2_blue
+areas:0,3
+:on_red_cap:#Pipeline_cap_3_red
+areas:0
+:on_blue_cap:#Pipeline_cap_3_blue
+areas:0

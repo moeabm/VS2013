@@ -1,0 +1,513 @@
+0.76
+====
+convar rcbot_sv_cheats_warning: If disabled, bots will try to spawn even if sv_cheats is 1 - use only with admin cvar plugin
+convar rcbot_enable_wpt_sounds: Enable/disable sound effects when editing waypoints
+changed weapon structure slightly to accommodate projectile speed
+altered gravity aiming for projectiles (use convar rcbot_projtweak to tweak)
+HPB_Bot2o.dll can be used if rcbot2 folder is not in the users home folder
+fixed waypoint path display bug
+sprint changes
+added waypoint editing sounds
+added autowaypointing from RCBOT1 with extras
+fixed bug #10 mistake with passed arguments in r285 @ sourceforge bugs
+updated default hook offsets
+
+0.75
+====
+installer: changed installation messages / added correct terms
+launcher: fixed exception at start up
+dod:s  added breakable waypoint for DOD:S (a rocket or grenade is required to break a wall nearby)
+dod:s  breakable waypoint can be team only
+dod:s  removed health/ammo waypoint types for DOD:S
+dod:s  changes to reloading in dod:s to prevent bots clicking their gun too often
+all:   fixed some waypoint menu glitches
+all:   changed some captions on waypoint menu
+all:   added some pathwaypoint commands into waypoint menu
+tf2:   fixed medics not healing
+tf2:   medics follow their healing player better
+tf2:   sentry guns have an even higher priority to become enemies
+tf2:   hwguys don't waste time revving their minigun if on fire or ubered
+tf2:   engineer crash fix
+tf2:   choice of defend waypoint changed in pl maps
+
+0.74
+====
+
+installer/launcher : fixed issues with dods install and launcher writing wrong values
+dod:s	 : fixes bots not seeing properly through windows
+dod:s    : fix bots not proning on sniper spots (again!)
+dod:s    : bots don't run away from smoke grenades
+dod:s    : bots aim for the head if visible (more deadly)
+dod:s	 : fixed crash with bots capturing
+tf2		 : fixed bots wrongly defending or attaking points when switching teams after round reset
+tf2		 : spy detection changes, bots shouldn't be able to redetect the same spy if it has changed disguise and gone out of sight
+tf2		 : spy detection improvement: bots seeing teammates shooting spies will shoot them too
+tf2		 : spy detection improvement: spies who are cloaked and on fire can be seen
+tf2		 : bots detect a spy if they are cloaked, on fire and no spies on team
+tf2		 : fixed on fire detection (medics heal at a higher priority)
+tf2		 : bots shout spy if they see an undisguised enemy spy
+tf2		 : bots remember spies that killed them
+tf2		 : changes to enemy following
+tf2		 : simple spy checking - bots melee the air, pyros fire flamethrower
+tf2      : update bot shooting fov
+tf2		 : bots don't listen to cloaked spies
+tf2		 : fixed sniper bug with snipers running on the spot
+tf2		 : changes to spy detection and engi building
+tf2      : fixed engis not placing moved objects (esp. dispensers)
+tf2		 : scouts jump around sometimes from waypoint to waypoint
+tf2		 : extra spy checking, bots might melee friendlies searching for spies
+tf2		 : bots try to go back to their last seen medic for health (it may also be a spy)
+tf2		 : ammo/health pickup changes, bots should change task if they suddenly picked up health or ammo
+tf2		 : possible crash fix for demoman
+tf2		 : engineer bots place a sentry when they hear 'put sentry here' voice command while moving a sentry
+tf2		 : bots check for spies again if they hear a 'spy' voice command
+tf2		 : medic crash bug fixed
+tf2		 : fixed blue team bots now don't defend the point on attack and defend maps
+tf2		 : engineer bots place moved object better if being attacked
+tf2		 : bots see teleporters quicker so they use them more often
+tf2		 : scouts automatically double jump off new waypoint type "fall" to save fall damage
+tf2		 : fixed gameevent debug crashing
+tf2		 : changes to sniping/when area changes bots change position
+tf2		 : changes to engineer building to increase build success
+tf2		 : bots should be able to seee sentries better from below
+tf2		 : engineer bots should think about moving their objects after a point is captured
+tf2		 : bot belief updated properly for sentry guns
+tf2		 : bots choose more dangerous places to defend over the safest
+tf2		 : fixed snipers not moving when sniper waypoint changes area and when they run out of ammo
+all mods : new sophisticated waypoint menu
+all mods : default waypoint drawtype is now 3
+all mods : waypoint visibility percentage shown
+all mods : new waypoint type "fall" (fall damage)
+all mods : fixed crash in debug hud with looktask string error
+all mods : fixed bad memory allocation errors
+all mods : reliability fix for cfindpath task
+all mods : more debug hud info
+all mods : debug crash fixes
+all mods : changes for linux
+all mods : fixed bug when bots wouldn't change weapon when they were out of ammo
+all mods : aiming system changes, better aiming, especially for stationary targets
+all mods : bots turn quicker on ladders to improve climbing success
+all mods : fixed bots looking at waypoints wrong
+all mods : improved ladder climbing (make sure waypoint YAW is facing the ladder)
+all mods : bot debug hud more information
+
+
+0.72
+====
+all mods: please move rcbot2 folder to users home folder i.e. /users/<name> or ~/
+all mods: Vfilesystem update 
+all mods: rcbot2 sv_tag 
+all mods: rcbot_ffa cvar , if 1 bots shoot each other disregarding teamplay
+all mods: fixed bug with bots jumping etc at the wrong position
+all mods: new debugging command 'rcbot debug hud' if 1, shows your debug bot info on screen
+tf2 : fixed engineer facing the correct way when building
+tf2 : fixed crash bug with engineer 
+hl2dm: bots use ammo crates if they need ammo 
+hl2dm: bots using buttons for lifts in hl2dm (need lift waypoints) 
+hl2dm: bots dont shoot explosive oildrum breakables 
+hl2dm: bots shoot breakables in the way
+hl2dm: bots go to snipe points if they have crossbow
+dod:s : bots prone when sniping on prone waypoints
+dod:s : added prone waypoint
+dod:s : machine gun changes -- bots shouldn't shoot from afar without deploying
+
+0.71
+
+General
+-------
+all: using optimized sin/cos
+all: fixed random crash to do with weapons (all mods)
+all: fixed, all mods: weapon updating
+all: fixed bug - bots not listening to other players (improves combat)
+all: fixed 'you do not have access to command' after map change (all mods)
+all: fixed divide by zero error
+all: fixed waypoint radiuses not being updated when bots touched waypoints
+all: changed bot touch waypoint behaviour
+
+waypointing: automatically add crouch waypoint if player is holding crouch button
+waypointing: added waypoint add <type> <area> e.g. rcbot waypoint add sniper 3 (adds sniper waypoint at area 3)
+waypointing: added pathwaypoint removefromto <id> <id> , and pathwaypoint createfromto <id> <id> commands
+waypointing: smaller crouch waypoints
+
+TF2
+----
+tf2: spies attack enemies on the point when disguised
+tf2: spy detection changes (if enemy is disguised as team spy and decloaks they don't detect the spy as long as everything else checks out)
+tf2: spies uncloaking when capturing point / spies defending point by attacking any enemy on point within a distance (cvar)
+
+DOD:S
+-------
+dods: extra waypoints for stock maps thanks to genmac (alencore)
+dods: bot's step back from bombs before they explode better
+dods: fixed a class bug where bots just stood still and did nothing
+dods: added command rcbot_nocapturing for custom maps/modes
+dods: bots can plant bombs that block paths (new waypoint 'bombtoopen')
+dods: bot choose to plant bombs in less dangerous capture points
+dods: defending/sniping - bots will crouch at crouch waypoints
+dods: improved flag/bomb detection/fixed number of capture points bots thought were available
+dods: bots support flag and bomb capture points on the same map
+dods: support for shooting breakable objects (new commands rcbot_shoot_breakable_dist, rcbot_shoot_breakables)
+dods: fixed bots interrupting other bots defusing or planting
+
+
+0.7
+
+General
+---------
+- fixed waypoint visibility table saving & loading
+- bot belief (danger) changes
+- learned bot belief is saved across maps
+- opens later waypoint now works
+- bug with finding enemies fixed
+- getprop system updated
+- CPU optimizations (requires increasing vis revs - see individual bot profiles)
+- a nested move+look priority system
+- general optimizations
+- rewritten getprop code
+
+DOD:S
+-----
+- support for DOD:S
+- support for capture flag maps / bomb maps
+- comes with dod_anzio, dod_colmar, dod_avalanche and dod_jagd waypoints
+- requires qaypoints for other maps to work for them
+- bots support attacking and defending
+- sniping
+- machine gunning
+- radio commands
+- automatic class changing
+- 'smart' capturing decisions
+- grenade throwing 
+- understand smoke grenades
+- bots can go prone
+- bots run for cover when reloading and when they see a grenade
+- bots can climb up and down ladders if waypointed properly
+
+I just need to add bomb map support and fix a few things and it should be ready
+
+HL2DM
+-----
+
+- normal weapon switching depending on ammo/distance
+- bots picking up objects with grav gun and shooting enemies
+- ladder climbing
+- sprinting
+- bots jumping over obstacles
+- bots using chargers (armor/health)
+
+TF2
+---
+- hooks player move function so all the pyro/gravity/rocket jump/double jump/hw guy bugs are fixed
+- doesn't crash when tf bot is added
+- engineers move their buildings
+- sniper bug fixed when they look into the sky before sniping
+- waypoints for some event maps and others (thanks community) 
+- many medic improvements
+- bots fight halloween bosses (added cvar rcbot_bossattackfactor)
+- bots shout 'activate uber' when being healed and can be ubered if they want to be ubered
+- spies choose diguise classes better
+- engineers place dispensers more reliably
+- spies cloaking/decloaking better when they see an enemy 
+- bots push on overtime and when nearby players say 'go go go' or 'move up'
+- spy cloaking changes
+- heavy minigun rev up changes
+- bots only shoot when nearly looking at enemy (added cvar rcbot_enemyshootfov)
+- bots dont listen to medics using medi guns or engineers using wrench
+- fixed bots aim jitter in tf2
+- engineer on blue team (attack map) bug fixed when wanting to place teleports
+- bots no longer pick up health if they are being healed by a medic
+
+0.65
+update: waypoints for some event maps and others (thanks community) 
+change: medic improvements
+added: bots fight halloween bosses (added cvar rcbot_bossattackfactor)
+added: bots shout 'activate uber' when being healed and can be ubered if they want to be ubered
+change: spies choose diguise classes better
+change: engineers place dispensers more reliably
+change: general optimizations
+change: rewritten getprop code
+change: spies cloaking/decloaking better when they see an enemy 
+change: a nested move+look priority system
+change: bots push on overtime and when nearby players say 'go go go' or 'move up'
+change: spy changes
+change: bots only shoot when nearly looking at enemy (added cvar rcbot_enemyshootfov)
+change: bots dont listen to medics using medi guns or engineers using wrench
+fix: bots aim jitter in tf2
+fix: engineer on blue team (attack map) bug fixed when wanting to place teleports
+fix: bots no longer pick up health if they are being healed
+
+0.63
+- fix for TF2 update
+- implemented lift waypoint (bots dont think theyre stuck on them)
+- interface changes so RCBot2 may be more compatible with other non supported mods for testing
+
+0.62
+- fix for TF2 update
+
+0.61
+- added support for simple Special Delivery mode
+- added waypoints for sd_doomsday (Edited from Fillmore's)
+- added waypoint type 'flagonly' (only bots with the flag can go this way)
+  + useful for special delivery type maps
+- added waypoint type 'noflag' (if bots have a flag it will be dropped here)
+  + useful to stop bots taking shortcuts that might go through a respawn area
+
+0.6 private Beta
+- spies only remove disguise on the flag point
+- engineers stop trying to upgrade buildings when they are out of metal
+- flag carriers don't melee
+- spies only voluntarily lose their disguise at the flag point if it isn't carried by a team member
+- more chance of medic ubering
+- more chance of bots facing their last enemy when looking for them
+- engineers crouch when building for the first time to upgrade the building
+- bots follow flag carriers always
+- spy bots attack engineers if their buildings are sapped
+- bots detect spies on contact (if they get stuck and see them)
+- bots go back to defend the push cart if it is being pushed
+- fixed engineers not looking at their sentries while looking after them
+- fixed bots not going to cart sometimes
+- fixed bot teleporter issue
+- fixed rcbot control command crash
+- avoid code improved
+- added rcbot_avoid_radius / rcbot_avoid_strength commands
+- bots say 'thanks' if you upgrade their bulidings
+- new bot utility system, max/min utilities can be changed by an external CSV (excel compatible) file
+- i.e. flexible bot behaviour that the user can control for certain types of maps (e.g. attack defend)
+this will give the engineer bots (for example) hints on what to build first in an attack map as opposed to a defend map
+and scouts whether to go for the flag/cart or just plain roam around
+this will be added by included two CSV files (attack/normal - i.e. defend) that can be edited in excel, or notepad, or any other csv editor
+- attack_util.csv in config folder
+- normal_util.csv in config folder
+- higher priority for bots to shoot enemies attacking the point
+- source change: easier for bots to say and hear all voice commands
+
+0.58
+- TF2: bots already capturing the point don't return to defend points if they're being captured
+- Orange Box: compatible with orange box HL2DM and other orange box mods
+	- returned bot spawn system back to normal for mods other than TF2
+
+0.57
+- hwguys rev mini gun at dangerous locations
+- spies no longer trie to shoot sentries/instead focus on sapping/attacking the engi
+- added: rcbot_rocket_pred <value> command , a multiplier for 
+         adding prediction to soldier rockets/demoman grenades. default: 0.45
+- fixed: spies try not to uncloak when enemy is facing them
+- bots use dispensers more
+- bots change classes automatically (use rcbot_change_classes 1 command)
+- bots no longer cry SPY when a player is disguised as their enemy team
+- new waitopen waypoint type for arena/koth maps where waypoints can only be used once the point is open
+  must use :arena_point_time:<seconds> in script
+- updated waypoints for koth_nucleus , koth_viaduct, cp_steel and more
+- + various spy tweaks
+- fixed: a loop in medic behaviour
+- changed: weapon selection method in TF2
+- waypoint belief change / route waypoints chosen based on bot's belief
+- waypoint belief change / waypoints bots took change belief when they get killed
+- add: new ":attack_defend_map:1" in bot map script to let bots know reds are defending on this map
+- spies sap teleporters
+
+0.56
+- engineers favour building sentries up to level 2 before 
+  building a teleporter exit (attacking engineers don't worry)
+- bots detect uncloaking spies
+- spies use sappers
+- snipers fixed
+- spies backstabbing improved
+- engineers remove sappers from sentries & dispensers
+- default rcbot_anglespeed value reduced to 8
+- spy notice time reduced significantly
+- spies plan to backstab from afar
+- fixed memory leak
+- medics try to heal more often
+- demomen place & detonate stickies
+- new command "rcbot waypoint show <wpt id>" (shows a line to a waypoint ID)
+- fixed cp_steel and pl_goldrush waypoints
+- new config.ini for setting up bot cvars
+- fixed defending payload bomb in cart maps
+
+0.546 beta!
+- fixed bug with pathfinding
+
+0.545 beta!
+- fixed with latest Tf2 update
+- engi's build teleporters again
+- bots use teleporters again
+- improved engineer building detection
+
+0.54 beta
+- works with latest TF2 updates
+- engineers don't listen to things when building
+- improved path finding algorithm speed
+
+0.53 BETA
+- added: allowed bots to take different routes (needs updated waypoints with "route waypoints")
+   (Works with supplied cp_dustbowl waypoints)
+   ONLY WORKS ON CTF/CP maps with UPDATED WAYPOINTS
+- fixed: spies remove disguise when trying to capture point
+- added: arena_point_time:<time> in script for arena maps
+- added: route waypoints (givetype route), make these the same area as 
+         attacking position (0 if ctf map) and give team type if appropriate
+- fixed: bots roaming instead of defending issue
+- fixed: reduced engineer wrenching distance
+- changed: increased spy attack distance with knife (still to improve)
+- changed: reduced soldiers need to use shotgun a little
+- added: bots return to cap point or flag if intel/cap point is being taken
+- allowed additions of editing up to four waypoint types at once
+- rcbot waypoint add <type 1> <type 2> <type 3> <type 4>
+- rcbot waypoint givetype <type 1> <type 2> <type 3> <type 4>
+
+to fix... Snipers still face wrong way...
+
+0.52
+- sniper changes (they shoot more with sniper rifle) -- bug still exists where they face the wrong direction sometimes
+- snipers no longer look around to listen to sounds when sniping
+- fixed possible engineer crashes
+- fixed possible medic crash
+- fixed possible divide by zero crash
+- added support for defend waypoints on PL/PLR map scripts
+- rcbot waypoint load <mapname> command, (use "rcbot waypoint save" after loading)
+- added 'class' in bot profiles
+- medics keep healing if looking away from healing player
+
+ issues/todo:
+  [] spies still cannot sap (*engine issue?)
+  [] demo's cannot set pipe traps (yet)  
+  [] bots don't always use teleports (some situations only)
+
+ KNOWN limitations:
+  All of these limitations are effects of the Orange Box SDK lack 
+  of 3rd party bot support, which are caused by the double speed/double 
+  timing issue:
+ 
+    [] bots still cannot crouch 
+    [] pyro's flame still does not show
+    [] sometimes engineers can't select wrench
+     [] other bots sometimes can't select the weapon they want
+      [] sometimes bots use melee weapon from long range
+    [] soldier rocket jumps are not perfect
+    [] scout double jumps are not perfect
+    [] bots can still move when bonked
+
+0.51
+- supports latest classless update
+- supports capturing on KOTH maps
+- supports capturing on ARENA maps
+
+0.5
+- readded an 'altered' bot belief waypoint system
+- fixed a general crash
+- fixed an engineer building crash
+- rcbot waypoint cut
+- rcbot waypoint copy
+- rcbot waypoint paste
+- performance command rcbot_visrevs (default 8, 8 maybe good enough) *REDUCED VALUE*
+- performance command rcbot_pathrevs (default 40, 20 maybe good enough) *REDUCED VALUE*
+- new "areaonly" waypoint type
+- new rcbot waypoint drawtype 2
+- added scripting for CP/PL maps (currently supported: cp_dustbowl/granary/badlands)
+- PLR support
+- added profiling for developers (rcbot debug profile)
+- Reduced Bot FOV to more realistic value
+- changed attacking code. attack code is now non-task based and runs simultaneously with bot tasks
+- changed spy attack code
+- added better bot choice of enemy, e.g. flag carriers have higher priority/ and spies/medics
+
+issues:
+engineers can't select wrench sometimes
+spy attack still not perfect
+
+0.46
+- provisional Support PLR maps
+- Support for CP_Badlands, CP_well
+- provisional Support for PL maps - thx The_Shadow
+- Bots listen to players attacking
+- reduced bot waiting time on health to 5 sec minimum
+- Added bots belief which will let them take different paths
+- command : rcbot_beliefmulti, increase it to be more effective.
+- Added rcbot waypoint menu, to add waypoint types (incomplete) need to press ESC to use.
+
+0.43
+- Provisional Support for CP Granary
+- Fixed crash bug
+- Engineers upgrade team mates dispensers and sentries
+
+0.42
+- Fixed working with scout update
+- Fixed bots not using teleporters
+
+0.4
+
+TF2 updates
+
+- fixed bots not looking at enemies shooting them from behind
+- fixed heavys from jumping whilst shooting
+- fixed taunting bots from moving and shooting 
+- helped bots not shooting correctly & not seeing enemies on ledges above them
+- medics healing
+- medics ubercharging (only when healing player is low on health or medic is low on health at the moment)
+- new waypoint version (For use with CP/PL maps / not supported yet)
+	- added waypoint radius' (use 'rcbot waypoint drawtype 1')
+	- added waypoint areas (for different map types soon)
+- possible crash bug fixes
+- improved snipers
+- bots now look ahead of where they want to go (gives some more realism)
+- stopped bots from using rocketjump/double jump waypoints if they cant use it
+- added 'defend' waypoint type
+- added 'rcbot_defrate' rate at which defensive bot classes defend at (default 0.35)
+- changed rocket jump code again!
+- reduce bot speeds again!
+- improved engineer building
+- added teleporter entrance / teleporter exit waypoints
+- engineers build teleporters
+- engineers upgrade teleporters and dispensers
+- engineers stay by sentry and hit it with wrench occasionally if nothing else to do
+- added 'rcbot_wpt_pathdist' command, use to reduce/increase distance for automatic waypoint paths to be made at
+
+0.3 
+TF2 updates
+
+- Bots use waypoints for sniper/sentry facing positions
+- bug fixes with enemy conditions
+- bug fixes with moving to a waypoint
+- rocket jump improvements
+- bot task improvements
+- sniper improvements
+- engineer building improvements
+- melee weapon fixes
+- scouts and bots with flag don't follow enemies
+- fixed custom MOD directories for ini file
+- using mersenne twiser randomiser / seeds when loaded
+- fixes only soldiers joining tf2 bug
+- engineers build up to level 3 sentry and also level 1 dispenser near sentry
+- bots use teleporters
+
+3.
+
+fixed: crash when players leave server
+
+2.
+
+added: bot profiles (key value pairs) in ini files in rcbot2/profiles folder
+
+added: force bots to select a specific weapon/team/model/name in bot profiles
+
+fixed: waypoint types message
+
+fixed: min_bots cannot be equal to or more than max_bots
+
+fixed: bad copy & paste job causing bots mod not to be picked up therefore bots stand still and do nothing on client listen server
+
+added: support for HL2DM Teamplay
+
+1.
+
+added: new command 'config max_bots' and 'config min_bots'
+
+added: new command 'users show'
+
+added: new command 'kickbot'
+
+added: new command 'rcbotd' for dedicated servers
+
+fixed: GPL license display messages
+

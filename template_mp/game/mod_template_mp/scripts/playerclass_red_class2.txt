@@ -1,3 +1,4 @@
+//Molly
 PlayerClassDatafile
 {
 	// FilePLayerClassInfo_t members
@@ -11,8 +12,8 @@ PlayerClassDatafile
 	"team"				"RED"
 
 	// Weapon Info
-	"primaryweapon"		"shotgun"
-	"secondaryweapon"	"pistol"
+	"primaryweapon"		"mp5"
+	"secondaryweapon"	"crossbow"
 	"meleeweapon"		"crowbar"
 
 

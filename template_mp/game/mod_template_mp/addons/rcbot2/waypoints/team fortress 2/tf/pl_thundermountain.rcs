@@ -1,0 +1,77 @@
+#
+# Thunder Mountain PL
+#
+# Map Start
+# CheckPoint A
+#
+:attack_defend_map:1
+:setup_time:85
+:on_reset:
+red_attack:0
+blue_attack:1
+red_defend:1
+blue_defend:0
+areas:1
+#
+# STAGE 1
+#
+:on_blue_cap:#Thunderm_cap_1_A
+red_attack:0
+blue_attack:2
+red_defend:2
+blue_defend:0
+areas:2
+#
+#
+#
+:on_blue_cap:#Thunderm_cap_1_B
+red_attack:0
+blue_attack:3
+red_defend:3
+blue_defend:0
+areas:3
+#
+# STAGE 2
+#
+:on_blue_cap:#Thunderm_cap_2_A
+red_attack:0
+blue_attack:4
+red_defend:4
+blue_defend:0
+areas:4
+#
+#
+#
+:on_blue_cap:#Thunderm_cap_2_B
+red_attack:0
+blue_attack:5
+red_defend:5
+blue_defend:0
+areas:5
+#
+#  STAGE 3
+#
+:on_blue_cap:#Thunderm_cap_3_A
+red_attack:0
+blue_attack:6
+red_defend:6
+blue_defend:0
+areas:6
+#
+#
+#
+:on_blue_cap:#Thunderm_cap_3_B
+red_attack:0
+blue_attack:7
+red_defend:7
+blue_defend:0
+areas:7
+#
+#
+#
+:on_blue_cap:#Thunderm_cap_3_C
+red_attack:0
+blue_attack:1
+red_defend:1
+blue_defend:0
+areas:1

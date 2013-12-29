@@ -1,0 +1,55 @@
+#
+# RCBot2 Script for cp_yukon_final
+#
+#
+:on_reset:
+blue_attack:3
+blue_defend:0
+red_attack:3
+red_defend:0
+areas:3
+#
+# 
+# 
+:on_blue_cap:Center Control Point
+blue_attack:4
+blue_defend:3
+red_attack:3
+red_defend:4
+areas:3
+:on_red_cap:Center Control Point
+red_attack:2
+red_defend:3
+blue_attack:3
+blue_defend:2
+areas:3
+#
+# 
+# 
+:on_blue_cap:Red Bridge
+red_attack:4
+red_defend:5
+blue_attack:5
+blue_defend:4
+areas:4
+:on_red_cap:Red Bridge
+red_attack:3
+red_defend:4
+blue_attack:4
+blue_defend:3
+areas:4
+#
+# 
+# 
+:on_blue_cap:Blue Bridge
+red_attack:2
+red_defend:3
+blue_attack:3
+blue_defend:2
+areas:2
+:on_red_cap:Blue Bridge
+red_attack:1
+red_defend:2
+blue_attack:2
+blue_defend:1
+areas:2

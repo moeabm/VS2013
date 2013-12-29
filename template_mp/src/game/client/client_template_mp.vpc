@@ -146,6 +146,10 @@ $Project "Client (SDK)"
 				$File	"$SRCDIR\game\shared\sdk\weapon_crucifix.cpp"
 				$File	"$SRCDIR\game\shared\sdk\weapon_shotgun_fd1.cpp"
 				$File	"$SRCDIR\game\shared\sdk\weapon_shotgun_fd2.cpp"
+				//8 Ball
+				$File	"$SRCDIR\game\shared\sdk\weapon_poolcue.cpp"
+				$File	"$SRCDIR\game\shared\sdk\weapon_thunder5.cpp"
+				$File	"$SRCDIR\game\shared\sdk\weapon_winchester.cpp"
 			}
 			
 			$Folder	"Multiplayer"
