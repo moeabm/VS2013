@@ -131,7 +131,7 @@ void CWeaponShotgunFD1::SecondaryAttack()
 		return;
 	}
 		// If my clip is empty (and I use clips) start reload
-	if ( UsesClipsForAmmo1() && m_iClip1 < 1 ) 
+	if ( m_iClip1 < 2 ) 
 	{
 		PrimaryAttack();
 		return;

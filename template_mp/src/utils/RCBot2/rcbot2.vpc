@@ -33,14 +33,21 @@ $Configuration	"Release"
 		$OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
 		$IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
 	}
+	
 }
 
 $Configuration
 {
+	$PreBuildEvent
+	{
+	// This is a terrible hack! but it gets the bots away from rcbot2 user dependency
+		$CommandLine		"setx RCBOTDIR $(ProjectDir)..\..\..\game\$GAMENAME\addons\" "\n" [$WIN32]
+	}
+
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	"..\..\public\mathlib;..\..\public;..\..\public\engine;..\..\public\tier0;..\..\public\tier1;..\..\dlls;..\..\game_shared;..\..\game\shared;..\..\game\server;..\..\public\game\server;"
-		$PreprocessorDefinitions		"$BASE;HOMEFOLDER;"
+		$PreprocessorDefinitions		"$BASE;" //HOMEFOLDER;
 		$PrecompiledHeaderFile			"$(IntDir)/HPB_bot2.pch"
 		$EnableC++Exceptions			"Yes (/EHsc)"
 	}

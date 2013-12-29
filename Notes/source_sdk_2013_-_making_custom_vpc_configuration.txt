@@ -1,0 +1,78 @@
+making a multiplayer, or single player mod; making your own custom projects without interfering with the sdk stuff.
+----------
+from this point forward we'll use "mymod" as the name, and this will be based on the github/sourcesdk-2013/mp tree
+
+duplicate
+src/game/server/server_hlmp.vpc -> server_mymod.vpc
+src/game/client/client_hlmp.vpc -> client_mymod.vpc
+
+open them both up in your text editor of choice, and change the line:
+$Macro GAMENAME 	"mod_hl2mp" [$SOURCESDK]
+to
+$Macro GAMENAME 	"mymod" [$SOURCESDK]
+
+then you can also modify the $Folder lines that have (HLMP) to say $Folder whatever (MYMOD)
+
+if you want to make a custom pre-processor definition so you can contain your changes in base code then modify:
+		$PreprocessorDefinitions		"$BASE;HL2MP;HL2_DLL"
+to
+		$PreprocessorDefinitions		"$BASE;HL2MP;HL2_DLL;MYMOD_DLL"
+		
+in both server_mymod.vpc / client_mymod.vpc
+
+next:
+
+modify
+mp/src/vpc_scripts/projects.vgc
+
+and make the following changes:
+$Project "client"
+{
+	"game\client\client_hl2mp.vpc"		[($WIN32||$POSIX) && $HL2MP]
+	"game\client\client_mymod.vpc"		[($WIN32||$POSIX) && $MYMOD]
+}
+
+$Project "server"
+{
+	"game\server\server_hl2mp.vpc"		[($WIN32||$POSIX) && $HL2MP]
+	"game\server\server_mymod.vpc"		[($WIN32||$POSIX) && $MYMOD]
+}
+
+then modify the bat files (and the osx/linux shell scripts) in the roots
+and simply change the /hl2mp to /mymod
+
+if you want to make another bat/shell script to only update, without regerating the solution;
+just duplicate them, call them updateprojects, and take off the /mksln part.
+
+next, duplicate:
+
+git/sourcesdk-2013/mp/game/mod_hl2mp to -> git/sourcesdk-2013/mp/game/mymod
+
+If you're in windows, I recommend using Link Shell Extension ( http://schinagl.priv.at/nt/hardlinkshellext/hardlinkshellext.html ) to allow you to symlink the folder into steamaps/sourcemods
+
+then you can just restart steam, and your mod will be there, without you having to ever copy anything again, and you can continue working out of the mp/game/mymod folder directly.
+binaries will output there automatically.
+
+MORE FROM TONYS: something i should have mentioned
+[4:58:35 PM] tonys: the keyword of "mymod"
+[4:58:41 PM] tonys: ie: for me it's "valkyrie"
+[4:58:56 PM] tonys: this is referenced in the vpc scripts
+[4:59:03 PM] tonys: as $VALKYRIE or $MYMOD
+[4:59:08 PM] tonys: etc
+[4:59:13 PM] tonys: and this is set when vpc runs
+[4:59:41 PM] tonys: e.g: devtools\bin\vpc.exe /hl2mp +game
+devtools\bin\vpc.exe /valkyrie +game
+devtools\bin\vpc.exe /mymod +game
+[5:00:02 PM] tonys: so the part in that pastebin, where i say to modify projects.vgc
+[5:00:22 PM | Edited 5:00:26 PM] tonys: means you can switch between the games (or build both with /allgames)
+[5:00:34 PM] tonys: which is a special vpc tag
+[5:00:50 PM] tonys: i think it's /allgames i forget atm
+[5:01:00 PM] tonys: and the +game
+[5:01:03 PM | Edited 5:01:04 PM] tonys: is the 'group'
+[5:01:07 PM] tonys: in groups.vgc
+[5:01:48 PM] tonys: so for example if you only wanted to auto-gen a solution that only builds server and client dlls, but doesn't do tier1, mathlib, etc
+[5:02:04 PM] tonys: oh there already is one.
+[5:02:06 PM] tonys: so you can just do
+[5:02:15 PM] tonys: vpc /mymod +gamedlls /mksln gameonly
+[5:02:33 PM] tonys: and it will spit out a gameonly.sln with just client.dll and server.dll
+[5:02:42 PM] tonys: (or makefile if you're in osx/linux)

@@ -804,7 +804,9 @@ void CBotGlobals :: buildFileName ( char *szOutput, const char *szFile, const ch
 #endif
 
 #ifndef HOMEFOLDER
-	strcat(szOutput,"..");
+	char dir[512];
+	ExpandEnvironmentStringsA("%RCBOTDIR%",dir, 511);
+	strcat(szOutput,dir);
 #endif HOMEFOLDER
 
 	addDirectoryDelimiter(szOutput);
