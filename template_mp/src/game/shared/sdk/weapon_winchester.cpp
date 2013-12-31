@@ -37,6 +37,7 @@ public:
 	virtual bool Reload();
 	virtual void WeaponIdle();
 	virtual bool ReloadOrSwitchWeapons();
+	virtual bool Holster(CBaseCombatWeapon *switchingto);
 
 	virtual SDKWeaponID GetWeaponID( void ) const		{ return SDK_WEAPON_WINCHESTER; }
 	virtual float GetWeaponSpread() { return 0.005f; } // AM; this weapon is VERY accurate
@@ -97,63 +98,7 @@ void CWeaponWinchester::PrimaryAttack()
 	if ( m_iClip1 <= 0 )
 		doPunch = false;
 
-		// If my clip is empty (and I use clips) start reload
-	if ( UsesClipsForAmmo1() && !m_iClip1 ) 
-	{
-		//Reload();
-		return;
-	}
- 
-	//Tony; check firemodes -- 
-	switch(GetFireMode())
-	{
-	case FM_SEMIAUTOMATIC:
-		if (pPlayer->GetShotsFired() > 0)
-			return;
-		break;
-		//Tony; added an accessor to determine the max burst on a per-weapon basis.
-	case FM_BURST:
-		if (pPlayer->GetShotsFired() > MaxBurstShots())
-			return;
-		break;
-	}
-#ifdef GAME_DLL
-	pPlayer->NoteWeaponFired();
-#endif
- 
-	pPlayer->DoMuzzleFlash();
- 
-	SendWeaponAnim( GetPrimaryAttackActivity() );
- 
-	// Make sure we don't fire more than the amount in the clip
-	if ( UsesClipsForAmmo1() )
-		m_iClip1 --;
-	else
-		pPlayer->RemoveAmmo(1, m_iPrimaryAmmoType );
- 
-	pPlayer->IncreaseShotsFired();
- 
-	float flSpread = GetWeaponSpread();
- 
-	FX_FireBullets(
-		pPlayer->entindex(),
-		pPlayer->Weapon_ShootPosition(),
-		pPlayer->EyeAngles() + pPlayer->GetPunchAngle(),
-		GetWeaponID(),
-		0, //Tony; fire mode - this is unused at the moment, left over from CSS when SDK* was created in the first place.
-		CBaseEntity::GetPredictionRandomSeed() & 255,
-		flSpread
-		);
- 
- 
-	//Add our view kick in
-	AddViewKick();
- 
-	//Tony; update our weapon idle time
-	SetWeaponIdleTime( gpGlobals->curtime + SequenceDuration() );
- 
-	m_flNextPrimaryAttack = gpGlobals->curtime + GetFireRate();
-	//m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
+	BaseClass::PrimaryAttack();
 
 	if ( doPunch )
 	{
@@ -188,46 +133,12 @@ void CWeaponWinchester::SecondaryAttack()
 		m_flNextPrimaryAttack = gpGlobals->curtime + 0.15;
 		return;
 	}
-		// If my clip is empty, return;
-	if ( m_iClip2 < 1) 
-	{
-		m_iClip2 *= 0;
-		return;
-	}
-	
-#ifdef GAME_DLL
-	pPlayer->NoteWeaponFired();
-#endif
-	
-	pPlayer->DoMuzzleFlash();
-	SendWeaponAnim( GetSecondaryAttackActivity() );
-	if ( UsesClipsForAmmo1() )
-		m_iClip2 --;
-	else
-		pPlayer->RemoveAmmo(1, m_iPrimaryAmmoType );
-	
-	pPlayer->IncreaseShotsFired();
-	
-	float flSpread = GetWeaponSpread(); // spead a little bit more than primary
-	
-	FX_FireBullets(
-		pPlayer->entindex(),
-		pPlayer->Weapon_ShootPosition(),
-		pPlayer->EyeAngles() + pPlayer->GetPunchAngle(),
-		GetWeaponID(),
-		0, //fire mode 1 is a double shot
-		CBaseEntity::GetPredictionRandomSeed() & 255,
-		flSpread
-		);
-		
- 
- 
-	//Add our view kick in
-	AddViewKick();
- 
-	//Tony; update our weapon idle time
-	//TODO: make model for this weapon.
 
+	//Zoom FOV 
+	if(pPlayer->GetFOV() < 90) pPlayer->SetFOV(pPlayer,90, 0.5f);
+	else pPlayer->SetFOV(pPlayer,40, 0.5f);
+
+	
 	SetWeaponIdleTime( gpGlobals->curtime + SequenceDuration() );
  
 	//m_flNextPrimaryAttack = gpGlobals->curtime + GetFireRate();
@@ -378,6 +289,11 @@ bool CWeaponWinchester::ReloadOrSwitchWeapons( void )
 	return false;
 }
 
+bool CWeaponWinchester::Holster( CBaseCombatWeapon *pSwitchingTo )
+{ 
+	GetPlayerOwner()->SetFOV(GetPlayerOwner(),90, 0.1f);
+	return BaseClass::Holster(pSwitchingTo);
+}
 
 //Tony; todo; add ACT_MP_PRONE* activities, so we have them.
 acttable_t CWeaponWinchester::m_acttable[] = 

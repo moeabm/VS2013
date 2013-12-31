@@ -38,7 +38,7 @@ public:
 	virtual void WeaponIdle();
 
 	virtual SDKWeaponID GetWeaponID( void ) const		{ return SDK_WEAPON_THUNDER5; }
-	virtual float GetWeaponSpread() { return 0.05362f; }
+	virtual float GetWeaponSpread() { return 0.06362f; }
 
 
 private:
@@ -123,61 +123,6 @@ void CWeaponThunder5::SecondaryAttack()
 	if ( !pPlayer )
 		return;
 
-	// don't fire underwater
-	if (pPlayer->GetWaterLevel() == 3)
-	{
-		PlayEmptySound( );
-		m_flNextPrimaryAttack = gpGlobals->curtime + 0.15;
-		return;
-	}
-		// If my clip is empty (and I use clips) start reload
-	if ( m_iClip1 < 2 ) 
-	{
-		PrimaryAttack();
-		return;
-	}
-	
-#ifdef GAME_DLL
-	pPlayer->NoteWeaponFired();
-#endif
-	
-	pPlayer->DoMuzzleFlash();
-	SendWeaponAnim( GetSecondaryAttackActivity() );
-	if ( UsesClipsForAmmo1() )
-		m_iClip1 -= 2;
-	else
-		pPlayer->RemoveAmmo(2, m_iPrimaryAmmoType );
-	
-	pPlayer->IncreaseShotsFired();
-	
-	float flSpread = GetWeaponSpread() * 1.4; // spead a little bit more than primary
-	
-	FX_FireBullets(
-		pPlayer->entindex(),
-		pPlayer->Weapon_ShootPosition(),
-		pPlayer->EyeAngles() + pPlayer->GetPunchAngle(),
-		GetWeaponID(),
-		1, //fire mode. do a double shot (double the bullets released)
-		CBaseEntity::GetPredictionRandomSeed() & 255,
-		flSpread
-		);
-		
- 
- 
-	//Add our view kick in
-	AddViewKick();
- 
-	//Tony; update our weapon idle time
-	//AM; Currently Sequence Duration is too short ; hack for now.
-	//TODO: make model for this weapon so this is appropriate CD. 
-
-	//SetWeaponIdleTime( gpGlobals->curtime + SequenceDuration() );
-	SetWeaponIdleTime( gpGlobals->curtime + 1.6f );
- 
-	//m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
-	//m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
-	m_flNextPrimaryAttack = gpGlobals->curtime +  1.6f;
-	m_flNextSecondaryAttack = gpGlobals->curtime +  1.6f;
 }
 
 bool CWeaponThunder5::Reload()
