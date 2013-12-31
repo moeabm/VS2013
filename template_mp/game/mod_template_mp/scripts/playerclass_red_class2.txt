@@ -12,9 +12,9 @@ PlayerClassDatafile
 	"team"				"RED"
 
 	// Weapon Info
-	"primaryweapon"		"mp5"
-	"secondaryweapon"	"crossbow"
-	"meleeweapon"		"crowbar"
+	"primaryweapon"		"crossbow"
+	"secondaryweapon"	"uzi"
+	"meleeweapon"		"colt"
 
 
 	"limitcvar"		"mp_limit_red_class2"

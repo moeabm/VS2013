@@ -211,6 +211,9 @@ typedef enum
 	SDK_WEAPON_THUNDER5,
 	SDK_WEAPON_WINCHESTER,
 	//MOLLY
+	SDK_WEAPON_COLT,
+	SDK_WEAPON_UZI,
+	SDK_WEAPON_CROSSBOW,
 
 	
 	WEAPON_MAX,		// number of weapons weapon index

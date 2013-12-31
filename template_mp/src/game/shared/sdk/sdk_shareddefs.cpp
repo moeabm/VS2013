@@ -93,6 +93,9 @@ static const char * s_WeaponAliasInfo[] =
 	"poolcue",	// SDK_WEAPON_POOLCUE
 	"thunder5",	// SDK_WEAPON_THUNDER5
 	"winchester",	// SDK_WEAPON_WINCHESTER
+	"colt",	// SDK_WEAPON_COLT
+	"uzi",	// SDK_WEAPON_UZI
+	"crossbow",	// SDK_WEAPON_CROSSBOW
 	NULL,		// WEAPON_NONE
 };
 

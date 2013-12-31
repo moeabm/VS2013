@@ -150,6 +150,10 @@ $Project "Client (SDK)"
 				$File	"$SRCDIR\game\shared\sdk\weapon_poolcue.cpp"
 				$File	"$SRCDIR\game\shared\sdk\weapon_thunder5.cpp"
 				$File	"$SRCDIR\game\shared\sdk\weapon_winchester.cpp"
+				//Molly
+				$File	"$SRCDIR\game\shared\sdk\weapon_colt.cpp"
+				$File	"$SRCDIR\game\shared\sdk\weapon_uzi.cpp"
+				$File	"$SRCDIR\game\shared\sdk\weapon_crossbow.cpp"
 			}
 			
 			$Folder	"Multiplayer"
