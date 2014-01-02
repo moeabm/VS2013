@@ -11,7 +11,6 @@
 #include "in_buttons.h"
 
 #ifdef CLIENT_DLL
-	#define CWeaponCrossbow C_WeaponCrossbow
 	#include "c_sdk_player.h"
 	#include "c_te_effect_dispatch.h"
 #else
@@ -37,8 +36,8 @@
 #define BOLT_SKIN_GLOW		1
 
 
-//#ifndef CLIENT_DLL
-#ifdef CLIENT_DLLddd
+#ifndef CLIENT_DLL
+//#ifdef NODEF29032
 
 extern ConVar sk_plr_dmg_crossbow;
 extern ConVar sk_npc_dmg_crossbow;
@@ -381,6 +380,21 @@ void CCrossbowBolt::BubbleThink( void )
 	UTIL_BubbleTrail( GetAbsOrigin() - GetAbsVelocity() * 0.1f, GetAbsOrigin(), 5 );
 }
 
+
+#else
+
+class C_CrossbowBolt : public C_BaseCombatCharacter
+{
+public:
+	DECLARE_CLASS( C_CrossbowBolt, C_BaseCombatCharacter ); // generic entity class macro
+	DECLARE_CLIENTCLASS(); // this is a client representation of a server class 
+ 
+};
+ 
+//Link a global entity name to this class (name used in Hammer etc.)
+LINK_ENTITY_TO_CLASS( crossbowbolt, C_CrossbowBolt );
+IMPLEMENT_CLIENTCLASS_DT( C_CrossbowBolt, DT_CrossbowBolt, CCrossbowBolt )
+END_RECV_TABLE()
 #endif
 
 //-----------------------------------------------------------------------------
@@ -637,22 +651,22 @@ void CWeaponCrossbow::FireBolt( void )
 		return;
 
 #ifndef CLIENT_DLL
-	//Vector vecAiming	= pOwner->GetAutoaimVector( 0 );	
-	//Vector vecSrc		= pOwner->Weapon_ShootPosition();
+	Vector vecAiming	= pOwner->GetAutoaimVector( 0 );	
+	Vector vecSrc		= pOwner->Weapon_ShootPosition();
 
-	//QAngle angAiming;
-	//VectorAngles( vecAiming, angAiming );
+	QAngle angAiming;
+	VectorAngles( vecAiming, angAiming );
 
-	//CCrossbowBolt *pBolt = CCrossbowBolt::BoltCreate( vecSrc, angAiming, GetSDKWpnData().m_iDamage, pOwner );
+	CCrossbowBolt *pBolt = CCrossbowBolt::BoltCreate( vecSrc, angAiming, GetSDKWpnData().m_iDamage, pOwner );
 
-	//if ( pOwner->GetWaterLevel() == 3 )
-	//{
-	//	pBolt->SetAbsVelocity( vecAiming * BOLT_WATER_VELOCITY );
-	//}
-	//else
-	//{
-	//	pBolt->SetAbsVelocity( vecAiming * BOLT_AIR_VELOCITY );
-	//}
+	if ( pOwner->GetWaterLevel() == 3 )
+	{
+		pBolt->SetAbsVelocity( vecAiming * BOLT_WATER_VELOCITY );
+	}
+	else
+	{
+		pBolt->SetAbsVelocity( vecAiming * BOLT_AIR_VELOCITY );
+	}
 
 #endif
 

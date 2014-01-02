@@ -21,7 +21,7 @@ PlayerClassDatafile
 	"classimagebg"		"cls_blue_class2_active_bg"
 
 	// Movement
-	"RunSpeed"		"240"
+	"RunSpeed"		"320"
 	"SprintSpeed"		"360"
 	"ProneSpeed"		"70"
 }

@@ -12,7 +12,7 @@ WeaponData
 
 	"clip_size"		"1"
 	"default_clip"		"5"
-	"primary_ammo"		"XBowBolt"
+	"primary_ammo"		"crossbow"
 	"secondary_ammo"	"None"
 
 	"weight"		"6"
