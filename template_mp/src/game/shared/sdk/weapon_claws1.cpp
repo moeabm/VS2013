@@ -106,6 +106,5 @@ void CWeaponClaws1::SecondaryAttack()
 	}
 #endif
 	
-	pPlayer->GoInvisible(5.0f);
 	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
 }

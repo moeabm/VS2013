@@ -10,6 +10,7 @@
 #include "ammodef.h"
 #include "KeyValues.h"
 #include "weapon_sdkbase.h"
+#include "engine/ienginesound.h"
 
 
 #ifdef CLIENT_DLL
@@ -573,15 +574,11 @@ void CSDKGameRules::Think()
 		}
 		// did slayers kill all vamps?
 		else if( slayTeam->GetNumPlayers() > 0 && vampTeam->GetAliveMembers() == 0){
-			slayTeam->AddScore(1);
-			EndRound();
-			Msg("Slayers win; end Round\n");
+			EndRound( SDK_TEAM_RED);
 		}
 		// did vamps kill all slayers?
 		else if( vampTeam->GetNumPlayers() > 0 && slayTeam->GetAliveMembers() == 0){
-			vampTeam->AddScore(1);
-			EndRound();
-			Msg("Vamp win; end Round\n");
+			EndRound( SDK_TEAM_BLUE);
 		}
 	}
 
@@ -1457,21 +1454,39 @@ float CSDKGameRules::GetMapElapsedTime( void )
 #ifndef CLIENT_DLL
 #ifdef SDK_USE_ROUNDS
 
-void CSDKGameRules::EndRound(){
+int CSDKGameRules::GetRoundState(){
+	return m_iRoundState;
+}
+
+
+void CSDKGameRules::EndRound( int winnerTeam){
 	m_iRoundState = ROUND_OVER;
 	m_flNextRound = gpGlobals->curtime + 5.0f;
-
+	char *winSound = new char[512];
+	CSDKTeam *wTeam;
+	
+	wTeam = GetGlobalSDKTeam(winnerTeam); 
+	
+	if(wTeam && winnerTeam == SDK_TEAM_BLUE){
+		winSound = ("Round.Vampire");
+		GetGlobalSDKTeam(winnerTeam)->AddScore(1);
+		Msg("%ss win; end Round\n", "Vampires" );
+	}
+	else if(wTeam && winnerTeam == SDK_TEAM_RED){
+		winSound = ("Round.Slayer");
+		GetGlobalSDKTeam(winnerTeam)->AddScore(1);
+		Msg("%ss win; end Round\n", "Slayer" );
+	}
+	else {
+		winSound = ("Round.Draw");
+	}
 	//TODO:  KILL ALL PLAYERS that are still alive (adjust score if necessary)
 	for(int i =0 ; i < GetNumberOfTeams(); i++){
 		CSDKTeam * tTeam = (CSDKTeam *) GetGlobalSDKTeam(i);
 		for( int j =0 ; j < tTeam->GetNumPlayers(); j++){
 			CSDKPlayer *tPlayer = (CSDKPlayer *) tTeam->GetPlayer(j);
 			if(tPlayer){
-				//Commented out so Winning players can walk around until new round starts
-				//tPlayer->ClearLives();
-				//if(tPlayer->IsAlive()){
-				//	tPlayer->StartObserverMode( OBS_MODE_CHASE );
-				//}
+				tPlayer->EmitSound(winSound);
 			}
 		}
 	}

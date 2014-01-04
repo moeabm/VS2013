@@ -1,0 +1,36 @@
+"Round.Draw"
+{
+	"channel"		"CHAN_AUTO"
+	"volume"		"0.900"
+
+	"soundlevel"	"SNDLVL_80dB"
+
+	"rndwave"
+	{
+		"wave"	"items/round_draw.wav"
+	}
+}
+"Round.Slayer"
+{
+	"channel"		"CHAN_AUTO"
+	"volume"		"0.900"
+
+	"soundlevel"	"SNDLVL_80dB"
+
+	"rndwave"
+	{
+		"wave"	"items/round_slay.wav"
+	}
+}
+"Round.Vampire"
+{
+	"channel"		"CHAN_AUTO"
+	"volume"		"0.900"
+
+	"soundlevel"	"SNDLVL_80dB"
+
+	"rndwave"
+	{
+		"wave"	"items/round_vamp.wav"
+	}
+}

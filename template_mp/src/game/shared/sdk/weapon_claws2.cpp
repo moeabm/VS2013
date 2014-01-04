@@ -87,8 +87,8 @@ void CWeaponClaws2::SecondaryAttack()
 	if ( !pPlayer )
 		return;
 	
-
-	WeaponSound( BURST );
+	
+	WeaponSound( SPECIAL1 );
 
 	Msg("Secondary Claws2 swing\n");
 	

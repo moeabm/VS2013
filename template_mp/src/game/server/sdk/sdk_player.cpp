@@ -294,8 +294,6 @@ void CSDKPlayer::PostThink()
 	if(isInvisible){
 		float iAlpha;
 		if(invEnd < gpGlobals->curtime){
-			
-			Msg("Class ... %s\n", m_Shared.PlayerClass());
 			SetRenderMode( kRenderNormal );
 			isInvisible = false;
 		}
@@ -410,6 +408,7 @@ void CSDKPlayer::Spawn()
 	
 	SetBloodColor( BLOOD_COLOR_RED );
 	
+	prayEnd = gpGlobals->curtime;
 	SetMoveType( MOVETYPE_WALK );
 	RemoveSolidFlags( FSOLID_NOT_SOLID );
 
@@ -422,7 +421,6 @@ void CSDKPlayer::Spawn()
 	}
 
 	m_hRagdoll = NULL;
-
 #if defined ( SDK_DEV_DLL )
 	RemoveEffects( EF_NOINTERP );
 
@@ -662,6 +660,10 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 	CTakeDamageInfo info = inputInfo;
 
 	CBaseEntity *pInflictor = info.GetInflictor();
+
+	if(SDKGameRules()->GetRoundState() != ROUND_ACTIVE){
+		return 0;
+	}
 
 	if ( !pInflictor || m_takedamage == DAMAGE_NO)
 		return 0;
@@ -1827,10 +1829,11 @@ void CSDKPlayer::State_Enter_ACTIVE()
 		return;
 	}
 	// Dont let player go active it they dont have a class
-	if(m_Shared.PlayerClass() < 0 && m_Shared.DesiredPlayerClass() < 0){
+	if(m_Shared.PlayerClass() == -1 && m_Shared.DesiredPlayerClass() == -1){
 		State_Transition(STATE_PICKINGCLASS);
 		return;
 	}
+
 
 	SetMoveType( MOVETYPE_WALK );
 	RemoveSolidFlags( FSOLID_NOT_SOLID );

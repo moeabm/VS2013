@@ -65,7 +65,7 @@ void CWeaponCrucifix::SecondaryAttack()
 	if ( !pPlayer )
 		return;
 
-	WeaponSound( SPECIAL1 , 4.0f);
+	WeaponSound( SPECIAL1 );
 
 	Msg("Secondary Crucifix swing\n");
 	

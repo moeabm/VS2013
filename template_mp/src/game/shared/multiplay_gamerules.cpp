@@ -623,7 +623,7 @@ ConVarRef suitcharger( "sk_suitcharger" );
 		{
 		case 1://progressive
 			pPlayer->m_Local.m_flFallVelocity -= PLAYER_MAX_SAFE_FALL_SPEED;
-			return pPlayer->m_Local.m_flFallVelocity * DAMAGE_FOR_FALL_SPEED;
+			return MIN(pPlayer->m_Local.m_flFallVelocity * DAMAGE_FOR_FALL_SPEED, 99);
 			break;
 		default:
 		case 0:// fixed

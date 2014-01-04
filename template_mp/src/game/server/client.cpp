@@ -334,6 +334,11 @@ void ClientPrecache( void )
 	CBaseEntity::PrecacheScriptSound( "Bounce.Shell" );
 	CBaseEntity::PrecacheScriptSound( "Bounce.Concrete" );
 
+	// Round sounds
+	CBaseEntity::PrecacheScriptSound( "Round.Draw" );
+	CBaseEntity::PrecacheScriptSound( "Round.Slayer" );
+	CBaseEntity::PrecacheScriptSound( "Round.Vampire" );
+
 	ClientGamePrecache();
 }
 

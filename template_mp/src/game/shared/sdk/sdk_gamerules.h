@@ -187,13 +187,19 @@ private:
 	CNetworkVar( float, m_flGameStartTime );
 	
 #ifdef SDK_USE_ROUNDS
+public:
+	int GetRoundState();
+
+private:
 	int m_iRoundNum;
 	int m_iRoundState;
 	float m_flNextRound;
 	CNetworkVar( float, m_flRoundTimer );
 	
-	void EndRound();
+	void EndRound( int winnerTeam = 0);
 	void StartRound();
+
+
 #endif
 };
 
