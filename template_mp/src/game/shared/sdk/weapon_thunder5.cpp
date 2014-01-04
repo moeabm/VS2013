@@ -38,7 +38,7 @@ public:
 	virtual void WeaponIdle();
 
 	virtual SDKWeaponID GetWeaponID( void ) const		{ return SDK_WEAPON_THUNDER5; }
-	virtual float GetWeaponSpread() { return 0.06362f; }
+	virtual float GetWeaponSpread() { return 0.10362f; }
 
 
 private:

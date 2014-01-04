@@ -748,10 +748,14 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 		// AM: if player is a vampire, dont kill just floor them.
 		if(GetTeamNumber() == SDK_TEAM_BLUE && m_iHealth <= info.GetDamage()){
 			//DO LIVE STAKE?
-			if(pInflictor->IsPlayer() && ((CSDKPlayer *)pInflictor)->GetActiveSDKWeapon()->IsMeleeWeapon()){ // IsMeleeWeapon() is defined in weapon script
+			if(pInflictor->IsPlayer() && ((CSDKPlayer *)pInflictor)->GetActiveSDKWeapon()->IsMeleeWeapon() && info.GetDamageType() & DMG_SLASH){ // IsMeleeWeapon() is defined in weapon script
+				int DMGTYPE = info.GetDamageType();
+				Msg("DmgType: %d", DMGTYPE);
 				return CBaseCombatCharacter::OnTakeDamage( info );
 			}
 			if(State_Get() == STATE_ACTIVE){
+				//BUG: knockout does not recieve player velocity so ragdoll falls straight down. 
+				SetAbsVelocity(info.GetDamageForce());
 				State_Transition( STATE_KNOCKOUT );	// Transition into the knockout state.
 				m_iHealth = 0;
 				return 0;
@@ -1693,18 +1697,9 @@ void CSDKPlayer::State_Enter_KNOCKOUT()
 	
 	AddSolidFlags( FSOLID_NOT_SOLID );
 	
-	//CreateRagdollEntity();
-	//BecomeRagdoll(CTakeDamageInfo(), GetAbsVelocity()); 
+	CTakeDamageInfo info = CTakeDamageInfo();
 
-	m_pRagdoll = CreateServerRagdoll( this, m_nForceBone, CTakeDamageInfo(), COLLISION_GROUP_INTERACTIVE_DEBRIS, true );
-	FixupBurningServerRagdoll( m_pRagdoll );
-	//RemoveDeferred();
-	//return true;
-	 
-	//SetAbsVelocity(Vector(0,0,0));
-
-	//pRagdoll->SetAbsOrigin(GetAbsOrigin());
-	//pRagdoll->SetAbsVelocity(Vector(0,0,0));
+	m_pRagdoll = CreateServerRagdoll( this, m_nForceBone, info, COLLISION_GROUP_INTERACTIVE_DEBRIS, true );
 
 	m_takedamage = DAMAGE_NO;
 	Weapon_SetLast(GetActiveSDKWeapon());
@@ -1720,6 +1715,7 @@ void CSDKPlayer::State_PreThink_KNOCKOUT()
 {
 	SetAbsOrigin(m_pRagdoll->GetAbsOrigin());
 	
+	//m_pRagdoll->SetAbsVelocity(GetAbsVelocity());
 	if(endKnockout < gpGlobals->curtime){
 		m_pRagdoll->Remove();
 		m_iHealth = 20;

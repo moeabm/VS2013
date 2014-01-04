@@ -3,26 +3,32 @@
 WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
-	"printname"	"#HL2_Crowbar"
+	"printname"	"#VS_Colt"
 	"viewmodel"				"models/weapons/v_crowbar.mdl"
 	"playermodel"			"models/weapons/w_crowbar.mdl"
 	"anim_prefix"			"crowbar"
-	"bucket"				"0"
+	"bucket"			"0"
 	"bucket_position"		"0"
 
-	"clip_size"				"-1"
-	"primary_ammo"			"None"
+	"clip_size"			"7"
+	"NumClips"			"7"
+	"primary_ammo"			"colt"
 	"secondary_ammo"		"None"
 
-	"weight"				"0"
+	"weight"			"0"
 	"item_flags"			"0"
+	"damage"			"15"
 
+	"CycleTime"			"0.3"
+	
 	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
 	SoundData
 	{
+		"reload"		"Weapon_Pistol.Reload"
 		"single_shot"		"Weapon_Crowbar.Single"
 		"melee_hit"			"Weapon_Crowbar.Melee_Hit"
 		"melee_hit_world"	"Weapon_Crowbar.Melee_HitWorld"
+		"special1"		"Weapon_Pistol.Single"
 	}
 
 	// Weapon Sprite data is loaded by the Client DLL.

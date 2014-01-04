@@ -8,6 +8,7 @@
 #include "weapon_sdkbase.h"
 #include "sdk_weapon_melee.h"
 
+#include "sdk_fx_shared.h"
 #if defined( CLIENT_DLL )
 
 	#define CWeaponColt C_WeaponColt
@@ -33,6 +34,8 @@ public:
 	virtual SDKWeaponID GetWeaponID( void ) const		{	return SDK_WEAPON_COLT; }
 	virtual float	GetRange( void )					{	return	64.0f;	}	//Tony; let the colt swing further.
 	virtual bool CanWeaponBeDropped() const				{	return false; }
+	virtual void SecondaryAttack();
+	virtual void ItemPostFrame();
 
 private:
 
@@ -56,6 +59,71 @@ CWeaponColt::CWeaponColt()
 {
 }
 
+void CWeaponColt::SecondaryAttack()
+{
+	CSDKPlayer *pPlayer = GetPlayerOwner();
+	if ( !pPlayer )
+		return;
+
+		// If my clip is empty (and I use clips) start reload
+	if ( UsesClipsForAmmo1() && m_iClip1 < 1 ) 
+	{
+		Reload();
+		return;
+	}
+
+	
+ 
+#ifdef GAME_DLL
+	pPlayer->NoteWeaponFired();
+#endif
+ 
+	pPlayer->DoMuzzleFlash();
+ 
+	SendWeaponAnim( GetSecondaryAttackActivity() );
+ 
+	// Make sure we don't fire more than the amount in the clip
+	if ( UsesClipsForAmmo1() )
+		m_iClip1 --;
+	else
+		pPlayer->RemoveAmmo(1, m_iPrimaryAmmoType );
+ 
+	pPlayer->IncreaseShotsFired();
+ 
+	float flSpread = GetWeaponSpread();
+ 
+	FX_FireBullets(
+		pPlayer->entindex(),
+		pPlayer->Weapon_ShootPosition(),
+		pPlayer->EyeAngles() + pPlayer->GetPunchAngle(),
+		GetWeaponID(),
+		0, //Tony; fire mode - this is unused at the moment, left over from CSS when SDK* was created in the first place.
+		CBaseEntity::GetPredictionRandomSeed() & 255,
+		flSpread
+		);
+ 
+    //Hack: override the swing sound from above
+	WeaponSound( SPECIAL1 );
+
+	//Add our view kick in
+	AddViewKick();
+ 
+	//Tony; update our weapon idle time
+	SetWeaponIdleTime( gpGlobals->curtime + SequenceDuration() );
+	
+	m_flNextPrimaryAttack = gpGlobals->curtime +  GetSequence();
+	m_flNextSecondaryAttack = gpGlobals->curtime +  GetFireRate();
+	
+}
+
+void CWeaponColt::ItemPostFrame( void )
+{
+	//Check Reload
+	if ( UsesClipsForAmmo1() )
+		CheckReload();
+	BaseClass::ItemPostFrame();
+}
+
 //Tony; todo; add ACT_MP_PRONE* activities, so we have them.
 acttable_t CWeaponColt::m_acttable[] = 
 {
@@ -72,6 +140,10 @@ acttable_t CWeaponColt::m_acttable[] =
 	{ ACT_MP_ATTACK_STAND_PRIMARYFIRE,		ACT_DOD_PRIMARYATTACK_SPADE,			false },
 	{ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE,		ACT_DOD_PRIMARYATTACK_SPADE,			false },
 	{ ACT_MP_ATTACK_PRONE_PRIMARYFIRE,		ACT_DOD_PRIMARYATTACK_PRONE_SPADE,		false },
+	
+	{ ACT_MP_RELOAD_STAND,					ACT_DOD_RELOAD_PISTOL,					false },
+	{ ACT_MP_RELOAD_CROUCH,					ACT_DOD_RELOAD_CROUCH_PISTOL,			false },
+	{ ACT_MP_RELOAD_PRONE,					ACT_DOD_RELOAD_PRONE_PISTOL,			false },
 };
 
 IMPLEMENT_ACTTABLE( CWeaponColt );

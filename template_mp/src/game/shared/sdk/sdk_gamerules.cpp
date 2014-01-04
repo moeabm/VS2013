@@ -543,22 +543,24 @@ void CSDKGameRules::Think()
 	CSDKTeam *vampTeam = GetGlobalSDKTeam(SDK_TEAM_BLUE);
 	CSDKTeam *slayTeam = GetGlobalSDKTeam(SDK_TEAM_RED);
 
-	if(vampTeam->GetNumPlayers() < 1 || slayTeam->GetNumPlayers() < 1){
-		//	Msg("Not enough players\n");
+	if(  m_iRoundState != ROUND_OVER && (vampTeam->GetNumPlayers() < 1 || slayTeam->GetNumPlayers() < 1)){
+		if(vampTeam->GetAliveMembers() == 0 &&
+			slayTeam->GetAliveMembers() == 0){
+			EndRound();
+		}
 	}
-
 	else if( m_iRoundState == ROUND_OVER ){
 		if(m_flNextRound < gpGlobals->curtime){
 			StartRound();
 			Msg("Round Started\n");
 		}
 	}
-	else if( vampTeam->GetNumPlayers() > 0 && vampTeam->GetAliveMembers() == 0){
+	else if( slayTeam->GetNumPlayers() > 0 && vampTeam->GetAliveMembers() == 0){
 		slayTeam->AddScore(1);
 		EndRound();
 		Msg("Slayers win; end Round\n");
 	}
-	else if( slayTeam->GetNumPlayers() > 0 && slayTeam->GetAliveMembers() == 0){
+	else if( vampTeam->GetNumPlayers() > 0 && slayTeam->GetAliveMembers() == 0){
 		vampTeam->AddScore(1);
 		EndRound();
 		Msg("Vamp win; end Round\n");
@@ -721,10 +723,11 @@ void CSDKGameRules::PlayerSpawn( CBasePlayer *p )
 			}
 
 			// Melee weapon
+			CBaseEntity *pMeleeWpn = NULL;
 			if ( pClassInfo.m_iMeleeWeapon )
 			{
 				Q_snprintf( buf, bufsize, "weapon_%s", WeaponIDToAlias(pClassInfo.m_iMeleeWeapon) );
-				pPlayer->GiveNamedItem( buf );
+				pMeleeWpn = pPlayer->GiveNamedItem( buf );
 			}
 
 			CWeaponSDKBase *pWpn = NULL;
@@ -750,7 +753,21 @@ void CSDKGameRules::PlayerSpawn( CBasePlayer *p )
 					int iClipSize = pWpn->GetSDKWpnData().iMaxClip1;
 					pPlayer->GiveAmmo( iNumClip * iClipSize, pWpn->GetSDKWpnData().szAmmo1 );
 				}
-			}				
+			}			
+
+			// give melee Ammo (i.e. Molly's colt)
+			if( pMeleeWpn )
+			{
+				pWpn = dynamic_cast<CWeaponSDKBase *>(pMeleeWpn);
+				
+				if( pWpn )
+				{
+					int iNumClip = pWpn->GetSDKWpnData().m_iDefaultAmmoClips - 1;	//account for one clip in the gun
+					int iClipSize = pWpn->GetSDKWpnData().iMaxClip1;
+					pPlayer->GiveAmmo( iNumClip * iClipSize, pWpn->GetSDKWpnData().szAmmo1 );
+				}
+
+			}
 
 			// Grenade Type 1
 			if ( pClassInfo.m_iGrenType1 != WEAPON_NONE )

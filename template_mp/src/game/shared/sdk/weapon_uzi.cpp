@@ -31,6 +31,9 @@ public:
 
 	virtual SDKWeaponID GetWeaponID( void ) const		{ return SDK_WEAPON_UZI; }
 	virtual int GetFireMode() const { return FM_AUTOMATIC; }
+	virtual float GetWeaponSpread() { return 0.06362f; }
+	
+	virtual void PrimaryAttack();
 
 private:
 
@@ -52,6 +55,59 @@ PRECACHE_WEAPON_REGISTER( weapon_uzi );
 
 CWeaponUzi::CWeaponUzi()
 {
+}
+
+//Tony; added as a default primary attack if it doesn't get overridden, ie: by CSDKWeaponMelee
+void CWeaponUzi::PrimaryAttack( void )
+{
+	// If my clip is empty (and I use clips) start reload
+	if ( UsesClipsForAmmo1() && !m_iClip1 ) 
+	{
+		Reload();
+		return;
+	}
+ 
+	CSDKPlayer *pPlayer = GetPlayerOwner();
+ 
+	if (!pPlayer)
+		return;
+
+	
+	trace_t traceHit;
+
+
+	Vector shootStart = pPlayer->Weapon_ShootPosition( );
+	Vector forward;
+	float range = 1000.0f;
+
+	pPlayer->EyeVectors( &forward, NULL, NULL );
+
+	Vector shootEnd = shootStart + forward * range;
+	UTIL_TraceLine( shootStart, shootEnd, MASK_SHOT_HULL, pPlayer, COLLISION_GROUP_NONE, &traceHit );
+	Activity nHitActivity = ACT_VM_HITCENTER;
+		
+	//TODO: add knockback code
+	
+	// -------------------------
+	//	Miss
+	// -------------------------
+	if ( traceHit.fraction != 1.0f )
+	{
+		nHitActivity = ACT_VM_HITCENTER;
+		CSDKPlayer *pHitPlayer = (CSDKPlayer *)traceHit.m_pEnt;
+		
+		if ( pHitPlayer != NULL && pHitPlayer->IsPlayer() && pHitPlayer->GetTeamNumber() == SDK_TEAM_BLUE)
+		{
+			Vector hitDirection;
+			pPlayer->EyeVectors( &hitDirection, NULL, NULL );
+			VectorNormalize( hitDirection );
+
+			Vector hitForce = hitDirection * 100.0f;
+			pHitPlayer->SetBaseVelocity(hitForce);
+		}
+		
+	}
+	BaseClass::PrimaryAttack();
 }
 
 //Tony; todo; add ACT_MP_PRONE* activities, so we have them.

@@ -63,14 +63,68 @@ void CWeaponPoolCue::SecondaryAttack()
 	CSDKPlayer *pPlayer = GetPlayerOwner();
 	if ( !pPlayer )
 		return;
+	
+	WeaponSound( SINGLE );
 
-	WeaponSound( SPECIAL1);
+	
+	trace_t traceHit;
+
+
+	Vector swingStart = pPlayer->Weapon_ShootPosition( );
+	Vector forward;
+
+	pPlayer->EyeVectors( &forward, NULL, NULL );
+
+	Vector swingEnd = swingStart + forward * GetRange();
+	UTIL_TraceLine( swingStart, swingEnd, MASK_SHOT_HULL, pPlayer, COLLISION_GROUP_NONE, &traceHit );
+	Activity nHitActivity = ACT_VM_HITCENTER;
 
 	Msg("Secondary PoolCue swing\n");
 	
 	//TODO: add knockback code
+	
+	// -------------------------
+	//	Miss
+	// -------------------------
+	if ( traceHit.fraction != 1.0f )
+	{
+		nHitActivity = ACT_VM_HITCENTER;
+		CSDKPlayer *pHitPlayer = (CSDKPlayer *)traceHit.m_pEnt;
+		
+		if ( pHitPlayer != NULL && pHitPlayer->IsPlayer() && pHitPlayer->GetTeamNumber() == SDK_TEAM_BLUE)
+		{
+			Vector hitDirection;
+			pPlayer->EyeVectors( &hitDirection, NULL, NULL );
+			VectorNormalize( hitDirection );
 
-	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
+			Vector hitForce = hitDirection * 700.0f;
+			
+			pHitPlayer->SetAbsOrigin(pHitPlayer->GetAbsOrigin() + Vector(0,0,10));
+			pHitPlayer->SetBaseVelocity(hitForce);
+
+			
+#ifndef CLIENT_DLL
+			CTakeDamageInfo info( GetOwner(), GetOwner(), 10.0f, DMG_CLUB);
+			info.SetDamageForce(hitForce);
+			pHitPlayer->TakeDamage(info);
+#endif
+		}
+		
+		WeaponSound( MELEE_HIT );
+	}
+	else
+	{
+		nHitActivity = ACT_VM_MISSCENTER;
+	}
+
+	// Send the anim
+	SendWeaponAnim( nHitActivity );
+
+	pPlayer->DoAnimationEvent( PLAYERANIMEVENT_ATTACK_SECONDARY );
+
+	//Setup our next attack times
+	m_flNextPrimaryAttack = gpGlobals->curtime + GetFireRate();
+	m_flNextSecondaryAttack = gpGlobals->curtime + GetFireRate();
 }
 
 //Tony; todo; add ACT_MP_PRONE* activities, so we have them.

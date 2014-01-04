@@ -18,7 +18,7 @@ WeaponData
 	"item_flags"			"0"
 	"damage"			"20"
 	
-	"CycleTime"			"0.5"
+	"CycleTime"			"0.3"
 	"Bullets"			"1"  // Shotgun bullets per shell
 
 	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
