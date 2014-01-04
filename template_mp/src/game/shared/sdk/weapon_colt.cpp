@@ -65,9 +65,11 @@ void CWeaponColt::SecondaryAttack()
 	if ( !pPlayer )
 		return;
 
+	if( m_bInReload ) return;
 		// If my clip is empty (and I use clips) start reload
 	if ( UsesClipsForAmmo1() && m_iClip1 < 1 ) 
 	{
+		m_bInReload = true;
 		Reload();
 		return;
 	}
@@ -108,10 +110,32 @@ void CWeaponColt::SecondaryAttack()
 	//Add our view kick in
 	AddViewKick();
  
+	bool doPunch = true;
+	if ( m_iClip1 <= 0 )
+		doPunch = false;
+
+	if ( doPunch )
+	{
+
+		// Update punch angles.
+		QAngle angle = pPlayer->GetPunchAngle();
+
+		if ( pPlayer->GetFlags() & FL_ONGROUND )
+		{
+			angle.x -= SharedRandomInt( "ShotgunPunchAngleGround", 2, 3 );
+		}
+		else
+		{
+			angle.x -= SharedRandomInt( "ShotgunPunchAngleAir", 4, 6 );
+		}
+
+		pPlayer->SetPunchAngle( angle );
+	}
+
 	//Tony; update our weapon idle time
 	SetWeaponIdleTime( gpGlobals->curtime + SequenceDuration() );
 	
-	m_flNextPrimaryAttack = gpGlobals->curtime +  GetSequence();
+	m_flNextPrimaryAttack = gpGlobals->curtime +  GetFireRate();
 	m_flNextSecondaryAttack = gpGlobals->curtime +  GetFireRate();
 	
 }

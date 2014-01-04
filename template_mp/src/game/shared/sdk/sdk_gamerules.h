@@ -36,6 +36,7 @@
 	#define CSDKGameRulesProxy C_SDKGameRulesProxy
 #endif
 
+extern ConVar vs_roundlength;	
 
 class CSDKGameRulesProxy : public CGameRulesProxy
 {
@@ -185,13 +186,15 @@ public:
 private:
 	CNetworkVar( float, m_flGameStartTime );
 	
-	#ifdef SDK_USE_ROUNDS
-		int m_iRoundNum;
-		int m_iRoundState;
-		int m_flNextRound;
-		void EndRound();
-		void StartRound();
-	#endif
+#ifdef SDK_USE_ROUNDS
+	int m_iRoundNum;
+	int m_iRoundState;
+	float m_flNextRound;
+	CNetworkVar( float, m_flRoundTimer );
+	
+	void EndRound();
+	void StartRound();
+#endif
 };
 
 //-----------------------------------------------------------------------------

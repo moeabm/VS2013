@@ -34,6 +34,7 @@
 #include "tier0/memdbgon.h"
 
 
+	ConVar vs_roundlength("vs_roundlength","180", FCVAR_SERVER_CAN_EXECUTE | FCVAR_NOTIFY, "Time limit (in seconds) for each round. (Default: 180)");
 #ifndef CLIENT_DLL
 
 class CSpawnPoint : public CPointEntity
@@ -325,6 +326,7 @@ void CSDKGameRules::ServerActivate()
 
 	//Tony; do any post stuff
 	m_flGameStartTime = gpGlobals->curtime;
+	m_flRoundTimer = gpGlobals->curtime;
 	if ( !IsFinite( m_flGameStartTime.Get() ) )
 	{
 		Warning( "Trying to set a NaN game start time\n" );
@@ -542,29 +544,53 @@ void CSDKGameRules::Think()
 #ifdef SDK_USE_ROUNDS
 	CSDKTeam *vampTeam = GetGlobalSDKTeam(SDK_TEAM_BLUE);
 	CSDKTeam *slayTeam = GetGlobalSDKTeam(SDK_TEAM_RED);
-
-	if(  m_iRoundState != ROUND_OVER && (vampTeam->GetNumPlayers() < 1 || slayTeam->GetNumPlayers() < 1)){
-		if(vampTeam->GetAliveMembers() == 0 &&
-			slayTeam->GetAliveMembers() == 0){
+	
+	//Round not over? Try to end it
+	if( m_iRoundState != ROUND_OVER){
+		//Check Round Timer
+		if( m_flRoundTimer + vs_roundlength.GetFloat() < gpGlobals->curtime){
+			//NOT VALID Save this for tie breaker 
+			//if(vampTeam->GetScore() == slayTeam->GetScore()){
+			//	Msg("Draw: end Round");
+			//}
+			//else if(vampTeam->GetScore() < slayTeam->GetScore()){
+			//	Msg("Slayers Win: end Round");
+			//}
+			//else {
+			//	Msg("Vampires Win: end Round");
+			//}
+			Msg("Draw: end Round");
 			EndRound();
 		}
-	}
-	else if( m_iRoundState == ROUND_OVER ){
-		if(m_flNextRound < gpGlobals->curtime){
-			StartRound();
-			Msg("Round Started\n");
+		//if not enough players 
+		else if( vampTeam->GetNumPlayers() < 1 || slayTeam->GetNumPlayers() < 1 ) {
+			//all players dead? end round so player(s) can keep playing
+			if(vampTeam->GetAliveMembers() == 0 &&
+				slayTeam->GetAliveMembers() == 0){
+				EndRound();
+				Msg("NO WIN; end Round\n");
+			}
+		}
+		// did slayers kill all vamps?
+		else if( slayTeam->GetNumPlayers() > 0 && vampTeam->GetAliveMembers() == 0){
+			slayTeam->AddScore(1);
+			EndRound();
+			Msg("Slayers win; end Round\n");
+		}
+		// did vamps kill all slayers?
+		else if( vampTeam->GetNumPlayers() > 0 && slayTeam->GetAliveMembers() == 0){
+			vampTeam->AddScore(1);
+			EndRound();
+			Msg("Vamp win; end Round\n");
 		}
 	}
-	else if( slayTeam->GetNumPlayers() > 0 && vampTeam->GetAliveMembers() == 0){
-		slayTeam->AddScore(1);
-		EndRound();
-		Msg("Slayers win; end Round\n");
+
+	else if(m_flNextRound < gpGlobals->curtime){
+		StartRound();
+		Msg("Round Started\n");
 	}
-	else if( vampTeam->GetNumPlayers() > 0 && slayTeam->GetAliveMembers() == 0){
-		vampTeam->AddScore(1);
-		EndRound();
-		Msg("Vamp win; end Round\n");
-	}
+
+	
 
 #endif 
 	BaseClass::Think();
@@ -1452,22 +1478,27 @@ void CSDKGameRules::EndRound(){
 }
 
 void CSDKGameRules::StartRound(){
-	m_iRoundState = ROUND_ACTIVE;
-	m_iRoundNum++;
 
+	int activePlayers = 0;
 	//TODO: Spawn all players reset their round life
 	//TODO: Reset Map
 	for(int i =0 ; i < GetNumberOfTeams(); i++){
 		CSDKTeam * tTeam = (CSDKTeam *) GetGlobalSDKTeam(i);
 		for( int j =0 ; j < tTeam->GetNumPlayers(); j++){
 			CSDKPlayer *tPlayer = (CSDKPlayer *) tTeam->GetPlayer(j);
-			if(tPlayer){
+			if(tPlayer && !tPlayer->IsClassMenuOpen()){
 				tPlayer->ClearLives();
 				tPlayer->RemoveAllItems(true);
 				tPlayer->AddLives(1); //TODO add cvar for multi lives
 				tPlayer->State_Transition( STATE_ACTIVE );
+				activePlayers++;
 			}
 		}
+	}
+	if(activePlayers > 0) {
+		m_iRoundState = ROUND_ACTIVE;
+		m_iRoundNum++;
+		m_flRoundTimer = gpGlobals->curtime;
 	}
 }
 #endif // Rounds

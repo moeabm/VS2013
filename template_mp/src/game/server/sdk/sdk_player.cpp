@@ -1821,6 +1821,17 @@ void CSDKPlayer::State_Enter_PICKINGTEAM()
 
 void CSDKPlayer::State_Enter_ACTIVE()
 {
+	// Dont let player go active it they are not on a team
+	if(GetTeamNumber() < SDK_TEAM_BLUE){
+		State_Transition(STATE_PICKINGTEAM);
+		return;
+	}
+	// Dont let player go active it they dont have a class
+	if(m_Shared.PlayerClass() < 0 && m_Shared.DesiredPlayerClass() < 0){
+		State_Transition(STATE_PICKINGCLASS);
+		return;
+	}
+
 	SetMoveType( MOVETYPE_WALK );
 	RemoveSolidFlags( FSOLID_NOT_SOLID );
     m_Local.m_iHideHUD = 0;
