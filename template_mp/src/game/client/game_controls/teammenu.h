@@ -57,7 +57,8 @@ public:
 	void AutoAssign();
 	
 protected:
-
+	
+	virtual vgui::Panel *CreateControlByName(const char *controlName);
 	// int GetNumTeams() { return m_iNumTeams; }
 	
 	// VGUI2 overrides

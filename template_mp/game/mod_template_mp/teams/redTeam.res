@@ -1,0 +1,43 @@
+"teams/blueTeam.res"
+{
+	"teamNameLabel"
+	{
+		"ControlName"		"Label"
+		"fieldName"		"teamNameLabel"
+		"xpos"			"3"
+		"ypos"			"0"
+		"wide"			"175"
+		"tall"			"15"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"		"0"
+		"labelText"		"#SDK_Team_Red"
+		"textAlignment"		"north-west"
+		"dulltext"		"0"
+		"brighttext"		"1"
+		"font"			"ClassMenuDefault"
+		"wrap"			"0"
+	}
+	
+	"teamInfo"
+	{
+		"ControlName"		"RichText"
+		"fieldName"		"teamInfo"
+		"xpos"		"0"
+		"ypos"		"140"
+		"wide"		"530"
+		"tall"		"280"
+		"autoResize"		"3"
+		"pinCorner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"		"0"
+		"maxchars"		"-1"
+		"text"			"#teaminfo_red"
+		"wrap"			"1"
+		"textAlignment"		"north-west"
+		"font"			"ClassMenuDefaultSmall"
+	}
+}

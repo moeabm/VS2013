@@ -9,8 +9,25 @@
 #define SDK_TEAMMENU_H
 
 #include "teammenu.h"
+#include <vgui_controls/EditablePanel.h>
+#include "iconpanel.h"
+#include "mouseoverpanelbutton.h"
 
 #if defined ( SDK_USE_TEAMS )
+class CSDKTeamInfoPanel : public vgui::EditablePanel
+{
+private:
+	DECLARE_CLASS_SIMPLE( CSDKTeamInfoPanel, vgui::EditablePanel );
+
+public:
+	CSDKTeamInfoPanel( vgui::Panel *parent, const char *panelName ) : vgui::EditablePanel( parent, panelName )
+	{
+	}
+
+	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual vgui::Panel *CreateControlByName( const char *controlName );
+};
+
 class CSDKTeamMenu : public CTeamMenu
 {
 private:
@@ -27,6 +44,7 @@ public:
 	void Update();
 	virtual void SetVisible(bool state);
 	void MoveToCenterOfScreen();
+	virtual Panel *CreateControlByName( const char *controlName );
 
 protected:
 	// vgui overrides for rounded corner background
@@ -38,6 +56,8 @@ private:
 	// rounded corners
 	Color					 m_bgColor;
 	Color					 m_borderColor;
+	CSDKTeamInfoPanel *m_pTeamInfoPanel;
+	MouseOverButton<CSDKTeamInfoPanel> *m_pInitialButton;
 
 };
 #endif // SDK_USE_TEAMS

@@ -584,7 +584,7 @@ void CSDKGameRules::Think()
 
 	else if(m_flNextRound < gpGlobals->curtime){
 		StartRound();
-		Msg("Round Started\n");
+		//Msg("Round Started\n");
 	}
 
 	

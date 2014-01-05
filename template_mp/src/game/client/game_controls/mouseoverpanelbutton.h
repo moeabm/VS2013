@@ -95,6 +95,26 @@ public:
 
 		return classPanel;
 	}
+		
+	const char *GetTeamPage( const char *teamName )
+	{
+		static char teamPanel[ _MAX_PATH ];
+		Q_snprintf( teamPanel, sizeof( teamPanel ), "teams/%s.res", teamName);
+
+		if ( g_pFullFileSystem->FileExists( teamPanel, IsX360() ? "MOD" : "GAME" ) )
+		{
+		}
+		else if (g_pFullFileSystem->FileExists( "teams/default.res", IsX360() ? "MOD" : "GAME" ) )
+		{
+			Q_snprintf ( teamPanel, sizeof( teamPanel ), "teams/default.res" );
+		}
+		else
+		{
+			return NULL;
+		}
+
+		return teamPanel;
+	}
 
 #ifdef REFRESH_CLASSMENU_TOOL
 
@@ -111,7 +131,12 @@ public:
 
 		// name, position etc of button is set, now load matching
 		// resource file for associated info panel:
-		m_pPanel->LoadControlSettings( GetClassPage( GetName() ) );
+		char typeName[512];
+		strcpy_s(typeName, sizeof(typeName), typeid(m_pPanel).name());
+		if(_stricmp(typeName, "class CSDKTeamInfoPanel *") == 0){
+			m_pPanel->LoadControlSettings( GetTeamPage( GetName() ) );
+		}
+		else m_pPanel->LoadControlSettings( GetClassPage( GetName() ) );
 	}		
 
 	T *GetClassPanel( void ) { return m_pPanel; }

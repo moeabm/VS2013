@@ -92,7 +92,7 @@ CTeamMenu::CTeamMenu(IViewPort *pViewPort) : Frame(NULL, PANEL_TEAM )
 	m_pMapInfoHTML = new HTML( this, "MapInfoHTML");
 #endif
 
-	LoadControlSettings("Resource/UI/TeamMenu.res");
+	//LoadControlSettings("Resource/UI/TeamMenu.res");
 	InvalidateLayout();
 
 	m_szMapName[0] = 0;
@@ -103,6 +103,11 @@ CTeamMenu::CTeamMenu(IViewPort *pViewPort) : Frame(NULL, PANEL_TEAM )
 //-----------------------------------------------------------------------------
 CTeamMenu::~CTeamMenu()
 {
+}
+
+Panel *CTeamMenu::CreateControlByName(const char *controlName)
+{
+		return BaseClass::CreateControlByName( controlName );
 }
 
 //-----------------------------------------------------------------------------

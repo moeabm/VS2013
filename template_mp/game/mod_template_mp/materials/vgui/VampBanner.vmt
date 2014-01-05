@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "vgui/VampBanner"
+	"$translucent" 1
+}

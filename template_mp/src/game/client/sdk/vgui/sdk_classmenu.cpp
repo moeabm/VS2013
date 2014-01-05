@@ -326,10 +326,10 @@ void CSDKClassMenu::UpdateNumClassLabel( void )
 				iClassLimit[i] = min( 32, pLimitCvar->GetInt() );
 		}	
 
-		if ( iClassLimit[i] < 0 || iClassCount[i] < iClassLimit[i] )
-			m_pClassFullLabel[i]->SetVisible( false );
-		else
-			m_pClassFullLabel[i]->SetVisible( true );
+		//if ( iClassLimit[i] < 0 || iClassCount[i] < iClassLimit[i] )
+		//	m_pClassFullLabel[i]->SetVisible( false );
+		//else
+		//	m_pClassFullLabel[i]->SetVisible( true );
 
 		if ( iClassLimit[i] > -1 )
 		{

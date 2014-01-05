@@ -19,6 +19,9 @@
 
 #include <vgui_controls/TextEntry.h>
 #include <vgui_controls/Button.h>
+#include <vgui_controls/RichText.h>
+#include <vgui/IVGUI.h>
+
 #include <vgui_controls/Panel.h>
 
 #include "cdll_util.h"
@@ -37,10 +40,40 @@
 using namespace vgui;
 
 #if defined ( SDK_USE_TEAMS )
+
+Panel *CSDKTeamInfoPanel::CreateControlByName( const char *controlName )
+{
+	if ( !Q_stricmp( "CIconPanel", controlName ) )
+	{
+		return new CIconPanel(this, "icon_panel");
+	}
+	else
+	{
+		return BaseClass::CreateControlByName( controlName );
+	}
+}
+
+void CSDKTeamInfoPanel::ApplySchemeSettings( IScheme *pScheme )
+{
+	RichText *pTeamInfo = dynamic_cast<RichText*>(FindChildByName("teamInfo"));
+
+	if ( pTeamInfo )
+	{
+		pTeamInfo->SetBorder(pScheme->GetBorder("NoBorder"));
+		pTeamInfo->SetBgColor(pScheme->GetColor("Blank", Color(0,0,0,0)));
+	}
+
+	BaseClass::ApplySchemeSettings( pScheme );
+}
+
 CSDKTeamMenu::CSDKTeamMenu(IViewPort *pViewPort) : CTeamMenu( pViewPort )
 {
 	// load the new scheme early!!
 	SetScheme("SourceScheme");
+
+	m_pTeamInfoPanel = new CSDKTeamInfoPanel( this, "TeamInfoPanel" );
+
+	LoadControlSettings("Resource/UI/TeamMenu.res");
 }
 
 //Destructor
@@ -180,4 +213,31 @@ void CSDKTeamMenu::ApplySchemeSettings( vgui::IScheme *pScheme )
 	DisableFadeEffect(); //Tony; shut off the fade effect because we're using sourcesceheme.
 
 }
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+Panel *CSDKTeamMenu::CreateControlByName( const char *controlName )
+{
+	if ( !Q_stricmp( "SDKButton", controlName ) )
+	{
+		MouseOverButton<CSDKTeamInfoPanel> *newButton = new MouseOverButton<CSDKTeamInfoPanel>( this, NULL, m_pTeamInfoPanel );
+
+		if( !m_pInitialButton )
+		{
+			m_pInitialButton = newButton;
+		}
+
+		return newButton;
+	}
+	else if ( !Q_stricmp( "CIconPanel", controlName ) )
+	{
+		return new CIconPanel(this, "icon_panel");
+	}
+	else
+	{
+		return BaseClass::CreateControlByName( controlName );
+	}
+}
+
 #endif // SDK_USE_TEAMS
