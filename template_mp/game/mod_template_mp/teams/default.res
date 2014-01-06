@@ -17,5 +17,6 @@
 		"textAlignment"		"center"
 		"dulltext"		"0"
 		"brighttext"		"0"
+		"fillcolor"		"Blank"
 	}
 }

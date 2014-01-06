@@ -244,8 +244,6 @@
 		"Default"		"0"
 		"font"			"DefaultLarge"
 		"scaleImage"		"1"
-		"activeimage"		"cls_red_class3_active"
-		"inactiveimage"		"cls_red_class2"
 	}
 	"red_class3_model"
 	{
@@ -312,10 +310,10 @@
 	{
 		"ControlName"		"SDKButton"
 		"fieldName"		"random"
-		"xpos"			"337"
-		"ypos"			"164"
-		"wide"			"110"
-		"tall"			"16"
+		"xpos"			"366"
+		"ypos"			"44"
+		"wide"			"62"
+		"tall"			"124"
 		"autoResize"		"0"
 		"pinCorner"		"2"
 		"visible"		"1"

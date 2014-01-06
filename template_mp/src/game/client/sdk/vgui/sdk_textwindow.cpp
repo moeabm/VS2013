@@ -30,7 +30,7 @@ using namespace vgui;
 CSDKTextWindow::CSDKTextWindow(IViewPort *pViewPort) : CTextWindow( pViewPort )
 {
 	// load the new scheme early!!
-	SetScheme("SourceScheme");
+	SetScheme("ClientScheme");
 }
 
 //-----------------------------------------------------------------------------

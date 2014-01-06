@@ -78,7 +78,7 @@ void CSDKClassInfoPanel::ApplySchemeSettings( IScheme *pScheme )
 CSDKClassMenu::CSDKClassMenu(IViewPort *pViewPort) : CClassMenu( pViewPort )
 {
 	// load the new scheme early!!
-	SetScheme("SourceScheme");
+	SetScheme("ClientScheme");
 
 	m_mouseoverButtons.RemoveAll();
 	m_iClassMenuKey = BUTTON_CODE_INVALID;
@@ -107,7 +107,7 @@ CSDKClassMenu::CSDKClassMenu(IViewPort *pViewPort) : CClassMenu( pViewPort )
 CSDKClassMenu::CSDKClassMenu(IViewPort *pViewPort, const char *panelName) : CClassMenu(pViewPort, panelName)
 {
 	// load the new scheme early!!
-	SetScheme("SourceScheme");
+	SetScheme("ClientScheme");
 
 	m_mouseoverButtons.RemoveAll();
 	m_iClassMenuKey = BUTTON_CODE_INVALID;

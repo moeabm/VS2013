@@ -11,7 +11,6 @@
 #include "teammenu.h"
 #include <vgui_controls/EditablePanel.h>
 #include "iconpanel.h"
-#include "mouseoverpanelbutton.h"
 
 #if defined ( SDK_USE_TEAMS )
 class CSDKTeamInfoPanel : public vgui::EditablePanel
@@ -45,6 +44,7 @@ public:
 	virtual void SetVisible(bool state);
 	void MoveToCenterOfScreen();
 	virtual Panel *CreateControlByName( const char *controlName );
+	virtual void ShowPanel(bool bShow);
 
 protected:
 	// vgui overrides for rounded corner background

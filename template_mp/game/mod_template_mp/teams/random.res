@@ -18,6 +18,7 @@
 		"dulltext"		"0"
 		"brighttext"		"1"
 		"font"			"ClassMenuDefault"
+		"fillcolor"		"Blank"
 		"wrap"			"0"
 	}
 	"teamInfo"
@@ -38,5 +39,6 @@
 		"wrap"			"1"
 		"textAlignment"		"north-west"
 		"font"			"TeamMenuDefaultSmall"
+		"fillcolor"		"Blank"
 	}
 }

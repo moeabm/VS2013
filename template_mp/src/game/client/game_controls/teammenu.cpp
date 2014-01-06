@@ -185,6 +185,36 @@ void CTeamMenu::Update()
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTeamMenu::Reset()
+{
+	for ( int i = 0 ; i < GetChildCount() ; ++i )
+	{
+		// Hide the subpanel for the MouseOverPanelButtons
+		MouseOverPanelButton *pPanel = dynamic_cast<MouseOverPanelButton *>( GetChild( i ) );
+
+		if ( pPanel )
+		{
+			pPanel->HidePage();
+		}
+	}
+
+	// Turn the first button back on again (so we have a default description shown)
+	Assert( m_mouseoverButtons.Count() );
+	for ( int i=0; i<m_mouseoverButtons.Count(); ++i )
+	{
+		if ( i == 0 )
+		{
+			m_mouseoverButtons[i]->ShowPage();	// Show the first page
+		}
+		else
+		{
+			m_mouseoverButtons[i]->HidePage();	// Hide the rest
+		}
+	}
+}
+//-----------------------------------------------------------------------------
 // Purpose: chooses and loads the text page to display that describes mapName map
 //-----------------------------------------------------------------------------
 void CTeamMenu::LoadMapPage( const char *mapName )

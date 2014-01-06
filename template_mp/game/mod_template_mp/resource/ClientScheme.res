@@ -19,7 +19,8 @@ Scheme
 		"OrangeDim"			"255 176 0 120"
 		"LightOrange"		"188 112 0 128"
 		
-		"Red"				"192 28 0 140"
+		"Red"				"192 28 0 100"
+		"Blue"				"220 240 255 100"
 		"Black"				"0 0 0 196"
 		"TransparentBlack"	"0 0 0 196"
 		"TransparentLightBlack"	"0 0 0 90"
@@ -40,7 +41,7 @@ Scheme
 		"BgColor"			"0 0 0 76"
 
 		"Panel.FgColor"			"255 220 0 100"
-		"Panel.BgColor"			"0 0 0 76"
+		"Panel.BgColor"			"0 0 0 0"
 		
 		"BrightFg"		"255 220 0 255"
 
@@ -87,7 +88,7 @@ Scheme
 		Border.Selection				"Blank"				// the additional border color for displaying the default/selected button
 
 		Button.TextColor				"Orange"
-		Button.BgColor					"Blank"
+		Button.BgColor					"TransparentLightBlack"
 		Button.ArmedTextColor			"Orange"
 		Button.ArmedBgColor				"Red"
 		Button.DepressedTextColor		"Orange"

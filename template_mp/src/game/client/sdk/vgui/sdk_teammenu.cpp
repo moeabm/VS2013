@@ -69,8 +69,9 @@ void CSDKTeamInfoPanel::ApplySchemeSettings( IScheme *pScheme )
 CSDKTeamMenu::CSDKTeamMenu(IViewPort *pViewPort) : CTeamMenu( pViewPort )
 {
 	// load the new scheme early!!
-	SetScheme("SourceScheme");
-
+	SetScheme("ClientScheme");
+	
+	m_mouseoverButtons.RemoveAll();
 	m_pTeamInfoPanel = new CSDKTeamInfoPanel( this, "TeamInfoPanel" );
 
 	LoadControlSettings("Resource/UI/TeamMenu.res");
@@ -79,6 +80,30 @@ CSDKTeamMenu::CSDKTeamMenu(IViewPort *pViewPort) : CTeamMenu( pViewPort )
 //Destructor
 CSDKTeamMenu::~CSDKTeamMenu()
 {
+}
+
+void CSDKTeamMenu::ShowPanel( bool bShow )
+{
+	if ( bShow )
+	{
+		engine->CheckPoint( "TeamMenu" );
+	}
+
+	for( int i = 0; i< GetChildCount(); i++ ) 
+	{
+		//Tony; using mouse over button for now, later we'll use CModelButton when I get it implemented!!
+		MouseOverButton<CSDKTeamInfoPanel> *button = dynamic_cast<MouseOverButton<CSDKTeamInfoPanel> *>(GetChild(i));
+
+		if ( button )
+		{
+			if( button == m_pInitialButton && bShow == true )
+				button->ShowPage();
+			else
+				button->HidePage();
+		}
+	}
+
+	BaseClass::ShowPanel( bShow );
 }
 void CSDKTeamMenu::MoveToCenterOfScreen()
 {

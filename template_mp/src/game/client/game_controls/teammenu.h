@@ -18,6 +18,7 @@
 
 #include <vgui/KeyCode.h>
 #include <utlvector.h>
+#include "mouseoverpanelbutton.h"
 
 namespace vgui
 {
@@ -41,7 +42,7 @@ public:
 
 	virtual const char *GetName( void ) { return PANEL_TEAM; }
 	virtual void SetData(KeyValues *data) {};
-	virtual void Reset() {};
+	virtual void Reset();
 	virtual void Update();
 	virtual bool NeedsUpdate( void ) { return false; }
 	virtual bool HasInputElements( void ) { return true; }
@@ -81,6 +82,7 @@ protected:
 	ButtonCode_t m_iScoreBoardKey;
 
 	char m_szMapName[ MAX_PATH ];
+	CUtlVector< MouseOverPanelButton * > m_mouseoverButtons;
 };
 
 
