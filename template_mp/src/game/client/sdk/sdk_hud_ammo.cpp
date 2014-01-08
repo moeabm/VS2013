@@ -13,11 +13,15 @@
 #include "iclientvehicle.h"
 #include <vgui_controls/AnimationController.h>
 #include <vgui/ILocalize.h>
+#include <vgui/ISurface.h>
+#include <vgui/ISystem.h>
+#include <vgui/IVGui.h>
 #include "ihudlcd.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Displays current ammunition level
 //-----------------------------------------------------------------------------
@@ -33,18 +37,32 @@ public:
 
 	void SetAmmo(int ammo, bool playAnimation);
 	void SetAmmo2(int ammo2, bool playAnimation);
+	void SetAmmo3(int ammo3, bool playAnimation);
+
+	void SetThirdValue(int value);
+	bool ShouldDisplayThirdValue();
+	void SetShouldDisplayThirdValue(bool state);
 
 protected:
+	virtual void Paint();
 	virtual void OnThink();
 
 	void UpdateAmmoDisplays();
 	void UpdatePlayerAmmo( C_BasePlayer *player );
+
+	wchar_t m_DividerText[32];
 
 private:
 	CHandle< C_BaseCombatWeapon > m_hCurrentActiveWeapon;
 	CHandle< C_BaseEntity > m_hCurrentVehicle;
 	int		m_iAmmo;
 	int		m_iAmmo2;
+	int		m_iAmmo3;
+	CPanelAnimationVarAliasType( float, digit3_xpos, "digit3_xpos", "60", "proportional_float" );
+	CPanelAnimationVarAliasType( float, digit3_ypos, "digit3_ypos", "2", "proportional_float" );
+
+	int		m_iThirdValue;
+	bool m_bDisplayThirdValue;
 };
 
 DECLARE_HUDELEMENT( CHudAmmo );
@@ -60,6 +78,9 @@ CHudAmmo::CHudAmmo( const char *pElementName ) : BaseClass(NULL, "HudAmmo"), CHu
 	hudlcd->SetGlobalStat( "(ammo_secondary)", "0" );
 	hudlcd->SetGlobalStat( "(weapon_print_name)", "" );
 	hudlcd->SetGlobalStat( "(weapon_name)", "" );
+	
+	swprintf(m_DividerText, 100, L"%hs", "I");
+	SetShouldDisplayThirdValue(false);
 }
 
 //-----------------------------------------------------------------------------
@@ -69,6 +90,9 @@ void CHudAmmo::Init( void )
 {
 	m_iAmmo		= -1;
 	m_iAmmo2	= -1;
+	m_iAmmo3	= -1;
+	
+	SetShouldDisplayThirdValue(false);
 
 	wchar_t *tempString = g_pVGuiLocalize->Find("#Valve_Hud_AMMO");
 	if (tempString)
@@ -99,6 +123,8 @@ void CHudAmmo::Reset()
 	m_hCurrentVehicle = NULL;
 	m_iAmmo = 0;
 	m_iAmmo2 = 0;
+	m_iAmmo3 = 0;
+	SetShouldDisplayThirdValue(false);
 
 	UpdateAmmoDisplays();
 }
@@ -132,6 +158,7 @@ void CHudAmmo::UpdatePlayerAmmo( C_BasePlayer *player )
 	// get the ammo in our clip
 	int ammo1 = wpn->Clip1();
 	int ammo2;
+	int ammo3 = wpn->Clip2();
 	if (ammo1 < 0)
 	{
 		// we don't use clip ammo, just use the total ammo count
@@ -144,6 +171,7 @@ void CHudAmmo::UpdatePlayerAmmo( C_BasePlayer *player )
 		ammo2 = player->GetAmmoCount(wpn->GetPrimaryAmmoType());
 	}
 
+
 	hudlcd->SetGlobalStat( "(ammo_primary)", VarArgs( "%d", ammo1 ) );
 	hudlcd->SetGlobalStat( "(ammo_secondary)", VarArgs( "%d", ammo2 ) );
 
@@ -152,12 +180,14 @@ void CHudAmmo::UpdatePlayerAmmo( C_BasePlayer *player )
 		// same weapon, just update counts
 		SetAmmo(ammo1, true);
 		SetAmmo2(ammo2, true);
+		SetAmmo3(ammo3, true);
 	}
 	else
 	{
 		// diferent weapon, change without triggering
 		SetAmmo(ammo1, false);
 		SetAmmo2(ammo2, false);
+		SetAmmo3(ammo3, false);
 
 		// update whether or not we show the total ammo display
 		if (wpn->UsesClipsForAmmo1())
@@ -170,6 +200,15 @@ void CHudAmmo::UpdatePlayerAmmo( C_BasePlayer *player )
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponDoesNotUseClips");
 			SetShouldDisplaySecondaryValue(false);
 		}
+
+		
+		if (wpn->UsesClipsForAmmo2())
+		{
+			SetShouldDisplayThirdValue(true);
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponUsesClips");
+		}
+		else 
+			SetShouldDisplayThirdValue(false);
 
 		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("WeaponChanged");
 		m_hCurrentActiveWeapon = wpn;
@@ -309,6 +348,92 @@ void CHudAmmo::SetAmmo2(int ammo2, bool playAnimation)
 	}
 
 	SetSecondaryValue(ammo2);
+}
+
+
+//-----------------------------------------------------------------------------
+// Purpose: Updates Clip 2 ammo display
+//-----------------------------------------------------------------------------
+void CHudAmmo::SetAmmo3(int ammo3, bool playAnimation)
+{
+	if (ammo3 != m_iAmmo3)
+	{
+		if (ammo3 == 0)
+		{
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("AmmoEmpty");
+		}
+		else if (ammo3 < m_iAmmo3)
+		{
+			// ammo has decreased
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("AmmoDecreased");
+		}
+		else
+		{
+			// ammunition has increased
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("AmmoIncreased");
+		}
+
+		m_iAmmo3 = ammo3;
+	}
+
+	SetThirdValue(ammo3);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: set value for secondary clip
+//-----------------------------------------------------------------------------
+void CHudAmmo::SetThirdValue(int value)
+{
+	m_iThirdValue = value;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: data accessor
+//-----------------------------------------------------------------------------
+void CHudAmmo::SetShouldDisplayThirdValue(bool state)
+{
+	m_bDisplayThirdValue = state;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: data accessor
+//-----------------------------------------------------------------------------
+bool CHudAmmo::ShouldDisplayThirdValue()
+{
+	return m_bDisplayThirdValue;
+}
+//-----------------------------------------------------------------------------
+// Purpose: renders the vgui panel
+//-----------------------------------------------------------------------------
+void CHudAmmo::Paint()
+{
+	if (m_bDisplayThirdValue)
+	{
+		// draw our numbers
+		surface()->DrawSetTextColor(GetFgColor());
+		surface()->DrawSetTextFont(m_hNumberFont);
+		surface()->DrawSetTextPos(digit3_xpos - 10, digit3_ypos);
+		surface()->DrawUnicodeString( m_DividerText );
+		PaintNumbers(m_hNumberFont, digit3_xpos, digit3_ypos, m_iThirdValue);
+
+		// draw the overbright blur
+		for (float fl = m_flBlur; fl > 0.0f; fl -= 1.0f)
+		{
+			if (fl >= 1.0f)
+			{
+				PaintNumbers(m_hNumberGlowFont, digit3_xpos, digit3_ypos, m_iThirdValue);
+			}
+			else
+			{
+				// draw a percentage of the last one
+				Color col = GetFgColor();
+				col[3] *= fl;
+				surface()->DrawSetTextColor(col);
+				PaintNumbers(m_hNumberGlowFont, digit3_xpos, digit3_ypos, m_iThirdValue);
+			}
+		}
+	}
+	BaseClass::Paint();
 }
 
 //-----------------------------------------------------------------------------

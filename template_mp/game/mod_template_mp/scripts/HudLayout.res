@@ -502,4 +502,16 @@
 		"visible"		"0"
 		"enabled"		"0"
 	}
+	"HudTimer"
+	{
+		"ControlName"		"Label"
+		"fieldName" 		"HudTimer"
+		"visible" 		"1"
+		"enabled" 		"1"
+		"xpos"			"350"
+		"ypos"			"450"
+		"wide"	 		"320"
+		"tall"	 		"20"
+		"labelText"		"TIME COUNT"
+	}
 }

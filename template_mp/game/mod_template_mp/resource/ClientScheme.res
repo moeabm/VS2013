@@ -19,10 +19,17 @@ Scheme
 		"OrangeDim"			"255 176 0 120"
 		"LightOrange"		"188 112 0 128"
 		
+		
+		"DarkRed"			"120 30	 30 255"
+		"TransparentDarkRed"		"60 20	 20 200"
+		
 		"Red"				"192 28 0 100"
 		"Blue"				"220 240 255 100"
-		"Black"				"0 0 0 196"
-		"TransparentBlack"	"0 0 0 196"
+		"Black"				"0 0 0 255"
+		"DullWhite"			"220 200 200 255"
+		"OffWhite"			"230 220 220 255"
+		"White"				"255 255 255 255"
+		"TransparentBlack"	"0 0 0 230"
 		"TransparentLightBlack"	"0 0 0 90"
 
 		"Blank"				"0 0 0 0"
@@ -37,10 +44,10 @@ Scheme
 	// controls use these to determine their settings
 	BaseSettings
 	{
-		"FgColor"			"255 220 0 100"
-		"BgColor"			"0 0 0 76"
+		"FgColor"			"255 220 220 100"
+		"BgColor"			"TransparentDarkRed"
 
-		"Panel.FgColor"			"255 220 0 100"
+		"Panel.FgColor"			"255 220 220 100"
 		"Panel.BgColor"			"0 0 0 0"
 		
 		"BrightFg"		"255 220 0 255"
@@ -50,8 +57,8 @@ Scheme
 		"BrightDamagedFg"		"255 0 0 255"
 
 		// weapon selection colors
-		"SelectionNumberFg"		"255 220 0 255"
-		"SelectionTextFg"		"255 220 0 255"
+		"SelectionNumberFg"		"255 220 220 255"
+		"SelectionTextFg"		"255 220 220 255"
 		"SelectionEmptyBoxBg" 	"0 0 0 80"
 		"SelectionBoxBg" 		"0 0 0 80"
 		"SelectionSelectedBoxBg" "0 0 0 80"
@@ -59,7 +66,7 @@ Scheme
 		"ZoomReticleColor"	"255 220 0 255"
 
 		// HL1-style HUD colors
-		"Yellowish"			"255 160 0 255"
+		"Yellowish"			"255 160 160 255"
 		"Normal"			"255 208 64 255"
 		"Caution"			"255 48 0 255"
 
@@ -83,26 +90,26 @@ Scheme
 
 ///HERE
 				// vgui_controls color specifications
-		Border.Bright					"LightOrange"		// the lit side of a control
-		Border.Dark						"LightOrange"		// the dark/unlit side of a control
-		Border.Selection				"Blank"				// the additional border color for displaying the default/selected button
+		Border.Bright					"OffWhite"		// the lit side of a control
+		Border.Dark					"DarkRed"		// the dark/unlit side of a control
+		Border.Selection				"Black"				// the additional border color for displaying the default/selected button
 
-		Button.TextColor				"Orange"
+		Button.TextColor				"White"
 		Button.BgColor					"TransparentLightBlack"
-		Button.ArmedTextColor			"Orange"
+		Button.ArmedTextColor			"White"
 		Button.ArmedBgColor				"Red"
-		Button.DepressedTextColor		"Orange"
-		Button.DepressedBgColor			"Red"
+		Button.DepressedTextColor		"DarkRed"
+		Button.DepressedBgColor			"0 0 0 255"
 
-		CheckButton.TextColor			"Orange"
-		CheckButton.SelectedTextColor	"Orange"
+		CheckButton.TextColor			"White"
+		CheckButton.SelectedTextColor	"200 200 200 255"
 		CheckButton.BgColor				"TransparentBlack"
 		CheckButton.Border1  			"Border.Dark" 		// the left checkbutton border
 		CheckButton.Border2  			"Border.Bright"		// the right checkbutton border
-		CheckButton.Check				"Orange"				// color of the check itself
+		CheckButton.Check				"White"				// color of the check itself
 
-		ComboBoxButton.ArrowColor		"Orange"
-		ComboBoxButton.ArmedArrowColor	"Orange"
+		ComboBoxButton.ArrowColor		"White"
+		ComboBoxButton.ArmedArrowColor	"DarkRed"
 		ComboBoxButton.BgColor			"TransparentBlack"
 		ComboBoxButton.DisabledBgColor	"Blank"
 
@@ -121,70 +128,70 @@ Scheme
 		FrameSystemButton.BgColor		"Blank"
 		FrameSystemButton.Icon			""
 		FrameSystemButton.DisabledIcon	""
-		FrameTitleBar.TextColor			"Orange"
+		FrameTitleBar.TextColor			"White"
 		FrameTitleBar.BgColor			"Blank"
-		FrameTitleBar.DisabledTextColor	"Orange"
+		FrameTitleBar.DisabledTextColor	"Red"
 		FrameTitleBar.DisabledBgColor	"Blank"
 
-		GraphPanel.FgColor				"Orange"
+		GraphPanel.FgColor				"DarkRed"
 		GraphPanel.BgColor				"TransparentBlack"
 
-		Label.TextDullColor				"Orange"
-		Label.TextColor					"Orange"
-		Label.TextBrightColor			"Orange"
-		Label.SelectedTextColor			"Orange"
+		Label.TextDullColor				"DullWhite"
+		Label.TextColor					"OffWhite"
+		Label.TextBrightColor			"White"
+		Label.SelectedTextColor			"White"
 		Label.BgColor					"Blank"
 		Label.DisabledFgColor1			"Blank"
-		Label.DisabledFgColor2			"LightOrange"
+		Label.DisabledFgColor2			"Red"
 
-		ListPanel.TextColor					"Orange"
+		ListPanel.TextColor					"White"
 		ListPanel.BgColor					"TransparentBlack"
 		ListPanel.SelectedTextColor			"Black"
 		ListPanel.SelectedBgColor			"Red"
 		ListPanel.SelectedOutOfFocusBgColor	"Red"
-		ListPanel.EmptyListInfoTextColor	"Orange"
+		ListPanel.EmptyListInfoTextColor	"DarkRed"
 
-		Menu.TextColor					"Orange"
+		Menu.TextColor					"White"
 		Menu.BgColor					"TransparentBlack"
-		Menu.ArmedTextColor				"Orange"
+		Menu.ArmedTextColor				"White"
 		Menu.ArmedBgColor				"Red"
 		Menu.TextInset					"6"
 
-		Chat.TypingText					"Orange"
+		Chat.TypingText					"DarkRed"
 
-		Panel.FgColor					"OrangeDim"
+		Panel.FgColor					"TransparentDarkRed"
 		Panel.BgColor					"blank"
 
-		ProgressBar.FgColor				"Orange"
+		ProgressBar.FgColor				"DarkRed"
 		ProgressBar.BgColor				"TransparentBlack"
 
-		PropertySheet.TextColor			"Orange"
-		PropertySheet.SelectedTextColor	"Orange"
+		PropertySheet.TextColor			"DarkRed"
+		PropertySheet.SelectedTextColor	"White"
 		PropertySheet.TransitionEffectTime	"0.25"	// time to change from one tab to another
 
-		RadioButton.TextColor			"Orange"
-		RadioButton.SelectedTextColor	"Orange"
+		RadioButton.TextColor			"DarkRed"
+		RadioButton.SelectedTextColor	"DarkRed"
 
-		RichText.TextColor				"Orange"
+		RichText.TextColor				"White"
 		RichText.BgColor				"Blank"
-		RichText.SelectedTextColor		"Orange"
+		RichText.SelectedTextColor		"DarkRed"
 		RichText.SelectedBgColor		"Blank"
 
-				ScrollBarButton.FgColor				"Orange"
+				ScrollBarButton.FgColor				"DarkRed"
 		ScrollBarButton.BgColor				"Blank"
-		ScrollBarButton.ArmedFgColor		"Orange"
+		ScrollBarButton.ArmedFgColor		"DarkRed"
 		ScrollBarButton.ArmedBgColor		"Blank"
-		ScrollBarButton.DepressedFgColor	"Orange"
+		ScrollBarButton.DepressedFgColor	"DarkRed"
 		ScrollBarButton.DepressedBgColor	"Blank"
 
 		ScrollBarSlider.FgColor				"Blank"		// nob color
 		ScrollBarSlider.BgColor				"Blank"		// slider background color
 
-		SectionedListPanel.HeaderTextColor	"Orange"
+		SectionedListPanel.HeaderTextColor	"DarkRed"
 		SectionedListPanel.HeaderBgColor	"Blank"
 		SectionedListPanel.DividerColor		"Black"
-		SectionedListPanel.TextColor		"Orange"
-		SectionedListPanel.BrightTextColor	"Orange"
+		SectionedListPanel.TextColor		"OffWhite"
+		SectionedListPanel.BrightTextColor	"White"
 		SectionedListPanel.BgColor			"TransparentLightBlack"
 		SectionedListPanel.SelectedTextColor			"Black"
 		SectionedListPanel.SelectedBgColor				"Red"
@@ -197,17 +204,17 @@ Scheme
 		Slider.DisabledTextColor1	"117 117 117 255"
 		Slider.DisabledTextColor2	"30 30 30 255"
 
-		TextEntry.TextColor			"Orange"
+		TextEntry.TextColor			"OffWhite"
 		TextEntry.BgColor			"TransparentBlack"
-		TextEntry.CursorColor		"Orange"
-		TextEntry.DisabledTextColor	"Orange"
+		TextEntry.CursorColor		"OffWhite"
+		TextEntry.DisabledTextColor	"DullWhite"
 		TextEntry.DisabledBgColor	"Blank"
 		TextEntry.SelectedTextColor	"Black"
 		TextEntry.SelectedBgColor	"Red"
 		TextEntry.OutOfFocusSelectedBgColor	"Red"
 		TextEntry.FocusEdgeColor	"TransparentBlack"
 
-		ToggleButton.SelectedTextColor	"Orange"
+		ToggleButton.SelectedTextColor	"White"
 
 		Tooltip.TextColor			"TransparentBlack"
 		Tooltip.BgColor				"Red"
@@ -217,7 +224,7 @@ Scheme
 		WizardSubPanel.BgColor		"Blank"
 
 		// scheme-specific colors
-		"FgColor"		"Orange"
+		"FgColor"		"DarkRed"
 		"BgColor"		"TransparentBlack"
 
 		"ViewportBG"		"Blank"
@@ -225,7 +232,7 @@ Scheme
 		"team1"			"255 64 64 255" // CT's
 		"team2"			"153 204 255 255" // T's
 
-		"MapDescriptionText"	"Orange" // the text used in the map description window
+		"MapDescriptionText"	"DarkRed" // the text used in the map description window
 		"CT_Blue"			"153 204 255 255"
 		"T_Red"				"255 64 64 255"
 		"Hostage_Yellow"	"Panel.FgColor"
