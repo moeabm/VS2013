@@ -51,6 +51,9 @@ public:
 	virtual void OnThink();
 			void MsgFunc_Damage( bf_read &msg );
 
+protected:
+	virtual void Paint();
+
 private:
 	// old variables
 	int		m_iHealth;
@@ -87,6 +90,8 @@ void CHudHealth::Reset()
 	m_bitsDamage	= 0;
 
 	wchar_t *tempString = g_pVGuiLocalize->Find("#Valve_Hud_HEALTH");
+	
+	swprintf(tempString, sizeof(tempString), L"%hs", "i");
 
 	if (tempString)
 	{
@@ -97,6 +102,8 @@ void CHudHealth::Reset()
 		SetLabelText(L"HEALTH");
 	}
 	SetDisplayValue(m_iHealth);
+	
+	SetPaintBackgroundEnabled(false);
 }
 
 //-----------------------------------------------------------------------------
@@ -167,4 +174,16 @@ void CHudHealth::MsgFunc_Damage( bf_read &msg )
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("HealthDamageTaken");
 		}
 	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: renders the vgui panel
+//-----------------------------------------------------------------------------
+void CHudHealth::Paint()
+{
+	surface()->DrawSetTextFont(m_hTextGlowFont);
+	surface()->DrawSetTextColor(GetFgColor());
+	surface()->DrawSetTextPos(text_xpos, text_ypos);
+	surface()->DrawUnicodeString( m_LabelText );
+	BaseClass::Paint();
 }

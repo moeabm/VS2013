@@ -52,7 +52,7 @@ WeaponData
 		"ammo"
 		{
 				"font"		"WeaponIcons"
-				"character"	"s"
+				"character"	"o"
 		}
 		"crosshair"
 		{

@@ -314,40 +314,40 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana"
-				"tall"		"9"
+				"name"		"EB Garamond 12 SC"
+				"tall"		"18"
 				"weight"	"700"
 				"antialias" "1"
 				"yres"	"1 599"
 			}
 			"2"
 			{
-				"name"		"Verdana"
-				"tall"		"12"
+				"name"		"EB Garamond 12 SC"
+				"tall"		"21"
 				"weight"	"700"
 				"antialias" "1"
 				"yres"	"600 767"
 			}
 			"3"
 			{
-				"name"		"Verdana"
-				"tall"		"14"
+				"name"		"EB Garamond 12 SC"
+				"tall"		"25"
 				"weight"	"900"
 				"antialias" "1"
 				"yres"	"768 1023"
 			}
 			"4"
 			{
-				"name"		"Verdana"
-				"tall"		"20"
+				"name"		"EB Garamond 12 SC"
+				"tall"		"31"
 				"weight"	"900"
 				"antialias" "1"
 				"yres"	"1024 1199"
 			}
 			"5"
 			{
-				"name"		"Verdana"
-				"tall"		"24"
+				"name"		"EB Garamond 12 SC"
+				"tall"		"35"
 				"weight"	"900"
 				"antialias" "1"
 				"yres"	"1200 10000"
@@ -358,7 +358,7 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"12"
 				"weight"	"0"
 				"range"		"0x0000 0x017F"
@@ -366,7 +366,7 @@ Scheme
 			}
 			"2"
 			{
-				"name"		"Verdana"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"13"
 				"weight"	"0"
 				"range"		"0x0000 0x017F"
@@ -374,7 +374,7 @@ Scheme
 			}
 			"3"
 			{
-				"name"		"Verdana"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"14"
 				"weight"	"0"
 				"range"		"0x0000 0x017F"
@@ -383,7 +383,7 @@ Scheme
 			}
 			"4"
 			{
-				"name"		"Verdana"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"20"
 				"weight"	"0"
 				"range"		"0x0000 0x017F"
@@ -392,7 +392,7 @@ Scheme
 			}
 			"5"
 			{
-				"name"		"Verdana"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"24"
 				"weight"	"0"
 				"range"		"0x0000 0x017F"
@@ -401,7 +401,7 @@ Scheme
 			}
 			"6"
 			{
-				"name"		"Arial"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"12"
 				"range" 		"0x0000 0x00FF"
 				"weight"		"0"
@@ -411,7 +411,7 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"12"
 				"weight"	"0"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
@@ -419,7 +419,7 @@ Scheme
 			}
 			"2"
 			{
-				"name"		"Verdana"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"13"
 				"weight"	"0"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
@@ -427,7 +427,7 @@ Scheme
 			}
 			"3"
 			{
-				"name"		"Verdana"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"14"
 				"weight"	"0"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
@@ -436,7 +436,7 @@ Scheme
 			}
 			"4"
 			{
-				"name"		"Verdana"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"20"
 				"weight"	"0"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
@@ -445,7 +445,7 @@ Scheme
 			}
 			"5"
 			{
-				"name"		"Verdana"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"24"
 				"weight"	"0"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
@@ -454,14 +454,14 @@ Scheme
 			}
 			"6"
 			{
-				"name"		"Verdana"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"12"
 				"range" 		"0x0000 0x00FF"
 				"weight"		"0"
 			}
 			"7"
 			{
-				"name"		"Arial"
+				"name"		"EB Garamond 12 SC"
 				"tall"		"11"
 				"range" 		"0x0000 0x00FF"
 				"weight"		"0"
@@ -471,8 +471,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana Bold"
-				"tall"		"18"
+				"name"		"EB Garamond 12 SC"
+				"tall"		"35"
 				"weight"	"500"
 			}
 		}
@@ -480,10 +480,10 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"HalfLife2"
+				"name"		"VSHUD"
 				"tall"		"64"
 				"weight"	"0"
-				"antialias" "1"
+				"antialias" 	"1"
 				"additive"	"1"
 				"custom"	"1"
 			}
@@ -492,12 +492,12 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"HalfLife2"
+				"name"		"VSHUD"
 				"tall"		"64"
 				"weight"	"0"
-				"antialias" "1"
+				"antialias" 	"1"
 				"blur"		"5"
-				"scanlines"	"2"
+				"scanlines"	"0"
 				"additive"	"1"
 				"custom"	"1"
 			}
@@ -527,6 +527,32 @@ Scheme
 				"antialias" "1"
 				"additive"	"1"
 				"custom"	"1" [!$OSX]
+			}
+		}
+		HudNumbersLabel
+		{
+			"1"
+			{
+				"name"		"VSHUD"
+				"tall"		"48"
+				"weight"	"0"
+				"antialias" "1"
+				"additive"	"1"
+				"custom"	"1"
+			}
+		}
+		HudNumbersLabelGlow
+		{
+			"1"
+			{
+				"name"		"VSHUD"
+				"tall"		"48"
+				"weight"	"0"
+				"blur"		"4"
+				"scanlines" "2"
+				"antialias" "1"
+				"additive"	"1"
+				"custom"	"1"
 			}
 		}
 		HudNumbers
@@ -572,8 +598,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana"
-				"tall"		"11"
+				"name"		"EB Garamond 12 SC"
+				"tall"		"24"
 				"weight"	"700"
 				"antialias" "1"
 				"additive"	"1"
@@ -583,9 +609,9 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana" [!$OSX]
+				"name"		"EB Garamond 12 SC" [!$OSX]
 				"name"		"Helvetica Bold" [$OSX]
-				"tall"		"14"
+				"tall"		"20"
 				"weight"	"1000"
 				"antialias" "1"
 				"additive"	"1"
@@ -595,9 +621,9 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana" [!$OSX]
+				"name"		"EB Garamond 12 SC" [!$OSX]
 				"name"		"Helvetica" [$OSX]
-				"tall"		"11"
+				"tall"		"24"
 				"weight"	"0"
 				"antialias" "1"
 				"additive"	"1"
@@ -607,40 +633,40 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana"
-				"tall"		"8"
+				"name"		"EB Garamond 12 SC"
+				"tall"		"20"
 				"weight"	"700"
 				"antialias" "1"
 				"yres"	"1 599"
 			}
 			"2"
 			{
-				"name"		"Verdana"
-				"tall"		"10"
+				"name"		"EB Garamond 12 SC"
+				"tall"		"24"
 				"weight"	"700"
 				"antialias" "1"
 				"yres"	"600 767"
 			}
 			"3"
 			{
-				"name"		"Verdana"
-				"tall"		"12"
+				"name"		"EB Garamond 12 SC"
+				"tall"		"26"
 				"weight"	"900"
 				"antialias" "1"
 				"yres"	"768 1023"
 			}
 			"4"
 			{
-				"name"		"Verdana"
-				"tall"		"16"
+				"name"		"EB Garamond 12 SC"
+				"tall"		"28"
 				"weight"	"900"
 				"antialias" "1"
 				"yres"	"1024 1199"
 			}
 			"5"
 			{
-				"name"		"Verdana"
-				"tall"		"17"
+				"name"		"EB Garamond 12 SC"
+				"tall"		"30"
 				"weight"	"1000"
 				"antialias" "1"
 				"yres"	"1200 10000"
@@ -1583,6 +1609,8 @@ Scheme
 	// specifies all the custom (non-system) font files that need to be loaded to service the above described fonts
 	CustomFontFiles
 	{
+		"1"		"resource/VSHUD.ttf"
+		"1"		"resource/EBGaramond.ttf"
 		"1"		"resource/HALFLIFE2.ttf"
 		"1"		"resource/HL2MP.ttf"
 		"2"		"resource/HL2crosshairs.ttf"

@@ -3,7 +3,7 @@
 WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
-	"printname"	"#HL2_Pistol"
+	"printname"	"#VS_Uzi"
 	"viewmodel"			"models/weapons/v_pistol.mdl"
 	"playermodel"		"models/weapons/w_pistol.mdl"
 	"anim_prefix"		"pistol"
@@ -40,17 +40,17 @@ WeaponData
 		"weapon"
 		{
 				"font"		"WeaponIcons"
-				"character"	"d"
+				"character"	"h"
 		}
 		"weapon_s"
 		{	
 				"font"		"WeaponIconsSelected"
-				"character"	"d"
+				"character"	"h"
 		}
 		"ammo"
 		{
 				"font"		"WeaponIcons"
-				"character"	"p"
+				"character"	"n"
 		}
 		"crosshair"
 		{

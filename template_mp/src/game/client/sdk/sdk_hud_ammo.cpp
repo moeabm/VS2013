@@ -79,7 +79,7 @@ CHudAmmo::CHudAmmo( const char *pElementName ) : BaseClass(NULL, "HudAmmo"), CHu
 	hudlcd->SetGlobalStat( "(weapon_print_name)", "" );
 	hudlcd->SetGlobalStat( "(weapon_name)", "" );
 	
-	swprintf(m_DividerText, 100, L"%hs", "I");
+	swprintf(m_DividerText, 100, L"%hs", "|");
 	SetShouldDisplayThirdValue(false);
 }
 
@@ -95,6 +95,7 @@ void CHudAmmo::Init( void )
 	SetShouldDisplayThirdValue(false);
 
 	wchar_t *tempString = g_pVGuiLocalize->Find("#Valve_Hud_AMMO");
+
 	if (tempString)
 	{
 		SetLabelText(tempString);
@@ -174,6 +175,15 @@ void CHudAmmo::UpdatePlayerAmmo( C_BasePlayer *player )
 
 	hudlcd->SetGlobalStat( "(ammo_primary)", VarArgs( "%d", ammo1 ) );
 	hudlcd->SetGlobalStat( "(ammo_secondary)", VarArgs( "%d", ammo2 ) );
+	
+	if(wpn){
+		
+		wchar_t *tempString = new wchar_t[32];
+		swprintf(tempString, sizeof(tempString)-1, L"%hc", wpn->GetSpriteAmmo()->cCharacterInFont );
+		
+		SetLabelText(tempString);
+		delete tempString;
+	}
 
 	if (wpn == m_hCurrentActiveWeapon)
 	{
@@ -407,13 +417,16 @@ bool CHudAmmo::ShouldDisplayThirdValue()
 //-----------------------------------------------------------------------------
 void CHudAmmo::Paint()
 {
+	//Should we draw Clip2 ammo?
 	if (m_bDisplayThirdValue)
 	{
-		// draw our numbers
+		//Draw divider
 		surface()->DrawSetTextColor(GetFgColor());
-		surface()->DrawSetTextFont(m_hNumberFont);
-		surface()->DrawSetTextPos(digit3_xpos - 10, digit3_ypos);
+		surface()->DrawSetTextFont(m_hTextFont);
+		surface()->DrawSetTextPos(digit_xpos+ 7 + (digit3_xpos - digit_xpos) / 2 , digit3_ypos);
 		surface()->DrawUnicodeString( m_DividerText );
+
+		// draw clip 2 value
 		PaintNumbers(m_hNumberFont, digit3_xpos, digit3_ypos, m_iThirdValue);
 
 		// draw the overbright blur

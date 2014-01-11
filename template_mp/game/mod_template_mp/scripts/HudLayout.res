@@ -13,7 +13,7 @@
 		"PaintBackgroundType"	"2"
 		
 		"text_xpos" "8"
-		"text_ypos" "20"
+		"text_ypos" "-5"
 		"digit_xpos" "50"
 		"digit_ypos" "2"
 	}
@@ -112,11 +112,13 @@
 		"PaintBackgroundType"	"2"
 
 		"text_xpos" "8"
-		"text_ypos" "20"
+		"text_ypos" "-5"
 		"digit_xpos" "44"
 		"digit_ypos" "2"
 		"digit2_xpos" "98"
 		"digit2_ypos" "16"
+		"digit3_xpos" "65"
+		"digit3_ypos" "2"
 	}
 
 	HudAmmoSecondary

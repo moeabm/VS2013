@@ -59,10 +59,11 @@ protected:
 	CPanelAnimationVar( vgui::HFont, m_hNumberFont, "NumberFont", "HudNumbers" );
 	CPanelAnimationVar( vgui::HFont, m_hNumberGlowFont, "NumberGlowFont", "HudNumbersGlow" );
 	CPanelAnimationVar( vgui::HFont, m_hSmallNumberFont, "SmallNumberFont", "HudNumbersSmall" );
-	CPanelAnimationVar( vgui::HFont, m_hTextFont, "TextFont", "Default" );
+	CPanelAnimationVar( vgui::HFont, m_hTextFont, "TextFont", "HudNumbersLabel" );
+	CPanelAnimationVar( vgui::HFont, m_hTextGlowFont, "TextGlowFont", "HudNumbersLabelGlow" );
 
 	CPanelAnimationVarAliasType( float, text_xpos, "text_xpos", "8", "proportional_float" );
-	CPanelAnimationVarAliasType( float, text_ypos, "text_ypos", "20", "proportional_float" );
+	CPanelAnimationVarAliasType( float, text_ypos, "text_ypos", "0", "proportional_float" );
 	CPanelAnimationVarAliasType( float, digit_xpos, "digit_xpos", "50", "proportional_float" );
 	CPanelAnimationVarAliasType( float, digit_ypos, "digit_ypos", "2", "proportional_float" );
 	CPanelAnimationVarAliasType( float, digit2_xpos, "digit2_xpos", "98", "proportional_float" );

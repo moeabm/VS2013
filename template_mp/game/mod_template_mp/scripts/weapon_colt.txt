@@ -37,17 +37,17 @@ WeaponData
 		"weapon"
 		{
 				"font"		"WeaponIcons"
-				"character"	"c"
+				"character"	"m"
 		}
 		"weapon_s"
 		{	
 				"font"		"WeaponIconsSelected"
-				"character"	"c"
+				"character"	"m"
 		}
 		"ammo"
 		{
 				"font"		"WeaponIcons"
-				"character"	"c"
+				"character"	"n"
 		}
 		"ammo2"
 		{

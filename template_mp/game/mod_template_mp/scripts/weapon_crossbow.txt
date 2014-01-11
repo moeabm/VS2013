@@ -3,7 +3,7 @@
 WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
-	"printname"		"#HL2_Crossbow"
+	"printname"		"#VS_Crossbow"
 	"viewmodel"		"models/weapons/v_crossbow.mdl"
 	"playermodel"	"models/weapons/w_crossbow.mdl"
 	"anim_prefix"	"bow"
@@ -45,7 +45,7 @@ WeaponData
 		"ammo"
 		{
 				"font"		"WeaponIcons"
-				"character"	"w"
+				"character"	"p"
 		}
 		"crosshair"
 		{
