@@ -316,9 +316,13 @@ void CSDKPlayer::PostThink()
 	}
 
 	if(ShouldTakeSunDmg()){
-		TakeDamage( CTakeDamageInfo( GetContainingEntity(INDEXENT(0)), GetContainingEntity(INDEXENT(0)), 1, DMG_SLOWBURN ) );
-		DispatchParticleEffect( "blood_impact_red_01", GetAbsOrigin(), QAngle(0,0,1), this);
-		m_NextEnvDmg = gpGlobals->curtime + 1.0f;
+		TakeDamage( CTakeDamageInfo( GetContainingEntity(INDEXENT(0)), GetContainingEntity(INDEXENT(0)), 2.0, DMG_SLOWBURN ) );
+		Ignite(1.0f,false,1.0f);
+		//DispatchParticleEffect( "blood_impact_red_01", GetAbsOrigin(), QAngle(0,0,1));
+		m_NextEnvDmg = gpGlobals->curtime + 0.10f;
+	}
+	else {
+		Extinguish();
 	}
 	QAngle angles = GetLocalAngles();
 	angles[PITCH] = 0;
@@ -396,11 +400,11 @@ void CSDKPlayer::Spawn()
 {
 	
 	engine->ClientCommand( edict(), "sv_cheats 1" );
-	engine->ClientCommand( edict(), "cl_entityreport 1" );
-	engine->ClientCommand( edict(), "bind f1 \"rcbot waypoint add\"");
-	engine->ClientCommand( edict(), "bind f2 \"rcbot waypoint add jump\"");
-	engine->ClientCommand( edict(), "bind f4 \"rcbot waypoint delete\"");
-	engine->ClientCommand( edict(), "bind f5 \"rcbot waypoint save\"");
+	//engine->ClientCommand( edict(), "cl_entityreport 1" );
+	//engine->ClientCommand( edict(), "bind f1 \"rcbot waypoint add\"");
+	//engine->ClientCommand( edict(), "bind f2 \"rcbot waypoint add jump\"");
+	//engine->ClientCommand( edict(), "bind f4 \"rcbot waypoint delete\"");
+	//engine->ClientCommand( edict(), "bind f5 \"rcbot waypoint save\"");
 	engine->ClientCommand( edict(), "rcbot waypoint on");
 	engine->ClientCommand( edict(), "rcbot pathwaypoint on");
 	
@@ -664,7 +668,14 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 	if(SDKGameRules()->GetRoundState() != ROUND_ACTIVE){
 		return 0;
 	}
+	
+	Msg("dmgtype: %d\n", info.GetDamageType());
+	Msg("Dmgtype: %d\n", DMG_BURN);
 
+	//turning off burn damage so it doesnt override our sun burn
+	if(info.GetDamageType() & DMG_BURN){
+		return 0;
+	}
 	if ( !pInflictor || m_takedamage == DAMAGE_NO)
 		return 0;
 
@@ -750,9 +761,14 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 		// AM: if player is a vampire, dont kill just floor them.
 		if(GetTeamNumber() == SDK_TEAM_BLUE && m_iHealth <= info.GetDamage()){
 			//DO LIVE STAKE?
-			if(pInflictor->IsPlayer() && ((CSDKPlayer *)pInflictor)->GetActiveSDKWeapon()->IsMeleeWeapon() && info.GetDamageType() & DMG_SLASH){ // IsMeleeWeapon() is defined in weapon script
-				int DMGTYPE = info.GetDamageType();
-				Msg("DmgType: %d", DMGTYPE);
+			if(pInflictor->IsWorld() && info.GetDamageType() & DMG_SLOWBURN){
+				return CBaseCombatCharacter::OnTakeDamage( info );
+			}
+			if(pInflictor->IsPlayer() && 
+				((CSDKPlayer *)pInflictor)->GetActiveSDKWeapon()->IsMeleeWeapon() && 
+				info.GetDamageType() & DMG_SLASH)
+			{
+				// IsMeleeWeapon() is defined in weapon script
 				return CBaseCombatCharacter::OnTakeDamage( info );
 			}
 			if(State_Get() == STATE_ACTIVE){
@@ -762,6 +778,9 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 				m_iHealth = 0;
 				return 0;
 			}
+			//If we got here then we've been staked.. do vamp death effect
+			//DispatchParticleEffect( "blood_impact_red_01", GetAbsOrigin(), QAngle(0,0,1));
+			//Ignite(30.0f,false);
 		}
 		return CBaseCombatCharacter::OnTakeDamage( info );
 	}

@@ -17,6 +17,23 @@
 		"digit_xpos" "50"
 		"digit_ypos" "2"
 	}
+	
+	HudTimer
+	{
+		"ControlName"		"HudTimer"
+		"xpos"		"c-wide"
+		"ypos"		"432"
+		"wide"		"64"
+		"tall"		"32"
+		"visible" 		"1"
+		"enabled" 		"1"
+		
+		"PaintBackgroundType"	"2"
+		
+		"digit_xpos" "2"
+		"digit_ypos" "2"
+		
+	}
 
 	TargetID
 	{
@@ -87,12 +104,11 @@
 		"ypos"	"432"
 		"wide"	"108"
 		"tall"  "36"
-		"visible" "1"
+		"visible" "0"
 		"enabled" "1"
 
 		"PaintBackgroundType"	"2"
 
-		
 		"text_xpos" "8"
 		"text_ypos" "20"
 		"digit_xpos" "50"
@@ -503,17 +519,5 @@
 		"fieldName"		"CHudVote"
 		"visible"		"0"
 		"enabled"		"0"
-	}
-	"HudTimer"
-	{
-		"ControlName"		"Label"
-		"fieldName" 		"HudTimer"
-		"visible" 		"1"
-		"enabled" 		"1"
-		"xpos"			"350"
-		"ypos"			"450"
-		"wide"	 		"320"
-		"tall"	 		"20"
-		"labelText"		"TIME COUNT"
 	}
 }

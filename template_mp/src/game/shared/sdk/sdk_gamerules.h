@@ -182,6 +182,7 @@ public:
 public:
 	float GetMapRemainingTime();	// time till end of map, -1 if timelimit is disabled
 	float GetMapElapsedTime();		// How much time has elapsed since the map started.
+	float GetRoundTimerRemaining();
 
 private:
 	CNetworkVar( float, m_flGameStartTime );

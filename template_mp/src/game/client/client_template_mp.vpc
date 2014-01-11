@@ -91,7 +91,8 @@ $Project "Client (SDK)"
 				$File	"sdk\sdk_hud_stamina.cpp"
 				$File	"sdk\sdk_hud_stamina.h"
 				$File	"sdk\sdk_hud_targetid.cpp"
-				$File	"sdk\sdk_hud_weaponselection.cpp"				
+				$File	"sdk\sdk_hud_weaponselection.cpp"	
+				$File	"sdk\sdk_hud_timer.cpp"					
 			}
 			
 			$Folder	"Player"

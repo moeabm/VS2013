@@ -52,6 +52,7 @@ void CHudBaseTimer::Paint()
 	
 	surface()->DrawSetTextColor(GetFgColor());
 	PaintTime( m_hNumberFont, digit_xpos, digit_ypos, m_iMinutes, m_iSeconds );
+	PaintTime( m_hNumberGlowFont, digit_xpos, digit_ypos, m_iMinutes, m_iSeconds );
 
 	// draw the overbright blur
 	for (float fl = m_flBlur; fl > 0.0f; fl -= 1.0f)

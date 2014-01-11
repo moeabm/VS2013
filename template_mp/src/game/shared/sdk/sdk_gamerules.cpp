@@ -80,8 +80,10 @@ REGISTER_GAMERULES_CLASS( CSDKGameRules );
 BEGIN_NETWORK_TABLE_NOBASE( CSDKGameRules, DT_SDKGameRules )
 #if defined ( CLIENT_DLL )
 		RecvPropFloat( RECVINFO( m_flGameStartTime ) ),
+		RecvPropFloat( RECVINFO( m_flRoundTimer ) ),
 #else
 		SendPropFloat( SENDINFO( m_flGameStartTime ), 32, SPROP_NOSCALE ),
+		SendPropFloat( SENDINFO( m_flRoundTimer ), 32, SPROP_NOSCALE ),
 #endif
 END_NETWORK_TABLE()
 
@@ -1451,6 +1453,13 @@ float CSDKGameRules::GetMapElapsedTime( void )
 {
 	return gpGlobals->curtime;
 }
+
+float CSDKGameRules::GetRoundTimerRemaining( void )
+{
+	return m_flRoundTimer + cvar->FindVar("vs_roundlength")->GetFloat() - gpGlobals->curtime;
+}
+
+
 #ifndef CLIENT_DLL
 #ifdef SDK_USE_ROUNDS
 

@@ -567,6 +567,36 @@ Scheme
 				"custom"	"1"
 			}
 		}
+		
+		HudTimer
+		{
+			"1"
+			{
+				"name"		"EB Garamond 12 SC" [!$OSX]
+				"name"		"Helvetica" [$OSX]
+				"tall"		"24"
+				"weight"	"0"
+				"antialias" 	"1"
+				"additive"	"1"
+				"custom"	"1"
+			}
+		}
+		
+		HudTimerGlow
+		{
+			"1"
+			{
+				"name"		"EB Garamond 12 SC" [!$OSX]
+				"name"		"Helvetica" [$OSX]
+				"tall"		"24"
+				"weight"	"0"
+				"blur"		"4"
+				"antialias" 	"1"
+				"additive"	"1"
+				"custom"	"1"
+			}
+		}
+		
 		HudNumbersGlow
 		{
 			"1"

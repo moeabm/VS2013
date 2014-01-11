@@ -96,18 +96,21 @@ void CWeaponPoolCue::SecondaryAttack()
 			Vector hitDirection;
 			pPlayer->EyeVectors( &hitDirection, NULL, NULL );
 			VectorNormalize( hitDirection );
+			hitDirection +=  Vector(0,0,0.5);
 
-			Vector hitForce = hitDirection * 700.0f;
-			
-			pHitPlayer->SetAbsOrigin(pHitPlayer->GetAbsOrigin() + Vector(0,0,10));
-			pHitPlayer->SetBaseVelocity(hitForce);
-
+			Vector hitForce = hitDirection * 500.0f;
 			
 #ifndef CLIENT_DLL
 			CTakeDamageInfo info( GetOwner(), GetOwner(), 10.0f, DMG_CLUB);
 			info.SetDamageForce(hitForce);
+			float tempFriction = pHitPlayer->GetFriction();
+			pHitPlayer->SetFriction(0.0);
+			//pHitPlayer->SetAbsOrigin(pHitPlayer->GetAbsOrigin() + Vector(0,0,10));
+			pHitPlayer->SetBaseVelocity(hitForce);
 			pHitPlayer->TakeDamage(info);
+			pHitPlayer->SetFriction(tempFriction);
 #endif
+			
 		}
 		
 		WeaponSound( MELEE_HIT );
