@@ -989,7 +989,7 @@ CBot :: CBot()
 void CBot :: init (bool bVarInit)
 {
 	//m_bNeedToInit = false; // doing this now
-
+	m_flDuckJumpStart = engine->Time();
 	m_iAmmo = NULL;
 	m_pButtons = NULL;
 	m_pNavigator = NULL;
@@ -2626,6 +2626,19 @@ void CBot :: duck ( bool hold )
 		m_pButtons->holdButton(IN_DUCK,0.0/* time to press*/,1.0/* hold time*/,0.5/*let go time*/); 
 }
 
+void CBot::duckjump ()
+{
+	if ( m_pButtons->canPressButton(IN_JUMP) && 
+	m_flDuckJumpStart + 3.0f < engine->Time() )
+	{		
+		
+		m_flDuckJumpStart = engine->Time();
+		m_pButtons->holdButton(IN_DUCK,0.0/* time to press*/,0.3/* hold time*/,0.5/*let go time*/); 
+		m_pButtons->holdButton(IN_JUMP,0.2/* time to press*/,0.5/* hold time*/,0.5/*let go time*/); 
+		// do the trademark jump & duck
+	}
+	
+}
 // TO DO: perceptron method
 bool CBot::wantToFollowEnemy ()
 {

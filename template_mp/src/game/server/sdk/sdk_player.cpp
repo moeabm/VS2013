@@ -668,10 +668,6 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 	if(SDKGameRules()->GetRoundState() != ROUND_ACTIVE){
 		return 0;
 	}
-	
-	Msg("dmgtype: %d\n", info.GetDamageType());
-	Msg("Dmgtype: %d\n", DMG_BURN);
-
 	//turning off burn damage so it doesnt override our sun burn
 	if(info.GetDamageType() & DMG_BURN){
 		return 0;

@@ -33,6 +33,15 @@
 
 #include "bot_utility.h"
 
+enum
+{
+	VS_TEAM_SPEC = 0,
+	VS_TEAM_VAMP = 2,
+	VS_TEAM_SLAY,
+
+	VS_MAX_TEAMS
+};
+
 // bot for HLDM
 class CHLDMBot : public CBot
 {

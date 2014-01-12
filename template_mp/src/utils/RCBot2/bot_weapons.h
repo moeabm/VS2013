@@ -117,6 +117,23 @@ enum
 	HL2DM_WEAPON_MAX
 };
 
+
+enum
+{
+	VS_WEAPON_CLAWS1 = 0,
+	VS_WEAPON_CLAWS2,
+	VS_WEAPON_CLAWS3,
+	VS_WEAPON_CRUCIFIX,
+	VS_WEAPON_SHOTGUNFD1,
+	VS_WEAPON_SHOTGUNFD2,
+	VS_WEAPON_POOLCUE,
+	VS_WEAPON_THUNDER5,
+	VS_WEAPON_WINCHESTER,
+	VS_WEAPON_COLT,	
+	VS_WEAPON_UZI,
+	VS_WEAPON_CROSSBOW,
+	VS_WEAPON_MAX
+};
 enum
 {
 	DOD_WEAPON_AMERKNIFE = 0,
@@ -172,6 +189,7 @@ enum
 
 extern WeaponsData_t TF2Weaps[];
 extern WeaponsData_t HL2DMWeaps[];
+extern WeaponsData_t VSWeaps[];
 extern WeaponsData_t DODWeaps[];
 
 class CWeapon

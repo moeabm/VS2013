@@ -715,6 +715,7 @@ public:
 	void secondaryAttack(bool bHold=false);
 	void jump ();
 	void duck ( bool hold = false );
+	void duckjump ();
 	void use ();
 	void reload();
 
@@ -844,6 +845,10 @@ public:
 	virtual bool walkingTowardsWaypoint ( CWaypoint *pWaypoint, bool *bOffsetApplied, Vector &vOffset );
 
 protected:
+
+	//AM duckjumping
+	bool m_bIsDuckJumping;
+	float m_flDuckJumpStart;
 
 	inline void setLookAt ( Vector vNew )
 	{

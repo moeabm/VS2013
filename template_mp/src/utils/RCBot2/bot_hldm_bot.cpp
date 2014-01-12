@@ -443,8 +443,13 @@ bool CHLDMBot :: handleAttack ( CBotWeapon *pWeapon, edict_t *pEnemy )
 
 		clearFailedWeaponSelect();
 
-		if ( pWeapon->isMelee() )
+		if ( pWeapon->isMelee() ){
 			setMoveTo(CBotGlobals::entityOrigin(pEnemy));
+			if(getTeam() == VS_TEAM_VAMP){
+
+				duckjump();
+			}
+		}
 
 		if ( (pWeapon->getID() == HL2DM_WEAPON_PHYSCANNON) && (DotProductFromOrigin(m_vAimVector) < rcbot_enemyshoot_gravgun_fov.GetFloat()) ) 
 			return true; // keep enemy / don't shoot : until angle between enemy is less than 20 degrees
@@ -480,6 +485,8 @@ bool CHLDMBot :: handleAttack ( CBotWeapon *pWeapon, edict_t *pEnemy )
 // time to think about something new to do
 void CHLDMBot :: getTasks (unsigned int iIgnore)
 {
+	//CBot::getTasks(iIgnore);
+	//return; 
 	static CBotUtilities utils;
 	static CBotUtility *next;
 	static CBotWeapon *gravgun;
@@ -497,15 +504,15 @@ void CHLDMBot :: getTasks (unsigned int iIgnore)
 	gravgun = m_pWeapons->getWeapon(CWeapons::getWeapon(HL2DM_WEAPON_PHYSCANNON));
 
 	// If I have the grav gun, think about picking something up
-	if ( gravgun )
-	{
-		edict_t *pent = INDEXENT(gravgun->getWeaponIndex());
+	//if ( gravgun )
+	//{
+	//	edict_t *pent = INDEXENT(gravgun->getWeaponIndex());
 
-		if ( CBotGlobals::entityIsValid(pent) )
-		{
-			ADD_UTILITY(BOT_UTIL_HL2DM_GRAVIGUN_PICKUP,(!m_pEnemy||(m_pCurrentWeapon&&(strcmp("weapon_physcannon",m_pCurrentWeapon->GetClassName())))) && gravgun && gravgun->hasWeapon() && (m_NearestPhysObj.get()!=NULL) && (gravgun->getWeaponIndex() > 0) && (CClassInterface::gravityGunObject(INDEXENT(gravgun->getWeaponIndex()))==NULL),0.9f);
-		}
-	}
+	//	if ( CBotGlobals::entityIsValid(pent) )
+	//	{
+	//		ADD_UTILITY(BOT_UTIL_HL2DM_GRAVIGUN_PICKUP,(!m_pEnemy||(m_pCurrentWeapon&&(strcmp("weapon_physcannon",m_pCurrentWeapon->GetClassName())))) && gravgun && gravgun->hasWeapon() && (m_NearestPhysObj.get()!=NULL) && (gravgun->getWeaponIndex() > 0) && (CClassInterface::gravityGunObject(INDEXENT(gravgun->getWeaponIndex()))==NULL),0.9f);
+	//	}
+	//}
 
 	if ( (crossbow = m_pWeapons->getWeapon(CWeapons::getWeapon(HL2DM_WEAPON_CROSSBOW))) != NULL )
 	{
@@ -514,45 +521,49 @@ void CHLDMBot :: getTasks (unsigned int iIgnore)
 	}
 
 	// low on health? Pick some up if there's any near by
-	ADD_UTILITY(BOT_UTIL_HL2DM_USE_HEALTH_CHARGER,(m_pHealthCharger.get() != NULL) && (CClassInterface::getAnimCycle(m_pHealthCharger)<1.0f) && (getHealthPercent()<1.0f),(1.0f-getHealthPercent()));
-	ADD_UTILITY(BOT_UTIL_FIND_NEAREST_HEALTH,(m_pHealthKit.get()!=NULL) && (getHealthPercent()<1.0f),1.0f-getHealthPercent());
+	//ADD_UTILITY(BOT_UTIL_HL2DM_USE_HEALTH_CHARGER,(m_pHealthCharger.get() != NULL) && (CClassInterface::getAnimCycle(m_pHealthCharger)<1.0f) && (getHealthPercent()<1.0f),(1.0f-getHealthPercent()));
+	//ADD_UTILITY(BOT_UTIL_FIND_NEAREST_HEALTH,(m_pHealthKit.get()!=NULL) && (getHealthPercent()<1.0f),1.0f-getHealthPercent());
 
 	// low on armor?
-	ADD_UTILITY(BOT_UTIL_HL2DM_FIND_ARMOR,(m_pBattery.get() !=NULL) && (getArmorPercent()<1.0f),(1.0f-getArmorPercent())*0.75f);
-	ADD_UTILITY(BOT_UTIL_HL2DM_USE_CHARGER,(m_pCharger.get() !=NULL) && (CClassInterface::getAnimCycle(m_pCharger)<1.0f) && (getArmorPercent()<1.0f),(1.0f-getArmorPercent())*0.75f);
-	
-	ADD_UTILITY(BOT_UTIL_HL2DM_USE_CRATE,(m_pAmmoCrate.get()!=NULL) && (m_fUseCrateTime < engine->Time()),1.0f);
+	//ADD_UTILITY(BOT_UTIL_HL2DM_FIND_ARMOR,(m_pBattery.get() !=NULL) && (getArmorPercent()<1.0f),(1.0f-getArmorPercent())*0.75f);
+	//ADD_UTILITY(BOT_UTIL_HL2DM_USE_CHARGER,(m_pCharger.get() !=NULL) && (CClassInterface::getAnimCycle(m_pCharger)<1.0f) && (getArmorPercent()<1.0f),(1.0f-getArmorPercent())*0.75f);
+	//
+	//ADD_UTILITY(BOT_UTIL_HL2DM_USE_CRATE,(m_pAmmoCrate.get()!=NULL) && (m_fUseCrateTime < engine->Time()),1.0f);
 	// low on ammo? ammo nearby?
 	ADD_UTILITY(BOT_UTIL_FIND_NEAREST_AMMO,(m_pAmmoKit.get() !=NULL) && (getAmmo(0)<5),0.01f*(100-getAmmo(0)));
 
 	// always able to roam around
 	ADD_UTILITY(BOT_UTIL_ROAM,true,0.01f);
-
+	 
 	// I have an enemy 
-	ADD_UTILITY(BOT_UTIL_FIND_LAST_ENEMY,wantToFollowEnemy() && !m_bLookedForEnemyLast && m_pLastEnemy && CBotGlobals::entityIsValid(m_pLastEnemy) && CBotGlobals::entityIsAlive(m_pLastEnemy),getHealthPercent()*(getArmorPercent()+0.1));
+	ADD_UTILITY(BOT_UTIL_FIND_LAST_ENEMY,
+		wantToFollowEnemy() && !m_bLookedForEnemyLast && m_pLastEnemy, 
+		//&& CBotGlobals::entityIsValid(m_pLastEnemy) 
+		//&& CBotGlobals::entityIsAlive(m_pLastEnemy),
+		getHealthPercent()*(getArmorPercent()+0.1));
 
-	if ( !hasSomeConditions(CONDITION_SEE_CUR_ENEMY) && hasSomeConditions(CONDITION_SEE_LAST_ENEMY_POS) && m_pLastEnemy && m_fLastSeeEnemy && ((m_fLastSeeEnemy + 10.0) > engine->Time()) && m_pWeapons->hasWeapon(HL2DM_WEAPON_FRAG) )
-	{
-		float fDistance = distanceFrom(m_vLastSeeEnemyBlastWaypoint);
+	//if ( !hasSomeConditions(CONDITION_SEE_CUR_ENEMY) && hasSomeConditions(CONDITION_SEE_LAST_ENEMY_POS) && m_pLastEnemy && m_fLastSeeEnemy && ((m_fLastSeeEnemy + 10.0) > engine->Time()) && m_pWeapons->hasWeapon(HL2DM_WEAPON_FRAG) )
+	//{
+	//	float fDistance = distanceFrom(m_vLastSeeEnemyBlastWaypoint);
 
-		if ( ( fDistance > BLAST_RADIUS ) && ( fDistance < 1500 ) )
-		{
-			CWeapon *pWeapon = CWeapons::getWeapon(HL2DM_WEAPON_FRAG);
-			CBotWeapon *pBotWeapon = m_pWeapons->getWeapon(pWeapon);
+	//	if ( ( fDistance > BLAST_RADIUS ) && ( fDistance < 1500 ) )
+	//	{
+	//		CWeapon *pWeapon = CWeapons::getWeapon(HL2DM_WEAPON_FRAG);
+	//		CBotWeapon *pBotWeapon = m_pWeapons->getWeapon(pWeapon);
 
-			ADD_UTILITY(BOT_UTIL_THROW_GRENADE, pBotWeapon && (pBotWeapon->getAmmo(this) > 0) ,1.0f-(getHealthPercent()*0.2));
-		}
-	}
+	//		ADD_UTILITY(BOT_UTIL_THROW_GRENADE, pBotWeapon && (pBotWeapon->getAmmo(this) > 0) ,1.0f-(getHealthPercent()*0.2));
+	//	}
+	//}
 
-	if ( m_pNearbyWeapon.get() )
-	{
-		pWeapon = CWeapons::getWeapon(m_pNearbyWeapon.get()->GetClassName());
+	//if ( m_pNearbyWeapon.get() )
+	//{
+	//	pWeapon = CWeapons::getWeapon(m_pNearbyWeapon.get()->GetClassName());
 
-		if ( pWeapon && !m_pWeapons->hasWeapon(pWeapon->getID()) )
-		{
-			ADD_UTILITY(BOT_UTIL_PICKUP_WEAPON, true , 0.6f + pWeapon->getPreference()*0.1f);
-		}
-	}
+	//	if ( pWeapon && !m_pWeapons->hasWeapon(pWeapon->getID()) )
+	//	{
+	//		ADD_UTILITY(BOT_UTIL_PICKUP_WEAPON, true , 0.6f + pWeapon->getPreference()*0.1f);
+	//	}
+	//}
 
 
 	utils.execute();
@@ -589,8 +600,9 @@ void CHLDMBot :: getTasks (unsigned int iIgnore)
 
 void CHLDMBot :: modThink ()
 {
-	m_fIdealMoveSpeed = CClassInterface::getMaxSpeed(m_pEdict);
 
+	m_fIdealMoveSpeed = CClassInterface::getMaxSpeed(m_pEdict);
+	
 	// update hitbox hull
 	//m_pEdict->GetCollideable()->GetCollisionOrigin();
 
@@ -609,7 +621,7 @@ void CHLDMBot :: modThink ()
 	m_pCurrentWeapon = CClassInterface::getCurrentWeapon(m_pEdict);
 	//	m_fFixWeaponTime = engine->Time() + 1.0f;
 	//}
-
+	
 	if ( m_pCurrentWeapon )
 		CClassInterface::getWeaponClip(m_pCurrentWeapon,&m_iClip1,&m_iClip2);
 

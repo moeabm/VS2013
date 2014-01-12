@@ -82,6 +82,22 @@ const char *g_szHL2DMWeapons[] =
 	"weapon_physcannon"
 };
 
+const char *g_szVSWeapons[] =
+{
+	"weapon_claws1",
+	"weapon_claws2",
+	"weapon_claws3",
+	"weapon_crucifix",
+	"weapon_shotgun_fd1",
+	"weapon_shotgun_fd2",
+	"weapon_poolcue",
+	"weapon_thunder5",
+	"weapon_winchester",
+	"weapon_colt",
+	"weapon_uzi",
+	"weapon_crossbow"
+};
+
   /*  0, 0, 1, 2, 6, 3,
     4, 5, 8, 8, 9, 8,
     7, 5, 10, 11, 12, 12,
@@ -139,6 +155,24 @@ WeaponsData_t HL2DMWeaps[] =
 	{1,HL2DM_WEAPON_PHYSCANNON,	g_szHL2DMWeapons[11],	WEAP_FL_GRAVGUN|WEAP_FL_PRIM_ATTACK,0,768,-1,4,0}
 };
 	
+WeaponsData_t VSWeaps[] =
+{
+/*
+	slot, id , weapon name, flags, min dist, max dist, ammo index, preference
+*/
+	{1,VS_WEAPON_CLAWS1,		g_szVSWeapons[0],	WEAP_FL_PRIM_ATTACK|WEAP_FL_MELEE|WEAP_FL_UNDERWATER,0,128,-1,1,0},
+	{1,VS_WEAPON_CLAWS2,		g_szVSWeapons[1],	WEAP_FL_PRIM_ATTACK|WEAP_FL_MELEE|WEAP_FL_UNDERWATER,0,128,-1,1,0},
+	{1,VS_WEAPON_CLAWS3,		g_szVSWeapons[2],	WEAP_FL_PRIM_ATTACK|WEAP_FL_MELEE|WEAP_FL_UNDERWATER,0,128,-1,1,0},
+	{1,VS_WEAPON_CRUCIFIX,		g_szVSWeapons[3],	WEAP_FL_PRIM_ATTACK|WEAP_FL_MELEE|WEAP_FL_UNDERWATER,0,128,-1,1,0},
+	{3,VS_WEAPON_SHOTGUNFD1,	g_szVSWeapons[4],	WEAP_FL_PRIM_ATTACK,0,768,-1,2,0},
+	{4,VS_WEAPON_SHOTGUNFD2,	g_szVSWeapons[5],	WEAP_FL_PRIM_ATTACK,0,768,-1,2,0},
+	{1,VS_WEAPON_POOLCUE,		g_szVSWeapons[6],	WEAP_FL_PRIM_ATTACK|WEAP_FL_MELEE|WEAP_FL_UNDERWATER,0,128,-1,1,0},
+	{3,VS_WEAPON_THUNDER5,		g_szVSWeapons[7],	WEAP_FL_PRIM_ATTACK,0,568,-1,2,0},
+	{4,VS_WEAPON_WINCHESTER,	g_szVSWeapons[8],	WEAP_FL_PRIM_ATTACK,0,1000,-1,2,0},
+	{1,VS_WEAPON_COLT,			g_szVSWeapons[9],	WEAP_FL_PRIM_ATTACK|WEAP_FL_MELEE|WEAP_FL_UNDERWATER,0,128,-1,1,0},
+	{2,VS_WEAPON_UZI,			g_szVSWeapons[10],	WEAP_FL_PRIM_ATTACK,0,768,-1,2,0},
+	{4,VS_WEAPON_CROSSBOW,		g_szVSWeapons[11],	WEAP_FL_PRIM_ATTACK|WEAP_FL_SCOPE|WEAP_FL_UNDERWATER,0,2000,-1,2,0}
+};
 
 const char *g_szTF2Weapons[] =
 {
@@ -184,7 +218,7 @@ int m_TF2AmmoIndices[] =
 	0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,2,2,2,2,1,1,2,1,2,2,0,2,1,1,3
 };
 
-
+ 
 WeaponsData_t TF2Weaps[] =
 {
 /*
