@@ -100,6 +100,8 @@ public:
 	}
 
 	static bool isAlivePlayer ( edict_t *pEntity );
+	
+	static bool isEnemyKnockedOut ( edict_t *pEntity );
 
 	static bool setWaypointDisplayType ( int iType );
 

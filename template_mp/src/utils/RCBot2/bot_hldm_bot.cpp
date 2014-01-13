@@ -451,8 +451,8 @@ bool CHLDMBot :: handleAttack ( CBotWeapon *pWeapon, edict_t *pEnemy )
 			}
 		}
 
-		if ( (pWeapon->getID() == HL2DM_WEAPON_PHYSCANNON) && (DotProductFromOrigin(m_vAimVector) < rcbot_enemyshoot_gravgun_fov.GetFloat()) ) 
-			return true; // keep enemy / don't shoot : until angle between enemy is less than 20 degrees
+		//if ( (pWeapon->getID() == HL2DM_WEAPON_PHYSCANNON) && (DotProductFromOrigin(m_vAimVector) < rcbot_enemyshoot_gravgun_fov.GetFloat()) ) 
+		//	return true; // keep enemy / don't shoot : until angle between enemy is less than 20 degrees
 
 		if ( pWeapon->canUseSecondary() && pWeapon->getAmmo(this,2) && pWeapon->secondaryInRange(fDistance) )
 		{
@@ -466,17 +466,19 @@ bool CHLDMBot :: handleAttack ( CBotWeapon *pWeapon, edict_t *pEnemy )
 		// can use primary
 		if ( pWeapon->canAttack() )
 		{
-			if ( pWeapon->mustHoldAttack() )
-				primaryAttack(true);
-			else
-				primaryAttack();
+			if(pWeapon->primaryInRange(fDistance)){
+				if ( pWeapon->mustHoldAttack() )
+					primaryAttack(true);
+				else
+					primaryAttack();
+			}
 
 			return true;
 		}
 	}
 	else
 	{
-		primaryAttack();
+		//primaryAttack();
 		return true;
 	}
 
@@ -621,7 +623,12 @@ void CHLDMBot :: modThink ()
 	m_pCurrentWeapon = CClassInterface::getCurrentWeapon(m_pEdict);
 	//	m_fFixWeaponTime = engine->Time() + 1.0f;
 	//}
-	
+	//if(m_pEnemy){
+	//	Msg("Bot Enemy : %s\n", m_pEnemy.get()->GetClassName());
+	//}
+	//else
+	//	Msg("Bot Enemy : %s\n", "NO ENEMY");
+
 	if ( m_pCurrentWeapon )
 		CClassInterface::getWeaponClip(m_pCurrentWeapon,&m_iClip1,&m_iClip2);
 
@@ -756,7 +763,27 @@ void CHLDMBot :: handleWeapons ()
 	//
 	// Handle attacking at this point
 	//
-	if ( m_pEnemy && !hasSomeConditions(CONDITION_ENEMY_DEAD) && 
+	if(m_pEnemy && hasSomeConditions(CONDITION_ENEMY_KNOCKEDOUT) ){
+		
+		// switch to stake
+		CBotWeapon *pWeapon;
+		pWeapon = getBestWeapon(m_pEnemy,true,true,true); 
+		if ( (pWeapon != NULL) && (pWeapon != getCurrentWeapon()) && pWeapon->getWeaponIndex() )
+		{
+			selectWeapon(pWeapon->getWeaponIndex());
+		}
+		
+		setLookAtTask((LOOK_ENEMY));
+
+		//go stake
+		if ( !handleAttack ( pWeapon, m_pEnemy ) )
+		{
+			m_pEnemy = NULL;
+			m_pOldEnemy = NULL;
+			wantToShoot(false);
+		}
+	}
+	else if ( m_pEnemy && !hasSomeConditions(CONDITION_ENEMY_DEAD) && 
 		hasSomeConditions(CONDITION_SEE_CUR_ENEMY) && wantToShoot() && 
 		isVisible(m_pEnemy) && isEnemy(m_pEnemy) )
 	{
@@ -773,6 +800,10 @@ void CHLDMBot :: handleWeapons ()
 		setLookAtTask((LOOK_ENEMY));
 
 		///battack = true;
+
+		if(pWeapon == NULL){
+			pWeapon = getCurrentWeapon();
+		}
 
 		if ( !handleAttack ( pWeapon, m_pEnemy ) )
 		{

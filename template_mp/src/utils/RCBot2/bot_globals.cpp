@@ -118,6 +118,15 @@ bool CBotGlobals ::isAlivePlayer ( edict_t *pEntity )
 	return pEntity && ENTINDEX(pEntity) && (ENTINDEX(pEntity) <= gpGlobals->maxClients) && (entityIsAlive(pEntity));
 }
 
+bool CBotGlobals ::isEnemyKnockedOut ( edict_t *pEntity )
+{
+	IPlayerInfo *p = playerinfomanager->GetPlayerInfo(pEntity);
+
+	if ( !p )
+		return false;
+
+	return (!p->IsDead() && (p->GetHealth() == 0));
+}
 //new map
 void CBotGlobals :: setMapName ( const char *szMapName ) 
 { 
@@ -423,7 +432,7 @@ bool CBotGlobals :: entityIsAlive ( edict_t *pEntity )
 		if ( !p )
 			return false;
 
-		return (!p->IsDead() && (p->GetHealth()>0));
+		return (!p->IsDead());
 
 	}
 

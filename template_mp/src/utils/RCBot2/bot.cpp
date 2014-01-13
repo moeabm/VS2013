@@ -869,14 +869,20 @@ void CBot :: think ()
 	if ( rcbot_debug_iglev.GetInt() != 9 )
 	{
 #endif
-	// update m_pEnemy with findEnemy()
-	m_pOldEnemy = m_pEnemy;
-	m_pEnemy = NULL;
+		// Dont change enemies if enemy is knocked out
+		if(!CBotGlobals::isEnemyKnockedOut(m_pEnemy)){
+			// update m_pEnemy with findEnemy()
+			m_pOldEnemy = m_pEnemy;
+			m_pEnemy = NULL;
 
-	if ( m_pOldEnemy )
-		findEnemy(m_pOldEnemy); // any better enemies than this one?
-	else
-		findEnemy();
+			if ( m_pOldEnemy )
+				findEnemy(m_pOldEnemy); // any better enemies than this one?
+			else
+				findEnemy();
+		}
+		else {
+			m_pOldEnemy = m_pEnemy;
+		}
 #ifdef _DEBUG
 	}
 #endif
@@ -1033,7 +1039,12 @@ void CBot :: updateConditions ()
 		else
 		{
 			removeCondition(CONDITION_ENEMY_DEAD);
-
+			if( CBotGlobals::isEnemyKnockedOut( m_pEnemy) ){
+				updateCondition(CONDITION_ENEMY_KNOCKEDOUT);
+			}
+			else{
+				removeCondition(CONDITION_ENEMY_KNOCKEDOUT);
+			}
 			// clear enemy
 			if ( m_pVisibles->isVisible(m_pEnemy) )
 			{

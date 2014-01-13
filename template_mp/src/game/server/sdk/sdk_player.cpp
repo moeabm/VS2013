@@ -1731,7 +1731,6 @@ void CSDKPlayer::State_Enter_KNOCKOUT()
 void CSDKPlayer::State_PreThink_KNOCKOUT()
 {
 	SetAbsOrigin(m_pRagdoll->GetAbsOrigin());
-	
 	//m_pRagdoll->SetAbsVelocity(GetAbsVelocity());
 	if(endKnockout < gpGlobals->curtime){
 		m_pRagdoll->Remove();
@@ -1840,7 +1839,7 @@ void CSDKPlayer::State_Enter_ACTIVE()
 {
 	// Dont let player go active it they are not on a team
 	if(GetTeamNumber() < SDK_TEAM_BLUE){
-		State_Transition(STATE_PICKINGTEAM);
+		//State_Transition(STATE_PICKINGTEAM);
 		return;
 	}
 	// Dont let player go active it they dont have a class
@@ -1949,6 +1948,10 @@ bool CSDKPlayer::ShouldTakeSunDmg( void ) {
 
 void CSDKPlayer::KockOut( void ) {
 
+}
+
+bool CSDKPlayer::isKnockedOut(){
+	return (State_Get() == STATE_KNOCKOUT);
 }
 
 

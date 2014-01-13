@@ -177,6 +177,8 @@ public:
 	void State_Transition( SDKPlayerState newState );
 	SDKPlayerState State_Get() const;				// Get the current state.
 
+	bool isKnockedOut();
+
 	virtual bool	ModeWantsSpectatorGUI( int iMode ) { return ( iMode != OBS_MODE_DEATHCAM && iMode != OBS_MODE_FREEZECAM ); }
 
 	virtual CBaseEntity * GetRagDoll( void );
