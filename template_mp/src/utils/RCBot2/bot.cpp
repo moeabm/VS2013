@@ -335,9 +335,13 @@ bool CBot :: createBotFromEdict(edict_t *pEdict, CBotProfile *pProfile)
 		strcpy(m_szBotName,pProfile->m_szName);
 	}
 	
-	if ( m_pPlayerInfo && (pProfile->m_iTeam != -1) )
-		m_pPlayerInfo->ChangeTeam(pProfile->m_iTeam);
-
+	if ( m_pPlayerInfo && (pProfile->m_iTeam != -1) ){
+		char *tmpCmd = new char[128];
+		sprintf(tmpCmd, "jointeam %d", pProfile->m_iTeam);
+		helpers->ClientCommand(pEdict, tmpCmd);
+		delete tmpCmd;
+		//m_pPlayerInfo->ChangeTeam(pProfile->m_iTeam);
+	}
 
 
 	/////////////////////////////
@@ -2804,6 +2808,7 @@ bool CBots :: createBot (const char *szClass, const char *szTeam, const char *sz
 
 	pBotProfile = CBotProfiles::getRandomFreeProfile();
 
+
 	if ( pBotProfile == NULL )
 	{
 		CBotGlobals::botMessage(NULL,0,"No bot profiles are free, creating a default bot...");
@@ -2815,9 +2820,15 @@ bool CBots :: createBot (const char *szClass, const char *szTeam, const char *sz
 	}
 
 	m_pNextProfile = pBotProfile;
-
+	
 	SET_PROFILE_DATA_INT(szClass,m_iClass);
-	SET_PROFILE_DATA_INT(szTeam,m_iTeam);
+
+	if(stricmp(szTeam, "") == 0 || stricmp(szTeam, "-1") == 0) {
+		SET_PROFILE_DATA_INT("0",m_iTeam);
+	}
+	else 
+		SET_PROFILE_DATA_INT(szTeam,m_iTeam);
+
 	SET_PROFILE_STRING(szName,szOVName,m_szName);
 
 	strncpy(m_szNextName,szOVName,63);

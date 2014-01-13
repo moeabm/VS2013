@@ -805,7 +805,7 @@ CAddBotCommand ::CAddBotCommand()
 	setAccessLevel(CMD_ACCESS_BOT);
 }
 
-eBotCommandResult CAddBotCommand :: execute ( CClient *pClient, const char *pcmd, const char *arg1, const char *arg2, const char *arg3, const char *arg4, const char *arg5 )
+eBotCommandResult CAddBotCommand :: execute ( CClient *pClient, const char *cTeam, const char *cClass, const char *cName, const char *arg3, const char *arg4, const char *arg5 )
 {	
 //	bool bOkay = false;
 
@@ -825,7 +825,7 @@ eBotCommandResult CAddBotCommand :: execute ( CClient *pClient, const char *pcmd
 		//else
 		//bOkay = CBots::createBot();
 
-		if ( CBots::createBot(pcmd,arg1,arg2) )
+		if ( CBots::createBot(cTeam,cClass,cName) )
 			CBotGlobals::botMessage(pEntity,0,"bot added");
 		else
 			CBotGlobals::botMessage(pEntity,0,"error: couldn't create bot! (Check maxplayers)");

@@ -1506,6 +1506,8 @@ void CSDKGameRules::EndRound( int winnerTeam){
 }
 
 void CSDKGameRules::StartRound(){
+	//round already started?
+	if(m_iRoundState == ROUND_ACTIVE) return;
 
 	int activePlayers = 0;
 	//TODO: Spawn all players reset their round life
