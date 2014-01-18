@@ -1,4 +1,4 @@
-"classes/random.res"
+"classes/blue_class3.res"
 {
 	"classNameLabel"
 	{
@@ -26,8 +26,8 @@
 		"fieldName"		"classInfo"
 		"xpos"			"7"
 		"ypos"			"36"
-		"wide"			"370"
-		"tall"			"90"
+		"wide"			"470"
+		"tall"			"200"
 		"autoResize"		"3"
 		"pinCorner"		"0"
 		"visible"		"1"
