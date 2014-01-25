@@ -54,8 +54,8 @@ nodes
  51 "ValveBiped.Bip01_R_Finger0" 38
  52 "ValveBiped.Bip01_R_Finger01" 51
  53 "ValveBiped.Bip01_R_Finger02" 52
- 54 "ValveBiped.weapon_bone" 38
- 55 "ValveBiped.weapon_bone_left" 19
+ 54 "Weapon.R" 38
+ 55 "Weapon.L" 19
 end
 skeleton
 time 0

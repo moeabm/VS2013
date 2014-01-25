@@ -64,7 +64,7 @@ CWeaponClaws2::CWeaponClaws2()
 //Tony; todo; add ACT_MP_PRONE* activities, so we have them.
 acttable_t CWeaponClaws2::m_acttable[] = 
 {
-	{ ACT_MP_STAND_IDLE,					ACT_DOD_STAND_AIM_SPADE,				false },
+	{ ACT_MP_STAND_IDLE,					ACT_VS_STAND_IDLE_CLAWS,				false },
 	{ ACT_MP_CROUCH_IDLE,					ACT_DOD_CROUCH_AIM_SPADE,				false },
 	{ ACT_MP_PRONE_IDLE,					ACT_DOD_PRONE_AIM_SPADE,				false },
 

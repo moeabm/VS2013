@@ -3,7 +3,7 @@ PlayerClassDatafile
 {
 	// FilePLayerClassInfo_t members
 	"printname"			"#class_blue_class2"	
-	"playermodel"			"models/player/blue_player.mdl"
+	"playermodel"			"models/player/edgar.mdl"
 	"selectcmd"			"cls_blue_class2"
 
 	// CSDKPlayerClassInfo members
