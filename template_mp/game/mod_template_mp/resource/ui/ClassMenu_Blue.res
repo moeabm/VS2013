@@ -201,7 +201,7 @@
 		"model"
 		{
 			"spotlight"	"1"
-			"modelname"	"models/player/blue_player.mdl"
+			"modelname"	"models/player/edgar.mdl"
 			"origin_z"	"-30"
 			"origin_y"	"0"
 			"origin_x"	"120"

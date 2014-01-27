@@ -2123,6 +2123,8 @@ typedef enum
 	ACT_THROWABLE_VM_FIRE,
 
 	// this is the end of the global activities, private per-monster activities start here.
+	ACT_VS_STAND_IDLE_CLAWS,
+
 	LAST_SHARED_ACTIVITY,
 } Activity;
 
