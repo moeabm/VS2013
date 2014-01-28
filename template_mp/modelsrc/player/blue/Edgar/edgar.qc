@@ -60,6 +60,8 @@ $sequence armBend "anims/phymodelAction" fps 30.00
 $sequence KneeRaise "anims/knee_raise" fps 30.00
 $sequence Run_Claws "anims/a_run" loop ACT_VS_RUN_CLAWS 1 fps 30.000000
 
+$sequence Attack_CLAWS "anims/SwingClaws" loop ACT_VS_ATTACK_CLAWS 1 fps 30.000000 subtract StandIdle_CLAWS 0
+
 
 // $animation a_runNW "anims/a_runNW" loop fps 30.000000 walkframe 16 LX LY	
 // $animation a_runN "anims/a_run" loop fps 30.000000 walkframe 16 LX 

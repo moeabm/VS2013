@@ -569,7 +569,7 @@ void CSDKGameRules::Think()
 		//if either team is empty
 		else if( vampTeam->GetNumPlayers() < 1 || slayTeam->GetNumPlayers() < 1 ) {
 			//all players dead and someone is on a team? end round so player(s) can keep playing
-			if( vampTeam->GetNumPlayers() +  slayTeam->GetNumPlayers() < 0 &&
+			if( vampTeam->GetNumPlayers() +  slayTeam->GetNumPlayers() > 0 &&
 				vampTeam->GetAliveMembers() == 0 &&
 				slayTeam->GetAliveMembers() == 0){
 				EndRound();
