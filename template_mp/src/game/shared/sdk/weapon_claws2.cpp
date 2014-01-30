@@ -35,12 +35,9 @@ public:
 	virtual float	GetCloackLenght( void )					{	return	5.0f;	}	//Tony; let the claws2 swing further.
 	virtual bool CanWeaponBeDropped() const				{	return false; }
 	void SecondaryAttack();
-	void GoInvisible();
 
 
 private:
-	bool isInvisible;
-	float startCloackTime;
 	CWeaponClaws2( const CWeaponClaws2 & );
 };
 
@@ -91,8 +88,6 @@ void CWeaponClaws2::SecondaryAttack()
 	WeaponSound( SPECIAL1 );
 
 	Msg("Secondary Claws2 swing\n");
-	
-	startCloackTime = gpGlobals->curtime;
 	
 	pPlayer->GoInvisible(5.0f);
 	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();

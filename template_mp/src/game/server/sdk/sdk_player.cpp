@@ -238,6 +238,11 @@ CSDKPlayer::CSDKPlayer()
 
 	m_pCurStateInfo = NULL;	// no state yet
 
+	
+	isInvisible = false;
+	invStart = gpGlobals->curtime;
+	invEnd = gpGlobals->curtime;
+
 }
 
 
@@ -294,6 +299,7 @@ void CSDKPlayer::PostThink()
 	if(isInvisible){
 		float iAlpha;
 		if(invEnd < gpGlobals->curtime){
+			SetRenderColorA(255);
 			SetRenderMode( kRenderNormal );
 			isInvisible = false;
 		}

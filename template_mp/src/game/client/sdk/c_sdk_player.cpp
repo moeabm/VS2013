@@ -537,6 +537,11 @@ C_SDKPlayer::C_SDKPlayer() :
 
 	m_fNextThinkPushAway = 0.0f;
 	m_bIsGlowing = false;
+	
+	isInvisible = false;
+	invStart = gpGlobals->curtime;
+	invEnd = gpGlobals->curtime;
+
 
 }
 
@@ -875,7 +880,8 @@ void C_SDKPlayer::ClientThink()
 	UpdateIDTarget();
 
 
-	
+	//AM; if invisible render alpha'd model
+	//NOTE this is only for the v_model.
 	if(isInvisible){
 		float iAlpha;
 		if(invEnd < gpGlobals->curtime){
@@ -884,6 +890,7 @@ void C_SDKPlayer::ClientThink()
 			isInvisible = false;
 		}
 		else if (gpGlobals->curtime-invStart > 0){
+			Msg("Invisible: True, %f, %f\n", invStart, invEnd);
 			
 			iAlpha = min((gpGlobals->curtime-invStart),0.8f)/ 0.8f; 
 			GetViewModel()->SetRenderMode( kRenderTransAlpha );

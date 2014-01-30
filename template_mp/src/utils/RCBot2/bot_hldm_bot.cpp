@@ -449,6 +449,12 @@ bool CHLDMBot :: handleAttack ( CBotWeapon *pWeapon, edict_t *pEnemy )
 
 				duckjump();
 			}
+			
+			if ( randomInt(0,1000) < 10 && pWeapon->secondaryInRange(fDistance*3))
+			{
+				secondaryAttack();
+				return true;
+			}
 		}
 
 		//if ( (pWeapon->getID() == HL2DM_WEAPON_PHYSCANNON) && (DotProductFromOrigin(m_vAimVector) < rcbot_enemyshoot_gravgun_fov.GetFloat()) ) 

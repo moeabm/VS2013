@@ -807,16 +807,18 @@ bool CSDKGameMovement::CheckJumpButton( void )
 	// Accelerate upward
 	// If we are ducking...
 	float startz = mv->m_vecVelocity[2];
-	if ( ((  m_pSDKPlayer->m_Local.m_bDucking ) || (  m_pSDKPlayer->GetFlags() & FL_DUCKING )) && player->GetTeamNumber() == SDK_TEAM_BLUE )
+	float playerSpeed = VectorLength(mv->m_vecVelocity);
+	if ( playerSpeed > 10 && ((  m_pSDKPlayer->m_Local.m_bDucking ) || (  m_pSDKPlayer->GetFlags() & FL_DUCKING )) && player->GetTeamNumber() == SDK_TEAM_BLUE )
 	{
 		
 			m_pSDKPlayer->DoAnimationEvent( PLAYERANIMEVENT_LONGJUMP );
 			mv->m_vecVelocity[2] = flGroundFactor * flJumpHeight ;  
 			Vector vecForward;
+			Vector vecJump = Vector(0,0, flGroundFactor * flJumpHeight);
 			AngleVectors( mv->m_vecViewAngles, &vecForward );
 			vecForward.z = 0;
 			VectorNormalize( vecForward );
-			VectorAdd( (vecForward*(fabs( mv->m_flForwardMove * 0.5f ))*2), mv->m_vecVelocity, mv->m_vecVelocity );
+			VectorAdd( (vecForward*(mv->m_flMaxSpeed * 2)), vecJump , mv->m_vecVelocity );
 	}
 	//AM; High Jump
 	else if(player->GetTeamNumber() == SDK_TEAM_BLUE)

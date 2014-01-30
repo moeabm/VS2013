@@ -36,12 +36,9 @@ public:
 	virtual float	GetCloackLenght( void )					{	return	5.0f;	}	//Tony; let the claws1 swing further.
 	virtual bool CanWeaponBeDropped() const				{	return false; }
 	void SecondaryAttack();
-	void GoInvisible();
 
 
 private:
-	bool isInvisible;
-	float startCloackTime;
 	CWeaponClaws1( const CWeaponClaws1 & );
 };
 
@@ -92,8 +89,6 @@ void CWeaponClaws1::SecondaryAttack()
 	WeaponSound( SPECIAL1 );
 
 	Msg("Secondary Claws1 swing\n");
-	
-	startCloackTime = gpGlobals->curtime;
 	
 #if defined( CLIENT_DLL )
 	C_SDKTeam *iTeam = GetGlobalSDKTeam( SDK_TEAM_RED );

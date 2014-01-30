@@ -35,12 +35,9 @@ public:
 	virtual float	GetCloackLenght( void )					{	return	5.0f;	}	//Tony; let the claws3 swing further.
 	virtual bool CanWeaponBeDropped() const				{	return false; }
 	void SecondaryAttack();
-	//void GoInvisible();
 
 
 private:
-	bool isInvisible;
-	float startCloackTime;
 	CWeaponClaws3( const CWeaponClaws3 & );
 };
 
