@@ -720,6 +720,7 @@ bool CSDKGameMovement::CheckJumpButton( void )
 		return false;
 	}
 
+	//Comment?
 	if( m_pSDKPlayer->State_Get() == STATE_KNOCKOUT){
 		mv->m_nOldButtons |= IN_JUMP;
 		return false;
@@ -784,7 +785,6 @@ bool CSDKGameMovement::CheckJumpButton( void )
 	SetGroundEntity( NULL );
 	
 	m_pSDKPlayer->PlayStepSound( (Vector &)mv->GetAbsOrigin(), player->GetSurfaceData(), 1.0, true );
-	m_pSDKPlayer->DoAnimationEvent( PLAYERANIMEVENT_JUMP );
 
 //Tony; liek the landing sound, leaving this here if as an example for playing a jump sound.
 //	// make the jump sound
@@ -803,38 +803,31 @@ bool CSDKGameMovement::CheckJumpButton( void )
 
 	float flJumpHeight = 268.3281572999747f;
 	
+	//AM; LongJump
 	// Accelerate upward
 	// If we are ducking...
 	float startz = mv->m_vecVelocity[2];
-	if ( (  m_pSDKPlayer->m_Local.m_bDucking ) || (  m_pSDKPlayer->GetFlags() & FL_DUCKING ) )
+	if ( ((  m_pSDKPlayer->m_Local.m_bDucking ) || (  m_pSDKPlayer->GetFlags() & FL_DUCKING )) && player->GetTeamNumber() == SDK_TEAM_BLUE )
 	{
-		// d = 0.5 * g * t^2		- distance traveled with linear accel
-		// t = sqrt(2.0 * 45 / g)	- how long to fall 45 units
-		// v = g * t				- velocity at the end (just invert it to jump up that high)
-		// v = g * sqrt(2.0 * 45 / g )
-		// v^2 = g * g * 2.0 * 45 / g
-		// v = sqrt( g * 2.0 * 45 )
-							
 		
-		if(player->GetTeamNumber() == 2){
+			m_pSDKPlayer->DoAnimationEvent( PLAYERANIMEVENT_LONGJUMP );
 			mv->m_vecVelocity[2] = flGroundFactor * flJumpHeight ;  
-			//mv->m_vecVelocity[1] *= 1.8; 
-			//mv->m_vecVelocity[0] *= 1.8;  
 			Vector vecForward;
 			AngleVectors( mv->m_vecViewAngles, &vecForward );
 			vecForward.z = 0;
 			VectorNormalize( vecForward );
 			VectorAdd( (vecForward*(fabs( mv->m_flForwardMove * 0.5f ))*2), mv->m_vecVelocity, mv->m_vecVelocity );
-		}
-		else mv->m_vecVelocity[2] = flGroundFactor * flJumpHeight;		// flJumpSpeed of 45
+	}
+	//AM; High Jump
+	else if(player->GetTeamNumber() == SDK_TEAM_BLUE)
+	{
+		m_pSDKPlayer->DoAnimationEvent( PLAYERANIMEVENT_JUMP );
+		mv->m_vecVelocity[2] += flGroundFactor * flJumpHeight * 2;  // 2 * gravity * height
 	}
 	else
 	{
-		if(player->GetTeamNumber() == 2)
-			mv->m_vecVelocity[2] += flGroundFactor * flJumpHeight * 2;  // 2 * gravity * height
-		else
-			mv->m_vecVelocity[2] += flGroundFactor * flJumpHeight;  // 2 * gravity * height
-		//mv->m_vecVelocity[2] += flGroundFactor * flJumpHeight;	// flJumpSpeed of 45
+		m_pSDKPlayer->DoAnimationEvent( PLAYERANIMEVENT_JUMP );
+		mv->m_vecVelocity[2] = flGroundFactor * flJumpHeight;		// flJumpSpeed of 45
 	}
 	
 	FinishGravity();
@@ -844,7 +837,7 @@ bool CSDKGameMovement::CheckJumpButton( void )
 
 	// Flag that we jumped.
 	mv->m_nOldButtons |= IN_JUMP;	// don't jump again until released
-
+	
 	m_pSDKPlayer->m_Shared.SetJumping( true );
 
 	return true;

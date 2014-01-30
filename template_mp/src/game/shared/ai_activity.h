@@ -2115,7 +2115,7 @@ typedef enum
 	ACT_MP_RELOAD_AIRWALK_PRIMARY3_END,
 	ACT_MP_RELOAD_SWIM_PRIMARY3,
 
-	// Throwable Animations
+	// Throwable Animationsa
 	ACT_MP_THROW,
 
 	ACT_THROWABLE_VM_DRAW,
@@ -2124,6 +2124,8 @@ typedef enum
 
 	// this is the end of the global activities, private per-monster activities start here.
 	ACT_VS_STAND_IDLE_CLAWS,
+	ACT_VS_ATTACK_CLAWS,
+	ACT_VS_LONG_JUMP,
 
 	LAST_SHARED_ACTIVITY,
 } Activity;

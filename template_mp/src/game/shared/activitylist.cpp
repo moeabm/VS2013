@@ -2273,6 +2273,9 @@ void ActivityList_RegisterSharedActivities( void )
 	
 //AM; Vampire Slayer Activities
 	REGISTER_SHARED_ACTIVITY ( ACT_VS_STAND_IDLE_CLAWS );
+	REGISTER_SHARED_ACTIVITY ( ACT_VS_ATTACK_CLAWS );
+	REGISTER_SHARED_ACTIVITY ( ACT_VS_LONG_JUMP );
+	
 
 	AssertMsg( g_HighestActivity == LAST_SHARED_ACTIVITY - 1, "Not all activities from ai_activity.h registered in activitylist.cpp" ); 
 } 

@@ -73,6 +73,10 @@ private:
 #endif
 
 	float		m_flHoldDeployedPoseUntilTime;
+
+protected:
+	bool	m_bDuckJumping;
+
 };
 
 CSDKPlayerAnimState *CreateSDKPlayerAnimState( CSDKPlayer *pPlayer );

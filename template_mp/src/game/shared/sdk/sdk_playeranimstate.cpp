@@ -71,6 +71,7 @@ CSDKPlayerAnimState::CSDKPlayerAnimState( CBasePlayer *pPlayer, MultiPlayerMovem
 : CMultiPlayerAnimState( pPlayer, movementData )
 {
 	m_pSDKPlayer = NULL;
+	m_bDuckJumping = false;
 
 	// Don't initialize SDK specific variables here. Init them in InitSDKAnimState()
 }
@@ -403,6 +404,19 @@ void CSDKPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
 		}
 		break;
 #endif
+		
+	case PLAYERANIMEVENT_LONGJUMP:
+		{
+			// Jump.
+			m_bJumping = true;
+			m_bDuckJumping = true;
+			m_bFirstJumpFrame = true;
+			m_flJumpStartTime = gpGlobals->curtime;
+
+			RestartMainSequence();
+
+			break;
+		}
 
 	default:
 		{
@@ -554,12 +568,14 @@ bool CSDKPlayerAnimState::HandleJumping( Activity &idealActivity )
 		if ( m_bFirstJumpFrame )
 		{
 			m_bFirstJumpFrame = false;
+			
 			RestartMainSequence();	// Reset the animation.
 		}
 
 		// Reset if we hit water and start swimming.
 		if ( m_pSDKPlayer->GetWaterLevel() >= WL_Waist )
 		{
+			m_bDuckJumping = false;
 			m_bJumping = false;
 			RestartMainSequence();
 		}
@@ -570,6 +586,7 @@ bool CSDKPlayerAnimState::HandleJumping( Activity &idealActivity )
 			if ( m_pSDKPlayer->GetFlags() & FL_ONGROUND )
 			{
 				m_bJumping = false;
+				m_bDuckJumping = false;
 				RestartMainSequence();
 
 				if ( bNewJump )
@@ -595,7 +612,8 @@ bool CSDKPlayerAnimState::HandleJumping( Activity &idealActivity )
 			}
 			else
 			{
-				idealActivity = ACT_MP_JUMP;
+				if(m_bDuckJumping) idealActivity = ACT_VS_LONG_JUMP;
+				else idealActivity = ACT_MP_JUMP;
 			}
 		}
 	}	

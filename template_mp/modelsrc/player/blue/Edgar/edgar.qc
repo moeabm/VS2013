@@ -59,8 +59,9 @@ $sequence ragdoll "ragdoll" ACT_DIERAGDOLL 1 fps 30.00
 $sequence armBend "anims/phymodelAction" fps 30.00
 $sequence KneeRaise "anims/knee_raise" fps 30.00
 $sequence Run_Claws "anims/a_run" loop ACT_VS_RUN_CLAWS 1 fps 30.000000
+$sequence Long_Jump "anims/LongJump" ACT_VS_LONG_JUMP 1 fps 30.000000
 
-$sequence Attack_CLAWS "anims/SwingClaws" loop ACT_VS_ATTACK_CLAWS 1 fps 30.000000 subtract StandIdle_CLAWS 0
+$sequence Attack_CLAWS "anims/SwingClaws" loop ACT_VS_ATTACK_CLAWS 1 fps 30.000000 subtract StandIdle_CLAWS 0 delta
 
 
 // $animation a_runNW "anims/a_runNW" loop fps 30.000000 walkframe 16 LX LY	
