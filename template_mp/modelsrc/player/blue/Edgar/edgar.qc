@@ -51,44 +51,12 @@ $attachment "weapon_bone_left" "ValveBiped.weapon_bone_left" 0.00 0.00 0.00 rota
 $attachment "2" "ValveBiped.Bip01_Head1" -0.00 0.00 0.00 rotate -0.00 0.00 0.00
 $attachment "head" "ValveBiped.Bip01_Head1" -0.00 0.00 0.00 rotate -0.00 0.00 0.00
 $includemodel "player/sdk_player_shared.mdl"
+$includemodel "player/vs_vamp_shared.mdl"
 $surfaceprop "flesh"
 $illumposition -1.497 -0.000 36.013
 
-$sequence StandIdle_CLAWS "anims/Stand_Idle_CLAWS" loop ACT_VS_STAND_IDLE_CLAWS 1 fps 10.00 
-$sequence ragdoll "ragdoll" ACT_DIERAGDOLL 1 fps 30.00
-$sequence armBend "anims/phymodelAction" fps 30.00
-$sequence KneeRaise "anims/knee_raise" fps 30.00
-$sequence Run_Claws "anims/a_run" loop ACT_VS_RUN_CLAWS 1 fps 30.000000
-$sequence Long_Jump "anims/LongJump" ACT_VS_LONG_JUMP 1 fps 30.000000
+ $sequence ragdoll "ragdoll" ACT_DIERAGDOLL 1 fps 30.00
 
-$sequence Attack_CLAWS "anims/SwingClaws" loop ACT_VS_ATTACK_CLAWS 1 fps 30.000000 subtract StandIdle_CLAWS 0 delta
-
-
-// $animation a_runNW "anims/a_runNW" loop fps 30.000000 walkframe 16 LX LY	
-// $animation a_runN "anims/a_run" loop fps 30.000000 walkframe 16 LX 
-// $animation a_runNE "anims/a_runNE" loop fps 30.000000 walkframe 16 LX LY	
-// $animation a_runE "anims/a_runE" loop fps 30.000000 walkframe 16 LY 
-// $animation a_runSE "anims/a_runSE" loop fps 30.000000 walkframe 16 LX LY	
-// $animation a_runS "anims/a_runS" loop fps 30.000000 walkframe 16 LX 
-// $animation a_runSW "anims/a_runSW" loop fps 30.000000 walkframe 16 LX LY
-// $animation a_runW "anims/a_runW" loop fps 30.000000 walkframe 16 LY 
-// $animation a_runC "anims/a_runC" loop fps 30.000000
-// $sequence myRunClaws {
-
-  // a_runSW	a_runS	a_runSE
-  // a_runW	a_runC	a_runE	
-  // a_runNW	a_runN	a_runNE
-  
-  // blendwidth 9
-  // blend move_y -1 1
-  
-  // activity ACT_VS_RUN_CLAWS 1
-// }
- 
-// $ikchain rhand ValveBiped.Bip01_R_Hand knee  0.707 0.707 0.000
-// $ikchain lhand ValveBiped.Bip01_L_Hand knee  0.707 0.707 0.000
-// $ikchain rfoot ValveBiped.Bip01_R_Foot knee  0.707 -0.707 0.000
-// $ikchain lfoot ValveBiped.Bip01_L_Foot knee  0.707 -0.707 0.000
 $collisionjoints "phymodel.smd" {
 
 	$mass 100.0

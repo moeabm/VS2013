@@ -16,7 +16,7 @@ WeaponData
 
 	"weight"			"4"
 	"item_flags"			"0"
-	"damage"			"20"
+	"damage"			"39"
 	
 	"CycleTime"			"0.3"
 	"Bullets"			"1"  // Shotgun bullets per shell

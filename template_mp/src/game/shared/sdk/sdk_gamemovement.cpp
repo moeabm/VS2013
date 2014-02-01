@@ -818,10 +818,10 @@ bool CSDKGameMovement::CheckJumpButton( void )
 			AngleVectors( mv->m_vecViewAngles, &vecForward );
 			vecForward.z = 0;
 			VectorNormalize( vecForward );
-			VectorAdd( (vecForward*(mv->m_flMaxSpeed * 2)), vecJump , mv->m_vecVelocity );
+			VectorAdd( (vecForward*(mv->m_flMaxSpeed * 1.5)), vecJump , mv->m_vecVelocity );
 	}
 	//AM; High Jump
-	else if(player->GetTeamNumber() == SDK_TEAM_BLUE)
+	else if(player->GetTeamNumber() == SDK_TEAM_BLUE && !((  m_pSDKPlayer->m_Local.m_bDucking ) || (  m_pSDKPlayer->GetFlags() & FL_DUCKING )))
 	{
 		m_pSDKPlayer->DoAnimationEvent( PLAYERANIMEVENT_JUMP );
 		mv->m_vecVelocity[2] += flGroundFactor * flJumpHeight * 2;  // 2 * gravity * height

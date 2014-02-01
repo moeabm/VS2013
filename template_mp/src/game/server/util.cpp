@@ -623,7 +623,10 @@ CBasePlayer *UTIL_GetLocalPlayer( void )
 	{
 		if ( developer.GetBool() )
 		{
-			Assert( !"UTIL_GetLocalPlayer" );
+			//annoying just warn
+			//TODO: uncomment on 
+			//Assert( !"UTIL_GetLocalPlayer" );
+			//Warning( "UTIL_GetLocalPlayer() called in multiplayer game.\n" );
 			
 #ifdef	DEBUG
 			Warning( "UTIL_GetLocalPlayer() called in multiplayer game.\n" );
