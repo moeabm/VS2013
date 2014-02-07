@@ -61,7 +61,7 @@ CWeaponClaws3::CWeaponClaws3()
 //Tony; todo; add ACT_MP_PRONE* activities, so we have them.
 acttable_t CWeaponClaws3::m_acttable[] = 
 {
-	{ ACT_MP_STAND_IDLE,					ACT_DOD_STAND_AIM_SPADE,				false },
+	{ ACT_MP_STAND_IDLE,					ACT_VS_STAND_IDLE_CLAWS,				false },
 	{ ACT_MP_CROUCH_IDLE,					ACT_DOD_CROUCH_AIM_SPADE,				false },
 	{ ACT_MP_PRONE_IDLE,					ACT_DOD_PRONE_AIM_SPADE,				false },
 
@@ -71,7 +71,7 @@ acttable_t CWeaponClaws3::m_acttable[] =
 	{ ACT_MP_PRONE_CRAWL,					ACT_DOD_PRONEWALK_AIM_SPADE,			false },
 	{ ACT_SPRINT,							ACT_DOD_SPRINT_AIM_SPADE,				false },
 
-	{ ACT_MP_ATTACK_STAND_PRIMARYFIRE,		ACT_DOD_PRIMARYATTACK_SPADE,			false },
+	{ ACT_MP_ATTACK_STAND_PRIMARYFIRE,		ACT_VS_ATTACK_CLAWS,			false },
 	{ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE,		ACT_DOD_PRIMARYATTACK_SPADE,			false },
 	{ ACT_MP_ATTACK_PRONE_PRIMARYFIRE,		ACT_DOD_PRIMARYATTACK_PRONE_SPADE,		false },
 };

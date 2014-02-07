@@ -262,7 +262,7 @@
 		"model"
 		{
 			"spotlight"	"1"
-			"modelname"	"models/player/female_01.mdl"
+			"modelname"	"models/player/nina.mdl"
 			"origin_z"	"-30"
 			"origin_y"	"10"
 			"origin_x"	"120"
@@ -272,7 +272,7 @@
 
 			"animation"
 			{
-				"sequence"		"cidle_melee"
+				"sequence"		"c_CrouchWalkIdle_GREN_STICK"
 				"pose_parameters"
 				{
 					"move_x" "0.1"
