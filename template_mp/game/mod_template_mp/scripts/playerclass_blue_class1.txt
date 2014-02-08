@@ -10,6 +10,7 @@ PlayerClassDatafile
 
 	// What team has this class, for verification
 	"team"				"BLUE"
+	"knockout"	"4"
 
 	// Weapon Info
 	"primaryweapon"		"claws1"

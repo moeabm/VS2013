@@ -46,6 +46,7 @@ $hbox 2 "ValveBiped.Bip01_Spine2" -0.500  -3.900  -7.500  7.500  7.100  7.500
 $hbox 2 "ValveBiped.Bip01_Spine4" -0.200  -2.800  -7.500  3.800  5.200  7.500
 $hbox 1 "ValveBiped.Bip01_Neck1" 0.500  -3.700  -2.500  3.500  1.300  2.500
 $hbox 1 "ValveBiped.Bip01_Head1" -1.300  -5.150  -3.000  7.700  3.150  3.000
+$attachment "eyes" "ValveBiped.Bip01_Head1" 2.63 -4.13 0.04 rotate 0.00 -80.10 -90.00
 $attachment "weapon_bone" "ValveBiped.weapon_bone" 0.00 0.00 -0.00 rotate -0.00 -0.00 -0.00
 $attachment "weapon_bone_left" "ValveBiped.weapon_bone_left" 0.00 0.00 0.00 rotate 0.00 0.00 -0.00
 $attachment "2" "ValveBiped.Bip01_Head1" -0.00 0.00 0.00 rotate -0.00 0.00 0.00

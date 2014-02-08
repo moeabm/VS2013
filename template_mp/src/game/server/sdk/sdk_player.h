@@ -64,6 +64,8 @@ public:
 	void KockOut( void );
 	float startKnockout;
 	float endKnockout;
+	float m_flKnockoutDur;
+	float m_flResHP;
 
 	//AM: round based lives
 #ifdef SDK_USE_ROUNDS

@@ -323,12 +323,12 @@ void CSDKPlayer::PostThink()
 
 	if(ShouldTakeSunDmg()){
 		TakeDamage( CTakeDamageInfo( GetContainingEntity(INDEXENT(0)), GetContainingEntity(INDEXENT(0)), 2.0, DMG_SLOWBURN ) );
-		Ignite(1.0f,false,1.0f);
+		Ignite(0.10f,false,0.10f);
 		//DispatchParticleEffect( "blood_impact_red_01", GetAbsOrigin(), QAngle(0,0,1));
-		m_NextEnvDmg = gpGlobals->curtime + 0.10f;
+		m_NextEnvDmg = gpGlobals->curtime + 0.20f;
 	}
 	else {
-		Extinguish();
+		//Extinguish();
 	}
 	QAngle angles = GetLocalAngles();
 	angles[PITCH] = 0;
@@ -762,10 +762,11 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 
 		// AM: if player is a vampire, dont kill just floor them.
 		if(GetTeamNumber() == SDK_TEAM_BLUE && m_iHealth <= info.GetDamage()){
-			//DO LIVE STAKE?
+			//Death By sundamage?
 			if(pInflictor->IsWorld() && info.GetDamageType() & DMG_SLOWBURN){
 				return CBaseCombatCharacter::OnTakeDamage( info );
 			}
+			//DO LIVE STAKE?
 			if(pInflictor->IsPlayer() && 
 				((CSDKPlayer *)pInflictor)->GetActiveSDKWeapon()->IsMeleeWeapon() && 
 				info.GetDamageType() & DMG_SLASH)
@@ -774,7 +775,6 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 				return CBaseCombatCharacter::OnTakeDamage( info );
 			}
 			if(State_Get() == STATE_ACTIVE){
-				//BUG: knockout does not recieve player velocity so ragdoll falls straight down. 
 				SetAbsVelocity(info.GetDamageForce());
 				State_Transition( STATE_KNOCKOUT );	// Transition into the knockout state.
 				m_iHealth = 0;
@@ -1718,6 +1718,7 @@ void CSDKPlayer::State_PreThink_DEATH_ANIM()
 void CSDKPlayer::State_Enter_KNOCKOUT()
 {
 	
+		Extinguish();
 	AddSolidFlags( FSOLID_NOT_SOLID );
 	
 	CTakeDamageInfo info = CTakeDamageInfo();
@@ -1731,7 +1732,7 @@ void CSDKPlayer::State_Enter_KNOCKOUT()
 
 	
 	startKnockout = gpGlobals->curtime;
-	endKnockout = startKnockout + SDK_DEFAULT_KNOCKOUT_TIME;
+	endKnockout = startKnockout + m_flKnockoutDur;
 }
 
 void CSDKPlayer::State_PreThink_KNOCKOUT()
@@ -1740,7 +1741,7 @@ void CSDKPlayer::State_PreThink_KNOCKOUT()
 	//m_pRagdoll->SetAbsVelocity(GetAbsVelocity());
 	if(endKnockout < gpGlobals->curtime){
 		m_pRagdoll->Remove();
-		m_iHealth = 20;
+		m_iHealth = m_flResHP;
 		m_takedamage = DAMAGE_YES;
 		bIsResurrecting = true;
 		State_Transition( STATE_ACTIVE );
@@ -1912,7 +1913,7 @@ bool CSDKPlayer::WantsLagCompensationOnEntity( const CBasePlayer *pPlayer, const
 bool CSDKPlayer::ShouldTakeSunDmg( void ) {
 	
 	if ( GetTeamNumber() != SDK_TEAM_BLUE ) return false;
-	if (!IsAlive()) return false;
+	if (!IsAlive() || IsDead()) return false;
 	if ( m_NextEnvDmg == NULL ) m_NextEnvDmg = gpGlobals->curtime - 1.0f;
 	if ( m_NextEnvDmg > gpGlobals->curtime ) return false;
 

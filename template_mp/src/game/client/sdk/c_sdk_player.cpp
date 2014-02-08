@@ -1287,7 +1287,7 @@ void C_SDKPlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, 
 			C_BaseEntity *pRagdoll = (C_BaseEntity*)m_pRagdoll.Get();
 
 			// gets its origin and angles
-			pRagdoll->GetAttachment( pRagdoll->LookupAttachment( "eyes" ), eyeOrigin, eyeAngles );
+			pRagdoll->GetAttachment( pRagdoll->LookupAttachment( "head" ), eyeOrigin, eyeAngles );
 			Vector vForward; 
 			AngleVectors( eyeAngles, &vForward );
 			eyeOrigin = Vector(0,0,24) + eyeOrigin;

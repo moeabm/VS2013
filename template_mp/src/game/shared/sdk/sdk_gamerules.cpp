@@ -833,6 +833,10 @@ void CSDKGameRules::PlayerSpawn( CBasePlayer *p )
 //			DevMsg("setting spawn armor to: %d\n", pClassInfo.m_iArmor );
 			pPlayer->SetSpawnArmorValue( pClassInfo.m_iArmor );
 
+			if(pPlayer->GetTeamNumber() == SDK_TEAM_BLUE){
+				pPlayer->m_flKnockoutDur = pClassInfo.m_flKnockoutDur;
+				pPlayer->m_flResHP = pClassInfo.m_flResHP;
+			}
 		}
 		else
 		{

@@ -45,6 +45,10 @@ CSDKPlayerClassInfo::CSDKPlayerClassInfo()
 	m_flProneSpeed		= SDK_DEFAULT_PLAYER_PRONESPEED;
 
 	m_iArmor			= 0;
+	m_flKnockoutDur = 4;
+	m_flResHP = 30;
+
+
 }
 
 void CSDKPlayerClassInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName )
@@ -132,6 +136,9 @@ void CSDKPlayerClassInfo::Parse( KeyValues *pKeyValuesData, const char *szWeapon
 	m_flProneSpeed		= pKeyValuesData->GetFloat( "ProneSpeed", SDK_DEFAULT_PLAYER_PRONESPEED );
 
 	m_iArmor			= pKeyValuesData->GetInt( "armor", 0 );
+	
+	m_flKnockoutDur		= pKeyValuesData->GetFloat( "knockout", 4 );
+	m_flResHP			= m_flKnockoutDur * 10 - 10;
 
 }
 #endif // SDK_USE_PLAYERCLASSES

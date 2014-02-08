@@ -47,6 +47,8 @@ public:
 	float m_flProneSpeed;
 
 	int m_iArmor;
+	float m_flKnockoutDur;
+	float m_flResHP;
 };
 #endif // SDK_USE_PLAYERCLASSES
 
