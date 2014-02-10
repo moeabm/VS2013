@@ -89,10 +89,21 @@ void CWeaponClaws3::SecondaryAttack()
 
 	Msg("Secondary Claws3 swing\n");
 	
-#if defined ( CLIENT_DLL )
+	
+	const FileWeaponInfo_t *pWeaponInfo = &GetWpnData();
+	const CSDKWeaponInfo *pSDKInfo;
+ 
+#ifdef _DEBUG
+	pSDKInfo = dynamic_cast< const CSDKWeaponInfo* >( pWeaponInfo );
+	Assert( pSDKInfo );
 #else
-	pPlayer->GoSunImmune(5.0f);
+	pSDKInfo = static_cast< const CSDKWeaponInfo* >( pWeaponInfo );
 #endif
-
-	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
+		
+#ifndef CLIENT_DLL // TODO: right now Sun Immune is server only
+	pPlayer->GoSunImmune(pSDKInfo->m_flSpecialActive);
+#endif
+	m_flEndSecondaryAttack = gpGlobals->curtime + pSDKInfo->m_flSpecialActive;
+	m_flNextSecondaryAttack = gpGlobals->curtime + pSDKInfo->m_iSpecialCooldown;
+	BaseClass::SecondaryAttack();
 }

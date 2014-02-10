@@ -136,7 +136,7 @@
 		"digit3_xpos" "65"
 		"digit3_ypos" "2"
 	}
-
+	
 	HudAmmoSecondary
 	{
 		"fieldName" "HudAmmoSecondary"
@@ -152,7 +152,42 @@
 		"digit_xpos" "10"
 		"digit_ypos" "2"
 	}
+
+	HudMeleeIcon
+	{
+		"fieldName" "HudMeleeIcon"
+		"xpos"	"r150"
+		"ypos"	"432"
+		"wide"	"136"
+		"tall"  "36"
+		"visible" "1"
+		"enabled" "1"
+
+		"PaintBackgroundType"	"2"
+
+		"text_xpos" "8"
+		"text_ypos" "0"
+		"digit_xpos" "0"
+		"digit_ypos" "-8"
+	}
 	
+	HudMeleeTimer
+	{
+		"fieldName" "HudMeleeTimer"
+		"xpos"	"r150"
+		"ypos"	"432"
+		"wide"	"136"
+		"tall"  "36"
+		"visible" "1"
+		"enabled" "1"
+
+		"PaintBackgroundType"	"2"
+
+		"text_xpos" "8"
+		"text_ypos" "0"
+		"digit_xpos" "0"
+		"digit_ypos" "-8"
+	}
 	HudSuitPower
 	{
 		"fieldName" "HudSuitPower"

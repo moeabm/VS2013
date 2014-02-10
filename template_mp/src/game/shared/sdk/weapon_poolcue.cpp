@@ -128,6 +128,7 @@ void CWeaponPoolCue::SecondaryAttack()
 	//Setup our next attack times
 	m_flNextPrimaryAttack = gpGlobals->curtime + GetFireRate();
 	m_flNextSecondaryAttack = gpGlobals->curtime + GetFireRate();
+	BaseClass::SecondaryAttack();
 }
 
 //Tony; todo; add ACT_MP_PRONE* activities, so we have them.

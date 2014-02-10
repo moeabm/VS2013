@@ -894,7 +894,7 @@ void C_SDKPlayer::ClientThink()
 			
 			iAlpha = min((gpGlobals->curtime-invStart),0.8f)/ 0.8f; 
 			GetViewModel()->SetRenderMode( kRenderTransAlpha );
-			GetViewModel()->SetRenderColorA(255- 200.0f * iAlpha);
+			GetViewModel()->SetRenderColorA(255- 150.0f * iAlpha);
 		}
 	}
 

@@ -547,8 +547,21 @@ public:
 
 	// Weapon firing
 	CNetworkVar( float, m_flNextPrimaryAttack );						// soonest time ItemPostFrame will call PrimaryAttack
+	CNetworkVar( float, m_flFiredSecondaryAttack );					// soonest time ItemPostFrame will call SecondaryAttack
+	CNetworkVar( float, m_flEndSecondaryAttack );					// soonest time ItemPostFrame will call SecondaryAttack
 	CNetworkVar( float, m_flNextSecondaryAttack );					// soonest time ItemPostFrame will call SecondaryAttack
 	CNetworkVar( float, m_flTimeWeaponIdle );							// soonest time ItemPostFrame will call WeaponIdle
+	
+
+	virtual int GetSecondaryAttackTimer() {
+		int percent;
+		percent = 100.0f * (gpGlobals->curtime - m_flFiredSecondaryAttack) /  (m_flNextSecondaryAttack - m_flFiredSecondaryAttack);
+		return percent; 
+	}
+	
+	virtual bool GetSecondaryAttackActive() {
+		return m_flEndSecondaryAttack > gpGlobals->curtime  && m_flFiredSecondaryAttack <= gpGlobals->curtime;
+	}
 	// Weapon state
 	bool					m_bInReload;			// Are we in the middle of a reload;
 	bool					m_bFireOnEmpty;			// True when the gun is empty and the player is still holding down the attack key(s)

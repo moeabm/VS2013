@@ -89,6 +89,18 @@ void CWeaponClaws2::SecondaryAttack()
 
 	Msg("Secondary Claws2 swing\n");
 	
-	pPlayer->GoInvisible(5.0f);
-	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
+	const FileWeaponInfo_t *pWeaponInfo = &GetWpnData();
+	const CSDKWeaponInfo *pSDKInfo;
+ 
+#ifdef _DEBUG
+	pSDKInfo = dynamic_cast< const CSDKWeaponInfo* >( pWeaponInfo );
+	Assert( pSDKInfo );
+#else
+	pSDKInfo = static_cast< const CSDKWeaponInfo* >( pWeaponInfo );
+#endif
+ 
+	pPlayer->GoInvisible(pSDKInfo->m_flSpecialActive);
+	m_flEndSecondaryAttack = gpGlobals->curtime + pSDKInfo->m_flSpecialActive;
+	m_flNextSecondaryAttack = gpGlobals->curtime + pSDKInfo->m_iSpecialCooldown;
+	BaseClass::SecondaryAttack();
 }

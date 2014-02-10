@@ -91,16 +91,28 @@ void CWeaponClaws1::SecondaryAttack()
 
 	Msg("Secondary Claws1 swing\n");
 	
+	
+	const FileWeaponInfo_t *pWeaponInfo = &GetWpnData();
+	const CSDKWeaponInfo *pSDKInfo;
+ 
+#ifdef _DEBUG
+	pSDKInfo = dynamic_cast< const CSDKWeaponInfo* >( pWeaponInfo );
+	Assert( pSDKInfo );
+#else
+	pSDKInfo = static_cast< const CSDKWeaponInfo* >( pWeaponInfo );
+#endif
+ 
 #if defined( CLIENT_DLL )
 	C_SDKTeam *iTeam = GetGlobalSDKTeam( SDK_TEAM_RED );
 	for( int i =0 ; i < iTeam->Get_Number_Players() ; i++){
 		CSDKPlayer *tmpPlayer = dynamic_cast< CSDKPlayer* > (iTeam->GetPlayer(i));
 		if(tmpPlayer->IsAlive()){
-			tmpPlayer->Glow(5.0f);
+			tmpPlayer->Glow(pSDKInfo->m_flSpecialActive);
 		}
 		Msg("FOUND SLAYER: %s", tmpPlayer->GetPlayerName());
 	}
 #endif
-	
-	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
+	m_flEndSecondaryAttack = gpGlobals->curtime + pSDKInfo->m_flSpecialActive;
+	m_flNextSecondaryAttack = gpGlobals->curtime + pSDKInfo->m_iSpecialCooldown;
+	BaseClass::SecondaryAttack();
 }

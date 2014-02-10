@@ -137,6 +137,7 @@ void CWeaponColt::SecondaryAttack()
 	
 	m_flNextPrimaryAttack = gpGlobals->curtime +  GetFireRate();
 	m_flNextSecondaryAttack = gpGlobals->curtime +  GetFireRate();
+	BaseClass::SecondaryAttack();
 	
 }
 

@@ -123,7 +123,8 @@ void CWeaponSDKMelee::PrimaryAttack()
 //------------------------------------------------------------------------------
 void CWeaponSDKMelee::SecondaryAttack()
 {
-	Swing( true );
+	//Swing( true );
+	m_flFiredSecondaryAttack = gpGlobals->curtime;
 }
 
 
@@ -383,6 +384,6 @@ void CWeaponSDKMelee::Swing( int bIsSecondary )
 
 	//Setup our next attack times
 	m_flNextPrimaryAttack = gpGlobals->curtime + GetFireRate();
-	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
+	if(bIsSecondary) m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
 }
 

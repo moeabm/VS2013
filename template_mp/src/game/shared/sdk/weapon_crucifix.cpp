@@ -73,10 +73,23 @@ void CWeaponCrucifix::SecondaryAttack()
 	//Possible future feature: Have the praying father d glow white
 	//TODO: add pray glow
 
-#ifndef CLIENT_DLL // right now pray function is server only
-	pPlayer->Pray(3.0f);
+	
+	const FileWeaponInfo_t *pWeaponInfo = &GetWpnData();
+	const CSDKWeaponInfo *pSDKInfo;
+ 
+#ifdef _DEBUG
+	pSDKInfo = dynamic_cast< const CSDKWeaponInfo* >( pWeaponInfo );
+	Assert( pSDKInfo );
+#else
+	pSDKInfo = static_cast< const CSDKWeaponInfo* >( pWeaponInfo );
 #endif
-	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
+ 
+#ifndef CLIENT_DLL // TODO: right now pray function is server only
+	pPlayer->Pray(pSDKInfo->m_flSpecialActive);
+#endif
+	m_flEndSecondaryAttack = gpGlobals->curtime + pSDKInfo->m_flSpecialActive;
+	m_flNextSecondaryAttack = gpGlobals->curtime + pSDKInfo->m_iSpecialCooldown;
+	BaseClass::SecondaryAttack();
 }
 
 //Tony; todo; add ACT_MP_PRONE* activities, so we have them.
