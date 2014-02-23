@@ -84,10 +84,7 @@ void CWeaponClaws2::SecondaryAttack()
 	if ( !pPlayer )
 		return;
 	
-	
 	WeaponSound( SPECIAL1 );
-
-	Msg("Secondary Claws2 swing\n");
 	
 	const FileWeaponInfo_t *pWeaponInfo = &GetWpnData();
 	const CSDKWeaponInfo *pSDKInfo;

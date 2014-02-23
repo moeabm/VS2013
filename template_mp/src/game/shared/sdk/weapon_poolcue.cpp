@@ -79,10 +79,6 @@ void CWeaponPoolCue::SecondaryAttack()
 	UTIL_TraceLine( swingStart, swingEnd, MASK_SHOT_HULL, pPlayer, COLLISION_GROUP_NONE, &traceHit );
 	Activity nHitActivity = ACT_VM_HITCENTER;
 
-	Msg("Secondary PoolCue swing\n");
-	
-	//TODO: add knockback code
-	
 	// -------------------------
 	//	Miss
 	// -------------------------

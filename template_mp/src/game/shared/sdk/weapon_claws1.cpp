@@ -88,8 +88,6 @@ void CWeaponClaws1::SecondaryAttack()
 	
 
 	WeaponSound( SPECIAL1 );
-
-	Msg("Secondary Claws1 swing\n");
 	
 	
 	const FileWeaponInfo_t *pWeaponInfo = &GetWpnData();
@@ -109,7 +107,6 @@ void CWeaponClaws1::SecondaryAttack()
 		if(tmpPlayer->IsAlive()){
 			tmpPlayer->Glow(pSDKInfo->m_flSpecialActive);
 		}
-		Msg("FOUND SLAYER: %s", tmpPlayer->GetPlayerName());
 	}
 #endif
 	m_flEndSecondaryAttack = gpGlobals->curtime + pSDKInfo->m_flSpecialActive;

@@ -330,3 +330,19 @@
 		"wave"	"*vo/npc/$gender01/pain09.wav"
 	}
 }
+
+//VS
+
+"Vampire.Drink"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"rndwave"
+	{
+		"wave"	"player/suck01.wav"
+	}
+}

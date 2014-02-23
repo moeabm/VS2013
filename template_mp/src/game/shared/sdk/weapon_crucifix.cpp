@@ -66,14 +66,11 @@ void CWeaponCrucifix::SecondaryAttack()
 		return;
 
 	WeaponSound( SPECIAL1 );
-
-	Msg("Secondary Crucifix swing\n");
 	
 	startPrayTime = gpGlobals->curtime;
 	//Possible future feature: Have the praying father d glow white
 	//TODO: add pray glow
 
-	
 	const FileWeaponInfo_t *pWeaponInfo = &GetWpnData();
 	const CSDKWeaponInfo *pSDKInfo;
  

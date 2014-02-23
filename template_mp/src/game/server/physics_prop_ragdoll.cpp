@@ -275,6 +275,7 @@ CRagdollProp::CRagdollProp( void )
 	m_allAsleep = false;
 	m_flFadeScale = 1;
 	m_flDefaultFadeScale = 1;
+	Precache();
 }
 
 CRagdollProp::~CRagdollProp( void )
@@ -284,6 +285,7 @@ CRagdollProp::~CRagdollProp( void )
 void CRagdollProp::Precache( void )
 {
 	PrecacheModel( STRING( GetModelName() ) );
+	PrecacheScriptSound( "Vampire.Drink" );
 	BaseClass::Precache();
 }
 
@@ -1715,6 +1717,7 @@ void Ragdoll_GetAngleOverrideString( char *pOut, int size, CBaseEntity *pEntity 
 
 //-----------------------------------------------------------------------------
 // Purpose: This is called when player uses a ragdoll
+// Blood sucking for campires. 
 //-----------------------------------------------------------------------------
 void CRagdollProp::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -1723,13 +1726,16 @@ void CRagdollProp::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 	//TODO: throttle this
 		m_flNextUseTime = gpGlobals->curtime + FEED_RATE;
 		CBasePlayer * pRagParent =(CBasePlayer *) GetOwnerEntity();
+		CBasePlayer * pPlayer = (CBasePlayer *) pActivator;
+
+		//Vampires' blood cannot be sucked
 		if(pRagParent && pRagParent->GetTeamNumber() == SDK_TEAM_BLUE) return;
 
-		CBasePlayer * pPlayer = (CBasePlayer *) pActivator;
+		// Only vampires can suck blood
 		if(pPlayer && pPlayer->GetTeamNumber() == SDK_TEAM_BLUE){
-			CPASAttenuationFilter sndFilter( this, "PropJeep.AmmoOpen" );
-			EmitSound( sndFilter, entindex(), "PropJeep.AmmoOpen" );
-			Msg("USED >>> FEED");
+			CPASAttenuationFilter sndFilter( this, "Vampire.Drink" );
+			EmitSound( sndFilter, entindex(), "Vampire.Drink" );
+			//Msg("USED >>> FEED");
 			pPlayer->TakeHealth(1.0f, DMG_GENERIC);
 		}
 	}
