@@ -147,7 +147,14 @@ void CSDKHudMeleeTimer::UpdatePlayerAmmo( C_BasePlayer *player )
 
 	m_iTimerValue = min(100, wpn->GetSecondaryAttackTimer());
 	m_bIsActive = wpn->GetSecondaryAttackActive();
-	//m_iTimerValue = 65;
+
+	if(m_bIsActive){
+			SetSize(_wide, m_iOrigTall );
+	}
+	else{
+			int newTall= max(1, m_iOrigTall * (m_iTimerValue/ 100.0) );
+			SetSize(_wide, newTall );
+	}
 
 	SetPaintEnabled(true);
 	SetPaintBackgroundEnabled(true);
@@ -257,8 +264,14 @@ void CSDKHudMeleeTimer::ApplySettings(KeyValues *inResourceData)
 {
 	BaseClass::ApplySettings(inResourceData);
 	
-	const char *wstr = inResourceData->GetString( "tall", NULL );
-	m_iOrigTall = atoi(wstr);
+	const char *tstr = inResourceData->GetString( "tall", NULL );
+	m_iOrigTall = atoi(tstr);
+	
+	
+	if ( IsProportional() )
+	{
+		m_iOrigTall = scheme()->GetProportionalScaledValueEx(GetScheme(), m_iOrigTall);
+	}
 
 }
 //-----------------------------------------------------------------------------
@@ -267,26 +280,21 @@ void CSDKHudMeleeTimer::ApplySettings(KeyValues *inResourceData)
 void CSDKHudMeleeTimer::Paint()
 {
 	
-		//Draw Melee Special Icon
-		if(m_bIsActive)
+		//if timer is at 100 percent draw indicator
+		if(m_iTimerValue == 100) {
 			surface()->DrawSetTextColor(Color(255,255,255,255));
-		else surface()->DrawSetTextColor(GetFgColor());
+			surface()->DrawSetTextFont(m_hTextGlowFont);
+			surface()->DrawSetTextPos(digit_xpos , digit_ypos);
+			surface()->DrawUnicodeString( m_DividerText );
+		}
+		//Draw Melee Special Icon
+		if(m_bIsActive){
+			surface()->DrawSetTextColor(Color(255,255,255,255));
+		}
+		else{
+			surface()->DrawSetTextColor(GetFgColor());
+		}
 		surface()->DrawSetTextFont(m_hTextFont);
 		surface()->DrawSetTextPos(digit_xpos , digit_ypos);
 		surface()->DrawUnicodeString( m_DividerText );
-		//PaintNumbers(m_hNumberFont, digit_xpos + 30, digit_ypos, m_iTimerValue);
-		if((m_iTimerValue/ 100.0) == 1.0) {
-			surface()->DrawSetTextColor(GetFgColor());
-			surface()->DrawSetTextFont(m_hTextFont);
-			surface()->DrawSetTextPos(digit_xpos , digit_ypos);
-			surface()->DrawUnicodeString( L"O" );
-		}
-		
-		if(m_bIsActive){
-			SetSize(_wide, m_iOrigTall );
-		}
-		else{
-			int newTall= max(1, m_iOrigTall * (m_iTimerValue/ 100.0) );
-			SetSize(_wide, newTall );
-		}
 }

@@ -48,7 +48,7 @@ WeaponData
 		"weapon_s"
 		{	
 				"font"		"WeaponIconsSelected"
-				"character"	"c"
+				"character"	"r"
 		}
 		"ammo"
 		{

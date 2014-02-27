@@ -67,4 +67,6 @@ config.cfg
 #VPC
 *.vpc_crc
 
+sound.cache
 
+template_mp/game/mod_template_mp/sound/sound.cache

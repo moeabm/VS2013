@@ -320,7 +320,6 @@ void CSDKPlayer::PostThink()
 			
 		}
 	}
-
 	if(ShouldTakeSunDmg()){
 		TakeDamage( CTakeDamageInfo( GetContainingEntity(INDEXENT(0)), GetContainingEntity(INDEXENT(0)), 2.0, DMG_SLOWBURN ) );
 		Ignite(0.10f,false,0.10f);
@@ -1726,10 +1725,11 @@ void CSDKPlayer::State_Enter_KNOCKOUT()
 	m_pRagdoll = CreateServerRagdoll( this, m_nForceBone, info, COLLISION_GROUP_INTERACTIVE_DEBRIS, true );
 
 	m_takedamage = DAMAGE_NO;
-	Weapon_SetLast(GetActiveSDKWeapon());
-	GetActiveSDKWeapon()->Holster(NULL);
-	Msg("STATE KNOCKOUT\n");
-
+	CWeaponSDKBase *wpn = GetActiveSDKWeapon();
+	if(wpn){
+		Weapon_SetLast(wpn);
+		wpn->Holster(NULL);
+	}
 	
 	startKnockout = gpGlobals->curtime;
 	endKnockout = startKnockout + m_flKnockoutDur;

@@ -44,7 +44,7 @@ WeaponData
 		"weapon_s"
 		{	
 				"font"		"WeaponIconsSelected"
-				"character"	"k"
+				"character"	"q"
 		}
 		"ammo"
 		{
