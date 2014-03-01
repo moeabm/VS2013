@@ -210,6 +210,8 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 		trace_t	tr, tr2;
 		tr = BaseClass::GetTouchTrace();
 		Vector	vecNormalizedVel = GetAbsVelocity();
+		
+		UTIL_TraceLine(GetAbsOrigin(), GetAbsOrigin() + vecNormalizedVel * 100, MASK_ALL, this, COLLISION_GROUP_PLAYER, &tr);
 
 		ClearMultiDamage();
 		VectorNormalize( vecNormalizedVel );
@@ -227,6 +229,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 			CTakeDamageInfo	dmgInfo( this, GetOwnerEntity(), m_iDamage, DMG_BULLET | DMG_NEVERGIB );
 			CalculateMeleeDamageForce( &dmgInfo, vecNormalizedVel, tr.endpos, 0.7f );
 			dmgInfo.SetDamagePosition( tr.endpos );
+
 			pOther->DispatchTraceAttack( dmgInfo, vecNormalizedVel, &tr );
 		}
 

@@ -392,7 +392,7 @@ void Bot_SetForwardMovement( CSDKBot *pBot, CUserCmd &cmd )
 {
 	if ( !pBot->IsEFlagSet(EFL_BOT_FROZEN) )
 	{
-		if ( pBot->m_iHealth > 20 )
+		if ( pBot->m_iHealth > 100 )
 		{
 			cmd.forwardmove = 600 * ( pBot->m_bBackwards ? -1 : 1 );
 			if ( false && pBot->m_flSideMove != 0.0f )

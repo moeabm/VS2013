@@ -648,7 +648,7 @@ void CSDKPlayer::InitialSpawn( void )
 void CSDKPlayer::TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &vecDir, trace_t *ptr )
 {
 	//Tony; disable prediction filtering, and call the baseclass.
-	CDisablePredictionFiltering disabler;
+	CDisablePredictionFiltering disabler;pp
 	BaseClass::TraceAttack( inputInfo, vecDir, ptr );
 }
 #else
@@ -659,7 +659,15 @@ void CSDKPlayer::TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &ve
 {
 	//Tony; disable prediction filtering, and call the baseclass.
 	CDisablePredictionFiltering disabler;
-	BaseClass::TraceAttack( inputInfo, vecDir, ptr, pAccumulator );
+	CTakeDamageInfo info(inputInfo);
+	CBaseEntity *inflictor = info.GetInflictor();
+
+	//This is for crossbow chest shot. if a crossbow bolt hits hitbox 11 then change the damage type to slash so we can kill the vampire
+	if(inflictor && strcmp(inflictor->GetClassname(),"crossbow_bolt")==0
+		&&ptr->hitbox == 11){
+		info.SetDamageType(DMG_SLASH);
+	}
+	BaseClass::TraceAttack( info, vecDir, ptr, pAccumulator );
 }
 #endif
 
@@ -765,9 +773,14 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 			if(pInflictor->IsWorld() && info.GetDamageType() & DMG_SLOWBURN){
 				return CBaseCombatCharacter::OnTakeDamage( info );
 			}
+			//Bolted in the heart?
+			if(strcmp(pInflictor->GetClassname(),"crossbow_bolt")==0 
+				&& info.GetDamageType() & DMG_SLASH){
+				return CBaseCombatCharacter::OnTakeDamage( info );
+			}
 			//DO LIVE STAKE?
 			if(pInflictor->IsPlayer() && 
-				((CSDKPlayer *)pInflictor)->GetActiveSDKWeapon()->IsMeleeWeapon() && 
+				//((CSDKPlayer *)pInflictor)->GetActiveSDKWeapon()->IsMeleeWeapon() && 
 				info.GetDamageType() & DMG_SLASH)
 			{
 				// IsMeleeWeapon() is defined in weapon script
@@ -893,8 +906,10 @@ void CSDKPlayer::Event_Killed( const CTakeDamageInfo &info )
 	}
 	else {
 		//since it was already created in Knockdown. 
+		if(m_pRagdoll){
 			m_pRagdoll->Remove();
 			m_pRagdoll = 0;
+		}
 		// TODO:Need explosion and sound in else statement
 	}
 
