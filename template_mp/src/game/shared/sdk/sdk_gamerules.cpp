@@ -36,6 +36,8 @@
 
 
 	ConVar vs_roundlength("vs_roundlength","180", FCVAR_SERVER_CAN_EXECUTE | FCVAR_NOTIFY, "Time limit (in seconds) for each round. (Default: 180)");
+	ConVar vs_bots_enabled("vs_bots_enabled","1", FCVAR_SERVER_CAN_EXECUTE | FCVAR_NOTIFY, "Turn bots on|off");
+	ConVar vs_bots_max("vs_bots_max","4", FCVAR_SERVER_CAN_EXECUTE | FCVAR_NOTIFY, "Maximum number of bots");
 #ifndef CLIENT_DLL
 
 class CSpawnPoint : public CPointEntity
@@ -1507,6 +1509,7 @@ void CSDKGameRules::EndRound( int winnerTeam){
 			}
 		}
 	}
+	BalanceTeams();
 }
 
 void CSDKGameRules::StartRound(){
@@ -1534,6 +1537,25 @@ void CSDKGameRules::StartRound(){
 		m_iRoundNum++;
 		m_flRoundTimer = gpGlobals->curtime;
 	}
+}
+
+void CSDKGameRules::BalanceTeams(){
+	CSDKTeam *vampTeam = GetGlobalSDKTeam(SDK_TEAM_BLUE);
+	CSDKTeam *slayTeam = GetGlobalSDKTeam(SDK_TEAM_RED);
+	int diff = slayTeam->GetNumPlayers() - vampTeam->GetNumPlayers();
+	if(diff < -1) { 
+		//switch vamps
+		for( int i=-1 ; i > diff; i--){
+			vampTeam->GetPlayer(rand() % vampTeam->GetNumPlayers())->ChangeTeam(SDK_TEAM_RED);
+		}
+	}
+	else if(diff > 1){
+		//switch slayers
+		for( int i=1 ; i < diff; i++){
+			slayTeam->GetPlayer(rand() % slayTeam->GetNumPlayers())->ChangeTeam(SDK_TEAM_BLUE);
+		}
+	}
+	return;
 }
 #endif // Rounds
 #endif // CLIENT_DLL

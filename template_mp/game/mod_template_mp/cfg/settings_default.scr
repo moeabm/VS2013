@@ -73,6 +73,20 @@ DESCRIPTION SERVER_OPTIONS
 		{ NUMBER 0 64 }
 		{ "0" }
 	}
+	
+	"vs_bots_enabled"
+	{
+		"Enable Bots"
+		{ BOOL }
+		{ "1"}
+	}
+	
+	"vs_bots_max"
+	{
+		"Max Bots"
+		{ Number 0 16 }
+		{ "4" }
+	}
 
 //	"mp_teamplay"
 //	{

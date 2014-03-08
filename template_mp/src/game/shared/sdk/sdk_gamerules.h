@@ -199,6 +199,7 @@ private:
 	
 	void EndRound( int winnerTeam = 0);
 	void StartRound();
+	void BalanceTeams();
 
 
 #endif

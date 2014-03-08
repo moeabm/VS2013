@@ -628,10 +628,18 @@ void CSDKPlayer::CommitSuicide( bool bExplode /* = false */, bool bForce /*= fal
 #if defined ( SDK_USE_PLAYERCLASSES )
 		m_Shared.PlayerClass() == PLAYERCLASS_UNDEFINED || 
 #endif
-		State_Get() != STATE_ACTIVE 
+		  (State_Get() != STATE_ACTIVE && State_Get() != STATE_KNOCKOUT)
 		)
 		return;
 	
+	//suicide handling while in knockout state
+	if(State_Get() == STATE_KNOCKOUT){
+		m_pRagdoll->Remove();
+		m_iHealth = 0;
+		m_takedamage = DAMAGE_YES;
+		bIsResurrecting = true;
+		TakeDamage(CTakeDamageInfo(this, this, 100.0f, DMG_SLASH));
+	}
 	m_iSuicideCustomKillFlags = SDK_DMG_CUSTOM_SUICIDE;
 
 	BaseClass::CommitSuicide( bExplode, bForce );
@@ -901,7 +909,7 @@ void CSDKPlayer::Event_Killed( const CTakeDamageInfo &info )
 	// because we still want to transmit to the clients in our PVS.
 	// AM; no ragdoll on kill for vampires. 
 	
-	if(GetTeamNumber() != SDK_TEAM_BLUE) {
+	if(GetTeamNumber() != SDK_TEAM_BLUE && State_Get() != STATE_KNOCKOUT) {
 		CreateServerRagdoll(this, m_nForceBone, CTakeDamageInfo(), COLLISION_GROUP_INTERACTIVE_DEBRIS, true );
 	}
 	else {
