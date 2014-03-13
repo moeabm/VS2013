@@ -30,6 +30,7 @@
 		"textAlignment"		"north-west"
 		"dulltext"		"0"
 		"brighttext"		"1"
+		"font"			"ScoreboardTitle"
 	}
 	"PlayerList"
 	{

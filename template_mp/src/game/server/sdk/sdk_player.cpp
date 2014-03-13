@@ -114,6 +114,8 @@ BEGIN_SEND_TABLE_NOBASE( CSDKPlayerShared, DT_SDKPlayerShared )
 	SendPropBool( SENDINFO( m_bIsSprinting ) ),
 #endif
 	SendPropDataTable( "sdksharedlocaldata", 0, &REFERENCE_SEND_TABLE(DT_SDKSharedLocalPlayerExclusive), SendProxy_SendLocalDataTable ),
+	
+	SendPropBool( SENDINFO( m_IsStealth ) ),
 END_SEND_TABLE()
 extern void SendProxy_Origin( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID );
 
@@ -166,6 +168,7 @@ IMPLEMENT_SERVERCLASS_ST( CSDKPlayer, DT_SDKPlayer )
 	SendPropInt( SENDINFO( m_iPlayerState ), Q_log2( NUM_PLAYER_STATES )+1, SPROP_UNSIGNED ),
 
 	SendPropBool( SENDINFO( m_bSpawnInterpCounter ) ),
+
 
 END_SEND_TABLE()
 
@@ -296,6 +299,9 @@ void CSDKPlayer::PostThink()
 {
 	BaseClass::PostThink();
 
+	if(m_Shared.IsStealth() && m_flStealthEnd <= gpGlobals->curtime){
+		m_Shared.m_IsStealth = false;
+	}
 	if(isInvisible){
 		float iAlpha;
 		if(invEnd < gpGlobals->curtime){
@@ -385,6 +391,12 @@ void CSDKPlayer::GoSunImmune(float length){
 	m_IsSunImmune = true;
 	immStart = gpGlobals->curtime;
 	immEnd = immStart + length;
+}
+
+void CSDKPlayer::GoStealth(float length){
+	m_Shared.m_IsStealth = true;
+	m_flStealthStart = gpGlobals->curtime;
+	m_flStealthEnd = m_flStealthStart + length;
 }
 
 void CSDKPlayer::Pray(float length){
@@ -1739,7 +1751,7 @@ void CSDKPlayer::State_PreThink_DEATH_ANIM()
 
 void CSDKPlayer::State_Enter_KNOCKOUT()
 {
-	
+	IncrementKOCount(1);
 		Extinguish();
 	AddSolidFlags( FSOLID_NOT_SOLID );
 	
@@ -1767,6 +1779,7 @@ void CSDKPlayer::State_PreThink_KNOCKOUT()
 		m_iHealth = m_flResHP;
 		m_takedamage = DAMAGE_YES;
 		bIsResurrecting = true;
+		IncrementResCount(1);
 		State_Transition( STATE_ACTIVE );
 		Weapon_Switch(Weapon_GetLast());
 	}

@@ -1,0 +1,9 @@
+"VertexlitGeneric"
+{
+	"$translucent" "1"
+	"$basetexture" "models\player\testRed"
+	"$vertexalpha" "1"
+//	"$no_fullbright" "1"
+	"$ignorez" "1"
+ 	  $selfillum 1
+}

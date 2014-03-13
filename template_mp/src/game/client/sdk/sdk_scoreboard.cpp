@@ -45,7 +45,7 @@ enum EScoreboardSections
 CSDKScoreboard::CSDKScoreboard(IViewPort *pViewPort):CClientScoreBoardDialog(pViewPort)
 {
 	// load the new scheme early!!
-	SetScheme("SourceScheme");
+	SetScheme("ClientScheme");
 
 }
 
@@ -93,6 +93,8 @@ void CSDKScoreboard::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 	SetBgColor( Color(0, 0, 0, 0) );
 	SetBorder( pScheme->GetBorder( "BaseBorder" ) );
+	
+	m_pPlayerList->SetHeaderFont(pScheme->GetFont("ScoreboardHeader", IsProportional()));
 }
 
 
@@ -224,9 +226,9 @@ void CSDKScoreboard::AddHeader()
 #if defined ( SDK_USE_PLAYERCLASSES )
 	m_pPlayerList->AddColumnToSection(0, "class", "", 0, scheme()->GetProportionalScaledValueEx( GetScheme(), SCORE_WIDTH ), hFallbackFont );
 #endif
-	m_pPlayerList->AddColumnToSection(0, "frags", "#PlayerScore", 0 | SectionedListPanel::COLUMN_RIGHT, scheme()->GetProportionalScaledValueEx( GetScheme(), SCORE_WIDTH ) );
-	m_pPlayerList->AddColumnToSection(0, "deaths", "#PlayerDeath", 0 | SectionedListPanel::COLUMN_RIGHT, scheme()->GetProportionalScaledValueEx( GetScheme(), DEATH_WIDTH ) );
-	m_pPlayerList->AddColumnToSection(0, "ping", "#PlayerPing", 0 | SectionedListPanel::COLUMN_RIGHT, scheme()->GetProportionalScaledValueEx( GetScheme(), PING_WIDTH ) );
+	m_pPlayerList->AddColumnToSection(0, "frags", "#VS_PlayerScore", 0 | SectionedListPanel::COLUMN_RIGHT, scheme()->GetProportionalScaledValueEx( GetScheme(), SCORE_WIDTH ) );
+	m_pPlayerList->AddColumnToSection(0, "DTH", "#VS_PlayerDRK", 0 | SectionedListPanel::COLUMN_RIGHT, scheme()->GetProportionalScaledValueEx( GetScheme(), DEATH_WIDTH ) );
+	m_pPlayerList->AddColumnToSection(0, "ping", "#VS_PlayerPing", 0 | SectionedListPanel::COLUMN_RIGHT, scheme()->GetProportionalScaledValueEx( GetScheme(), PING_WIDTH ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -248,14 +250,16 @@ void CSDKScoreboard::AddSection(int teamType, int teamNumber)
 		m_pPlayerList->AddColumnToSection(sectionID, "class", "", 0, scheme()->GetProportionalScaledValueEx( GetScheme(), SCORE_WIDTH ), hFallbackFont );
 #endif
 		m_pPlayerList->AddColumnToSection(sectionID, "frags", "", SectionedListPanel::COLUMN_RIGHT, scheme()->GetProportionalScaledValueEx( GetScheme(), SCORE_WIDTH ) );
-		m_pPlayerList->AddColumnToSection(sectionID, "deaths", "", SectionedListPanel::COLUMN_RIGHT, scheme()->GetProportionalScaledValueEx( GetScheme(), DEATH_WIDTH ) );
+		m_pPlayerList->AddColumnToSection(sectionID, "deaths", "", SectionedListPanel::COLUMN_RIGHT, scheme()->GetProportionalScaledValueEx( GetScheme(), DEATH_WIDTH*2/4 ) );
+		m_pPlayerList->AddColumnToSection(sectionID, "res", "", SectionedListPanel::COLUMN_RIGHT, scheme()->GetProportionalScaledValueEx( GetScheme(), DEATH_WIDTH/4 ) );
+		m_pPlayerList->AddColumnToSection(sectionID, "ko", "", SectionedListPanel::COLUMN_RIGHT, scheme()->GetProportionalScaledValueEx( GetScheme(), DEATH_WIDTH/4 ) );
 		m_pPlayerList->AddColumnToSection(sectionID, "ping", "", SectionedListPanel::COLUMN_RIGHT, scheme()->GetProportionalScaledValueEx( GetScheme(), PING_WIDTH ) );
 
 		// set the section to have the team color
 		if ( teamNumber )
 		{
 			if ( SDKGameResources() )
-					m_pPlayerList->SetSectionFgColor(sectionID,  SDKGameResources()->GetTeamColor(teamNumber));
+							m_pPlayerList->SetSectionFgColor(sectionID,  SDKGameResources()->GetTeamColor(teamNumber));
 		}
 
 		//Tony; don't make unassigned always visible when using teams.
@@ -310,7 +314,7 @@ void CSDKScoreboard::UpdatePlayerInfo()
 
 
 #if defined ( SDK_USE_PLAYERCLASSES )
-	int localteam = pPlayer->GetTeamNumber();
+	//int localteam = pPlayer->GetTeamNumber();
 	C_BasePlayer *pOther = NULL;
 #endif
 
@@ -326,6 +330,8 @@ void CSDKScoreboard::UpdatePlayerInfo()
 			kv->SetInt("team", sdkPR->GetTeam( i ) );
 			kv->SetString("name", sdkPR->GetPlayerName(i) );
 			kv->SetInt("deaths", sdkPR->GetDeaths( i ));
+			kv->SetInt("res", sdkPR->GetReses( i ));
+			kv->SetInt("ko", sdkPR->GetKOs( i ));
 			kv->SetInt("frags", sdkPR->GetPlayerScore( i ));
 
 #if defined ( SDK_USE_PLAYERCLASSES )
@@ -334,7 +340,7 @@ void CSDKScoreboard::UpdatePlayerInfo()
 			if (pOther )
 			{
 				int ot = pOther->GetTeamNumber();
-				if ( ot == localteam || localteam == TEAM_UNASSIGNED)
+				if ( true /*ot == localteam || localteam == TEAM_UNASSIGNED */)
 					kv->SetString("class", SDKGameRules()->GetPlayerClassName( SDKGameResources()->GetPlayerClass(i), ot ) );
 				else
 					kv->SetString("class", "");

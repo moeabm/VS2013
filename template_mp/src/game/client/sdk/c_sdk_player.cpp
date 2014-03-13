@@ -103,6 +103,8 @@ BEGIN_RECV_TABLE_NOBASE( CSDKPlayerShared, DT_SDKPlayerShared )
 	RecvPropBool( RECVINFO( m_bIsSprinting ) ),
 #endif
 	RecvPropDataTable( "sdksharedlocaldata", 0, 0, &REFERENCE_RECV_TABLE(DT_SDKSharedLocalPlayerExclusive) ),
+	
+	RecvPropBool( RECVINFO( m_IsStealth ) ),
 END_RECV_TABLE()
 
 BEGIN_RECV_TABLE_NOBASE( C_SDKPlayer, DT_SDKLocalPlayerExclusive )
@@ -134,6 +136,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_SDKPlayer, DT_SDKPlayer, CSDKPlayer )
 	RecvPropInt( RECVINFO( m_iPlayerState ) ),
 
 	RecvPropBool( RECVINFO( m_bSpawnInterpCounter ) ),
+
 END_RECV_TABLE()
 
 // ------------------------------------------------------------------------------------------ //
@@ -1258,7 +1261,8 @@ int C_SDKPlayer::DrawModel(int flags)
 	  SetRenderColorG(50);
 	  SetRenderColorB(50);
 	   //working now... needed to precache the material. I precached in team initialization (bad place?)
-      modelrender->ForcedMaterialOverride( materials->FindMaterial( "models/player/glow", TEXTURE_GROUP_CLIENT_EFFECTS ) );
+      //modelrender->ForcedMaterialOverride( materials->FindMaterial( "models/player/glow", TEXTURE_GROUP_CLIENT_EFFECTS ) );
+      modelrender->ForcedMaterialOverride( materials->FindMaterial( "models/player/testRed", TEXTURE_GROUP_CLIENT_EFFECTS ) );
 	  
       BaseClass::DrawModel(STUDIO_RENDER|STUDIO_TRANSPARENCY|STUDIO_OVERRIDE);
       modelrender->ForcedMaterialOverride(0);

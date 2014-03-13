@@ -32,6 +32,8 @@ protected:
 	CNetworkArray( int, m_iPing, MAX_PLAYERS+1 );
 	CNetworkArray( int, m_iScore, MAX_PLAYERS+1 );
 	CNetworkArray( int, m_iDeaths, MAX_PLAYERS+1 );
+	CNetworkArray( int, m_iReses, MAX_PLAYERS+1 );
+	CNetworkArray( int, m_iKOs, MAX_PLAYERS+1 );
 	CNetworkArray( int, m_bConnected, MAX_PLAYERS+1 );
 	CNetworkArray( int, m_iTeam, MAX_PLAYERS+1 );
 	CNetworkArray( int, m_bAlive, MAX_PLAYERS+1 );

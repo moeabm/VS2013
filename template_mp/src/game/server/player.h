@@ -659,6 +659,8 @@ public:
 	// Accessor methods
 	int		FragCount() const		{ return m_iFrags; }
 	int		DeathCount() const		{ return m_iDeaths;}
+	int		ResCount() const		{ return m_iReses;}
+	int		KOCount() const		{ return m_iKOs;}
 	bool	IsConnected() const		{ return m_iConnected != PlayerDisconnected; }
 	bool	IsDisconnecting() const	{ return m_iConnected == PlayerDisconnecting; }
 	bool	IsSuitEquipped() const	{ return m_Local.m_bWearingSuit; }
@@ -689,6 +691,12 @@ public:
 
 	void	ResetDeathCount();
 	void	IncrementDeathCount( int nCount );
+
+	void	ResetResCount();
+	void	IncrementResCount( int nCount );
+
+	void	ResetKOCount();
+	void	IncrementKOCount( int nCount );
 
 	void	SetArmorValue( int value );
 	void	IncrementArmorValue( int nCount, int nMaxValue = -1 );
@@ -1026,6 +1034,8 @@ private:
 
 	int						m_iFrags;
 	int						m_iDeaths;
+	int						m_iReses;
+	int						m_iKOs;
 
 	float					m_flNextDecalTime;// next time this player can spray a decal
 

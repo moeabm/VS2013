@@ -32,7 +32,7 @@ private:
 
 protected:
 // column widths at 640
-	enum { NAME_WIDTH = 160, SCORE_WIDTH = 60, DEATH_WIDTH = 60, PING_WIDTH = 80, VOICE_WIDTH = 0, FRIENDS_WIDTH = 0 };
+	enum { NAME_WIDTH = 160, SCORE_WIDTH = 60, DEATH_WIDTH = 80, PING_WIDTH = 40, VOICE_WIDTH = 20, FRIENDS_WIDTH = 0 };
 	// total = 340
 
 public:
@@ -105,7 +105,7 @@ protected:
 	vgui::ImageList				*m_pImageList;
 	CUtlMap<CSteamID,int>		m_mapAvatarsToImageList;
 
-	CPanelAnimationVar( int, m_iAvatarWidth, "avatar_width", "34" );		// Avatar width doesn't scale with resolution
+	CPanelAnimationVar( int, m_iAvatarWidth, "avatar_width", "64" );		// Avatar width doesn't scale with resolution
 	CPanelAnimationVarAliasType( int, m_iNameWidth, "name_width", "136", "proportional_int" );
 	CPanelAnimationVarAliasType( int, m_iClassWidth, "class_width", "35", "proportional_int" );
 	CPanelAnimationVarAliasType( int, m_iScoreWidth, "score_width", "35", "proportional_int" );

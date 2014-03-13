@@ -85,10 +85,7 @@ void CWeaponClaws1::SecondaryAttack()
 	CSDKPlayer *pPlayer = GetPlayerOwner();
 	if ( !pPlayer )
 		return;
-	
-
 	WeaponSound( SPECIAL1 );
-	
 	
 	const FileWeaponInfo_t *pWeaponInfo = &GetWpnData();
 	const CSDKWeaponInfo *pSDKInfo;
@@ -108,6 +105,8 @@ void CWeaponClaws1::SecondaryAttack()
 			tmpPlayer->Glow(pSDKInfo->m_flSpecialActive);
 		}
 	}
+#else
+	pPlayer->GoStealth(pSDKInfo->m_flSpecialActive);
 #endif
 	m_flEndSecondaryAttack = gpGlobals->curtime + pSDKInfo->m_flSpecialActive;
 	m_flNextSecondaryAttack = gpGlobals->curtime + pSDKInfo->m_iSpecialCooldown;

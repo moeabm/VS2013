@@ -429,6 +429,15 @@ bool CWeaponSDKBase::Holster( CBaseCombatWeapon *pSwitchingTo )
  
 	return true;
 }
+
+void CWeaponSDKBase::WeaponSound( WeaponSound_t sound_type, float soundtime /* = 0.0f */ )
+{
+	CSDKPlayer *pPlayer = (CSDKPlayer *)GetOwner();
+	if(pPlayer && pPlayer->m_Shared.IsStealth()) {
+			return;
+	}
+	BaseClass::WeaponSound(sound_type, soundtime);
+}
  
 #ifdef GAME_DLL
 void CWeaponSDKBase::SetDieThink( bool bDie )
@@ -442,4 +451,6 @@ void CWeaponSDKBase::Die( void )
 {
 	UTIL_Remove( this );
 }
+
+
 #endif

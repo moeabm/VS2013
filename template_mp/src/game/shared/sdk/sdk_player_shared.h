@@ -128,6 +128,13 @@ public:
 private:
 
 	OuterClass *m_pOuter;
+	
+public:
+	bool IsStealth() { return m_IsStealth;}
+private:
+	CNetworkVar( bool, m_IsStealth );
+
+
 };			   
 
 

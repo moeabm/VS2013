@@ -35,7 +35,8 @@ C_SDKTeam *GetGlobalSDKTeam( int iIndex )
 //-----------------------------------------------------------------------------
 C_SDKTeam::C_SDKTeam()
 {
-		  PrecacheMaterial( "models/player/glow" );
+		  //PrecacheMaterial( "models/player/glow" );
+		  PrecacheMaterial( "models/player/testRed" );
 }
 
 //-----------------------------------------------------------------------------

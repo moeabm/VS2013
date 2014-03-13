@@ -12,4 +12,5 @@
 	"$phongalbedotint" "1" 
 	"$translucent"  "1"
 	"$model"        "1"
-	"$additive"     "1"								}
+	"$additive"     "1"						
+}

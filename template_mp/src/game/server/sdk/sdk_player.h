@@ -163,7 +163,12 @@ private:
 	float prayStart, prayEnd;
 
 public:
-
+	//Stealth (Louis)
+	void GoStealth( float duration );
+	
+	float m_flStealthStart;
+	float m_flStealthEnd;
+public:
 
 	virtual int GetPlayerStance();
 

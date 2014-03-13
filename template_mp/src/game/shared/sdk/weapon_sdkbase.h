@@ -47,6 +47,9 @@ public:
  
 	// override to play custom empty sounds
 	virtual bool PlayEmptySound();
+
+	
+	virtual void WeaponSound( WeaponSound_t sound_type, float soundtime = 0.0f );
  
 	//Tony; these five functions return the sequences the view model uses for a particular action. -- You can override any of these in a particular weapon if you want them to do
 	//something different, ie: when a pistol is out of ammo, it would show a different sequence.

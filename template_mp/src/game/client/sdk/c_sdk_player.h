@@ -60,9 +60,12 @@ public:
 	virtual void GoInvisible( float);
 
 	virtual void Glow( float);
-
+	
 // Called by shared code.
 public:
+	//Stealth (Louis)
+	void GoStealth( float duration );
+
 	SDKPlayerState State_Get() const;
 	
 	void DoAnimationEvent( PlayerAnimEvent_t event, int nData = 0 );

@@ -28,8 +28,8 @@ END_RECV_TABLE()
 C_SDK_PlayerResource::C_SDK_PlayerResource()
 {
 #if defined ( SDK_USE_TEAMS )
-	m_Colors[SDK_TEAM_BLUE] = COLOR_BLUE;
-	m_Colors[SDK_TEAM_RED] = COLOR_RED;
+	m_Colors[SDK_TEAM_BLUE] = COLOR_RED; //Vampires
+	m_Colors[SDK_TEAM_RED] = COLOR_WHITE; //Slayers
 #endif
 
 	m_Colors[TEAM_UNASSIGNED] = COLOR_YELLOW;

@@ -362,6 +362,8 @@ BEGIN_DATADESC( CBasePlayer )
 
 	DEFINE_FIELD( m_iFrags, FIELD_INTEGER ),
 	DEFINE_FIELD( m_iDeaths, FIELD_INTEGER ),
+	DEFINE_FIELD( m_iReses, FIELD_INTEGER ),
+	DEFINE_FIELD( m_iKOs, FIELD_INTEGER ),
 	DEFINE_FIELD( m_bAllowInstantSpawn, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_flNextDecalTime, FIELD_TIME ),
 	//DEFINE_AUTO_ARRAY( m_szTeamName, FIELD_STRING ), // mp
@@ -2915,6 +2917,33 @@ void CBasePlayer::IncrementDeathCount( int nCount )
 	m_iDeaths += nCount;
 	pl.deaths = m_iDeaths;
 }
+
+void CBasePlayer::ResetResCount()
+{
+	m_iReses = 0;
+	pl.reses = m_iReses;
+}
+
+void CBasePlayer::IncrementResCount( int nCount )
+{
+	m_iReses += nCount;
+	pl.reses = m_iReses;
+}
+
+
+void CBasePlayer::ResetKOCount()
+{
+	m_iKOs = 0;
+	pl.kos = m_iKOs;
+}
+
+
+void CBasePlayer::IncrementKOCount( int nCount )
+{
+	m_iKOs += nCount;
+	pl.kos = m_iKOs;
+}
+
 
 void CBasePlayer::AddPoints( int score, bool bAllowNegativeScore )
 {

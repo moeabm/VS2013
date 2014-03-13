@@ -1420,9 +1420,9 @@ bool CBaseCombatWeapon::DefaultDeploy( char *szViewModel, char *szWeaponModel, i
 	}
 
 	// Can't shoot again until we've finished deploying
-	m_flNextPrimaryAttack	= gpGlobals->curtime + SequenceDuration();
-	//TODO: AM need to override this so pray and doesnt reset.
-	m_flNextSecondaryAttack	= gpGlobals->curtime + SequenceDuration();
+	// AM; using max() to prevent cooldown resetting on weapon swapping
+	m_flNextPrimaryAttack	= max(gpGlobals->curtime + SequenceDuration(), m_flNextPrimaryAttack);
+	m_flNextSecondaryAttack	= max(gpGlobals->curtime + SequenceDuration(), m_flNextSecondaryAttack) ;
 	m_flHudHintMinDisplayTime = 0;
 
 	m_bAltFireHudHintDisplayed = false;
