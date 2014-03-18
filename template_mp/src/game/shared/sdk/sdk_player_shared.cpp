@@ -634,4 +634,17 @@ bool CSDKPlayer::ShouldCollide( int collisionGroup, int contentsMask ) const
 
 
 
+void CSDKPlayer::PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, float fvol, bool force )
+{
+	if(!m_Shared.IsStealth()){
+		BaseClass::PlayStepSound( vecOrigin, psurface, fvol, force );
+	}
+	else{
+		Msg("Stealthed; footstep suppressed\n");
+		return;
+	}
+	return;
+}
+
+
 

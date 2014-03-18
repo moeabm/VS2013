@@ -61,7 +61,7 @@ CSDKScoreboard::~CSDKScoreboard()
 //-----------------------------------------------------------------------------
 void CSDKScoreboard::PaintBackground()
 {
-	m_pPlayerList->SetBgColor( Color(0, 0, 0, 0) );
+	m_pPlayerList->SetBgColor( Color(0, 0, 0, 150) );
 	m_pPlayerList->SetBorder(NULL);
 
 	int wide, tall;

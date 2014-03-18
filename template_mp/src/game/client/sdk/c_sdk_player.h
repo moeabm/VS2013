@@ -65,6 +65,7 @@ public:
 public:
 	//Stealth (Louis)
 	void GoStealth( float duration );
+	virtual void			PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, float fvol, bool force );
 
 	SDKPlayerState State_Get() const;
 	

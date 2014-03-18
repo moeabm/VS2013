@@ -85,7 +85,6 @@ void CWeaponClaws1::SecondaryAttack()
 	CSDKPlayer *pPlayer = GetPlayerOwner();
 	if ( !pPlayer )
 		return;
-	WeaponSound( SPECIAL1 );
 	
 	const FileWeaponInfo_t *pWeaponInfo = &GetWpnData();
 	const CSDKWeaponInfo *pSDKInfo;
@@ -98,6 +97,7 @@ void CWeaponClaws1::SecondaryAttack()
 #endif
  
 #if defined( CLIENT_DLL )
+	WeaponSound( SPECIAL1 );
 	C_SDKTeam *iTeam = GetGlobalSDKTeam( SDK_TEAM_RED );
 	for( int i =0 ; i < iTeam->Get_Number_Players() ; i++){
 		CSDKPlayer *tmpPlayer = dynamic_cast< CSDKPlayer* > (iTeam->GetPlayer(i));

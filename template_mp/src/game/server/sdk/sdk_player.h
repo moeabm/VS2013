@@ -67,6 +67,9 @@ public:
 	float m_flKnockoutDur;
 	float m_flResHP;
 
+	
+	virtual void			PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, float fvol, bool force );
+
 	//AM: round based lives
 #ifdef SDK_USE_ROUNDS
 private:

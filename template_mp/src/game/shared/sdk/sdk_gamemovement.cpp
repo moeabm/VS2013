@@ -808,7 +808,7 @@ bool CSDKGameMovement::CheckJumpButton( void )
 	// If we are ducking...
 	float startz = mv->m_vecVelocity[2];
 	float playerSpeed = VectorLength(mv->m_vecVelocity);
-	if ( playerSpeed > 10 && ((  m_pSDKPlayer->m_Local.m_bDucking ) || (  m_pSDKPlayer->GetFlags() & FL_DUCKING )) && player->GetTeamNumber() == SDK_TEAM_BLUE )
+	if ( playerSpeed > 80 && ((  m_pSDKPlayer->m_Local.m_bDucking ) || (  m_pSDKPlayer->GetFlags() & FL_DUCKING )) && player->GetTeamNumber() == SDK_TEAM_BLUE )
 	{
 		
 			m_pSDKPlayer->DoAnimationEvent( PLAYERANIMEVENT_LONGJUMP );
