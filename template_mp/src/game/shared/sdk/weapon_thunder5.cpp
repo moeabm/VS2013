@@ -197,7 +197,7 @@ void CWeaponThunder5::WeaponIdle()
 		}
 		else if (m_iInSpecialReload != 0)
 		{
-			if (m_iClip1 != 8 && pPlayer->GetAmmoCount( m_iPrimaryAmmoType ))
+			if (m_iClip1 != GetMaxClip1() && pPlayer->GetAmmoCount( m_iPrimaryAmmoType ))
 			{
 				Reload( );
 			}
@@ -209,12 +209,19 @@ void CWeaponThunder5::WeaponIdle()
 				// play cocking sound
 				m_iInSpecialReload = 0;
 				SetWeaponIdleTime( gpGlobals->curtime + 1.5 );
-				m_flNextPrimaryAttack = gpGlobals->curtime + 0.15; // Add a small delay between finishing reload and firing again
+				m_flNextPrimaryAttack = gpGlobals->curtime + 0.45; // Add a small delay between finishing reload and firing again
 			}
 		}
 		else
 		{
-			SendWeaponAnim( ACT_VM_IDLE );
+			if(random->RandomInt(0, 10000) < 10 ){// gpGlobals->curtime - m_flTimeWeaponIdle > 10.0 ){ 
+				SendWeaponAnim(ACT_VM_FIDGET);
+				Msg("Fidget\n");
+				m_flTimeWeaponIdle = gpGlobals->curtime;
+			}
+			else{
+				SendWeaponAnim( ACT_VM_IDLE );
+			}
 		}
 	}
 }

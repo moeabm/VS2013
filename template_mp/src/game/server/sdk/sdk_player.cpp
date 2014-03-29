@@ -19,6 +19,7 @@
 #include "in_buttons.h"
 #include "particle_parse.h"
 #include "physics_prop_ragdoll.h"
+#include "te_effect_dispatch.h"
 
 
 #if defined ( SDK_DLL ) && defined ( SDK_DEV_DLL )
@@ -815,6 +816,7 @@ int CSDKPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 			//If we got here then we've been staked.. do vamp death effect
 			//DispatchParticleEffect( "blood_impact_red_01", GetAbsOrigin(), QAngle(0,0,1));
 			//Ignite(30.0f,false);
+			Msg("STAKED");
 		}
 		return CBaseCombatCharacter::OnTakeDamage( info );
 	}
@@ -921,16 +923,35 @@ void CSDKPlayer::Event_Killed( const CTakeDamageInfo &info )
 	// because we still want to transmit to the clients in our PVS.
 	// AM; no ragdoll on kill for vampires. 
 	
-	if(GetTeamNumber() != SDK_TEAM_BLUE && State_Get() != STATE_KNOCKOUT) {
+	if(GetTeamNumber() != SDK_TEAM_BLUE 
+		&& State_Get() != STATE_KNOCKOUT) {
 		CreateServerRagdoll(this, m_nForceBone, CTakeDamageInfo(), COLLISION_GROUP_INTERACTIVE_DEBRIS, true );
 	}
 	else {
-		//since it was already created in Knockdown. 
+		// TODO:Need explosion and sound in else statement
+		CEffectData data = CEffectData();
+		CRecipientFilter filter = CRecipientFilter();
+
+
+		//CPASFilter filter = CPASFilter();
+		filter.AddAllPlayers();
+		filter.MakeReliable();
+	
+		// Send our origin
+		data.m_vOrigin = GetAbsOrigin();
+		// Send our scale
+		data.m_flScale = 50.0f;
+		
+		DispatchEffect("watersplash", data, filter);
+		DispatchEffect("bloodspray", data, filter);
+		DispatchEffect("Sparkle", data, filter);
+		
+		//since it was already created in Knockdown.
+		//remove ragdoll;
 		if(m_pRagdoll){
 			m_pRagdoll->Remove();
 			m_pRagdoll = 0;
 		}
-		// TODO:Need explosion and sound in else statement
 	}
 
 	State_Transition( STATE_DEATH_ANIM );	// Transition into the dying state.
