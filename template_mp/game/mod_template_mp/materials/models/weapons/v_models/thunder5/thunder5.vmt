@@ -1,6 +1,15 @@
 "VertexlitGeneric"
 {
-	"$basetexture" "models/weapons/v_models/thunder5/thunder5"
-	"$envmap" "env_cubemap"
-	"$envmapmask" "models\weapons\v_models\thunder5\thunder5_ref"
+	"$basetexture" 	"models/weapons/v_models/thunder5/thunder5"
+	"$bumpmap" 	"models/weapons/v_models/thunder5/thunder5_norm"
+
+	"$phong" 	"1"
+	"$phongboost"	"0.33"
+	"$normalmapalphaphongmask"	 "1"
+	"$phong exponenttexture" 	"models/weapons/v_models/thunder5/thunder5_spec"
+
+	"$envmap" 	"env_cubemap"
+	"$envmapmask" 	"models\weapons\v_models\thunder5\thunder5_ref"
+
+	"$rimlight" 	"1"
 }
