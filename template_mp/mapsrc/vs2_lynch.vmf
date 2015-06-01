@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "6411"
-	"mapversion" "241"
+	"mapversion" "242"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,7 +20,7 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "241"
+	"mapversion" "242"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -337,7 +337,7 @@ world
 		{
 			"id" "84"
 			"plane" "(1728 -2560 544) (1728 -2240 544) (2560 -2240 544)"
-			"material" "MAPS/VS2_LYNCH/VS_BUILDING1"
+			"material" "BUILDING_TEMPLATE/BUILDING_TEMPLATE021A"
 			"uaxis" "[1 0 0 -22] 1.1"
 			"vaxis" "[0 -1 0 60] 0.93"
 			"rotation" "0"
@@ -382,7 +382,7 @@ world
 			"id" "80"
 			"plane" "(2560 -2560 64) (1728 -2560 64) (1728 -2560 544)"
 			"material" "MAPS/VS2_LYNCH/VS_BUILDING1"
-			"uaxis" "[1 0 0 -22] 1.1"
+			"uaxis" "[1 0 0 -30] 1.1"
 			"vaxis" "[0 0 -1 60] 0.93"
 			"rotation" "0"
 			"lightmapscale" "16"
@@ -435,9 +435,9 @@ world
 		{
 			"id" "88"
 			"plane" "(1728 -2240 64) (1728 -1600 64) (1728 -1600 320)"
-			"material" "BUILDING_TEMPLATE/BUILDING_TEMPLATE002H"
-			"uaxis" "[0 1 0 0] 0.25"
-			"vaxis" "[0 0 -1 256] 0.25"
+			"material" "MAPS/VS2_LYNCH/VS_BUILDING1"
+			"uaxis" "[0 1 0 -22] 1.1"
+			"vaxis" "[0 0 -1 60] 0.93"
 			"rotation" "0"
 			"lightmapscale" "16"
 			"smoothing_groups" "0"
@@ -446,9 +446,9 @@ world
 		{
 			"id" "87"
 			"plane" "(2560 -1600 64) (2560 -2240 64) (2560 -2240 320)"
-			"material" "BUILDING_TEMPLATE/BUILDING_TEMPLATE002H"
-			"uaxis" "[0 1 0 0] 0.25"
-			"vaxis" "[0 0 -1 256] 0.25"
+			"material" "MAPS/VS2_LYNCH/VS_BUILDING1"
+			"uaxis" "[0 1 0 -22] 1.1"
+			"vaxis" "[0 0 -1 60] 0.93"
 			"rotation" "0"
 			"lightmapscale" "16"
 			"smoothing_groups" "0"
@@ -457,9 +457,9 @@ world
 		{
 			"id" "86"
 			"plane" "(1728 -1600 64) (2560 -1600 64) (2560 -1600 320)"
-			"material" "BUILDING_TEMPLATE/BUILDING_TEMPLATE002H"
-			"uaxis" "[1 0 0 0] 0.25"
-			"vaxis" "[0 0 -1 256] 0.25"
+			"material" "MAPS/VS2_LYNCH/VS_BUILDING1"
+			"uaxis" "[1 0 0 -22] 1.1"
+			"vaxis" "[0 0 -1 60] 0.93"
 			"rotation" "0"
 			"lightmapscale" "16"
 			"smoothing_groups" "0"
@@ -23343,93 +23343,6 @@ entity
 }
 entity
 {
-	"id" "37822"
-	"classname" "info_overlay"
-	"angles" "0 0 0"
-	"BasisNormal" "-1 0 0"
-	"BasisOrigin" "1728 -1728 128"
-	"BasisU" "0 1 0"
-	"BasisV" "0 0 -1"
-	"EndU" "0"
-	"EndV" "1"
-	"fademindist" "-1"
-	"material" "building_template/building_template002c"
-	"sides" "88"
-	"StartU" "1"
-	"StartV" "0"
-	"uv0" "-64 -64 0"
-	"uv1" "-64 64 0"
-	"uv2" "64 64 0"
-	"uv3" "64 -64 0"
-	"origin" "1728 -1728 128"
-	editor
-	{
-		"color" "80 150 225"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 1000]"
-	}
-}
-entity
-{
-	"id" "37875"
-	"classname" "info_overlay"
-	"angles" "0 0 0"
-	"BasisNormal" "-1 0 0"
-	"BasisOrigin" "1728 -1984 128"
-	"BasisU" "0 1 0"
-	"BasisV" "0 0 -1"
-	"EndU" "0"
-	"EndV" "1"
-	"fademindist" "-1"
-	"material" "building_template/building_template002n"
-	"sides" "88"
-	"StartU" "1"
-	"StartV" "0"
-	"uv0" "-64 -64 0"
-	"uv1" "-64 64 0"
-	"uv2" "64 64 0"
-	"uv3" "64 -64 0"
-	"origin" "1728 -1984 128"
-	editor
-	{
-		"color" "80 150 225"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 1500]"
-	}
-}
-entity
-{
-	"id" "37917"
-	"classname" "info_overlay"
-	"angles" "0 0 0"
-	"BasisNormal" "-1 0 0"
-	"BasisOrigin" "1728 -2240 128"
-	"BasisU" "0 1 0"
-	"BasisV" "0 0 -1"
-	"EndU" "0"
-	"EndV" "1"
-	"fademindist" "-1"
-	"material" "building_template/building_template002c"
-	"sides" "88"
-	"StartU" "1"
-	"StartV" "0"
-	"uv0" "-64 -64 0"
-	"uv1" "-64 64 0"
-	"uv2" "64 64 0"
-	"uv3" "64 -64 0"
-	"origin" "1728 -2240 128"
-	editor
-	{
-		"color" "80 150 225"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 1000]"
-	}
-}
-entity
-{
 	"id" "38651"
 	"classname" "func_brush"
 	"disablereceiveshadows" "0"
@@ -24630,8 +24543,8 @@ cameras
 	}
 	camera
 	{
-		"position" "[1891.84 -3093.63 371.052]"
-		"look" "[1888.53 -2935.89 344.37]"
+		"position" "[2061.58 -2867.81 767.369]"
+		"look" "[1997.03 -2748.45 682.58]"
 	}
 }
 cordon
