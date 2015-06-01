@@ -75,3 +75,5 @@ template_mp/src/lib/public/tier1.lib
 template_mp/src/lib/public/vgui_controls.lib
 template_mp/src/mathlib/Debug/win32/mathlib.vcxprojResolveAssemblyReference.cache
 template_mp/src/vgui2/vgui_controls/Debug/win32/vgui_controls.vcxprojResolveAssemblyReference.cache
+*.cache
+*.lib
